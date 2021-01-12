@@ -1,0 +1,4 @@
+.headerWrapper {
+    grid-area: header;
+    background-color: lightskyblue;
+}

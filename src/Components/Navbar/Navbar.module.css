@@ -1,0 +1,4 @@
+.navbarWrapper {
+    grid-area: navbar;
+    background-color: cornflowerblue;
+}
