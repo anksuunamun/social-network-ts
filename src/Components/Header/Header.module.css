@@ -1,4 +1,41 @@
 .headerWrapper {
     grid-area: header;
-    background-color: lightskyblue;
+    height: 110px;
+    background-color: inherit;
+    color: white;
+    display: grid;
+    grid-template-columns: 12fr 3fr;
+    align-content: center;
+
+}
+
+.logo img {
+    height: 65px;
+}
+
+.userActionsWrapper {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-items: end;
+}
+
+.authButtonWrapper {
+    width: 110px;
+    background-color: #7e26a6;
+    border: none;
+    border-radius: 0.25rem;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.authButtonWrapper:hover {
+    background-color: #ae54d8;
+    cursor: pointer;
+}
+.userName {
+    font-size: 19px;
 }
