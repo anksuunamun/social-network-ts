@@ -1,4 +1,11 @@
 .navbarWrapper {
     grid-area: navbar;
-    background-color: cornflowerblue;
+    background-color: #392f2d;
+    border-radius: 0.25rem;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    height: 300px;
+
+
 }

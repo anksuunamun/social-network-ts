@@ -5,7 +5,7 @@ import Profile from './Profile';
 function ProfileContainer() {
     return (
         <>
-            <Profile/>
+            <Profile />
         </>
     )
 }
