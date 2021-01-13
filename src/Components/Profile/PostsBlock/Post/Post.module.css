@@ -1,0 +1,12 @@
+.post {
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    column-gap: 20px;
+}
+
+
+.userImg {
+    width: 30px;
+
+
+}

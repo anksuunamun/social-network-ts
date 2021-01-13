@@ -1,0 +1,25 @@
+.profileInfoWrapper {
+
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    column-gap: 60px;
+
+}
+
+.profileInfoImg {
+    border: 1px solid #73605b;
+    border-radius: 0.25rem;
+}
+
+.profileInfoImg img {
+    width: 140px;
+}
+
+.textInfo {
+    display: grid;
+    margin-top: 15px;
+}
+
+.textInfo > div:first-child {
+   font-size: 1.4em;
+}

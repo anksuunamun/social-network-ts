@@ -6,7 +6,7 @@
 body {
     margin: 0;
     background-color: #2b2322;
-    font-family: 'Lato', sans-serif;
+    font-family: Calibri, sans-serif;
 }
 .appWrapper {
 
@@ -27,9 +27,11 @@ body {
     grid-area: content;
     height: 100%;
     background-color: #392f2d;
-    border: 1px solid #73605b;
+    /*border: 1px solid #73605b;*/
     border-radius: 0.25rem;
     color: white;
+    max-height: 800px;
+    padding: 20px;
 }
 
 

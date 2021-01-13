@@ -1,4 +1,5 @@
 .profileWrapper {
-
-
+    display: grid;
+    grid-template-rows: 2fr 5fr;
+    row-gap: 30px;
 }

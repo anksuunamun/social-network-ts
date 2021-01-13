@@ -1,0 +1,45 @@
+.postsBlock {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    margin-top: 20px;
+    column-gap: 20px;
+
+}
+
+.posts {
+    display: grid;
+    row-gap: 15px;
+    grid-auto-rows: 50px;
+}
+
+textarea {
+    background-color: #473B38;
+    color: white;
+    font-size: 16px;
+    border-radius: 0.25rem;
+    border: 1px solid #73605b;
+}
+
+textarea:focus {
+    outline-color: #73605b;
+    border-color: #73605b;
+    background-color: #73605b;
+}
+
+.postsBlock button {
+    width: 100px;
+    height: 40px;
+    background-color: #7e26a6;
+    border: none;
+    border-radius: 0.25rem;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.postsBlock button:hover {
+    background-color: #ae54d8;
+    cursor: pointer;
+}
