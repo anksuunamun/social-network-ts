@@ -8,7 +8,7 @@ type PostPropsType = {
     id: string
 }
 function Post(props: PostPropsType) {
-    console.log(props)
+
     return (
         <div className={styles.post}>
             <img className={styles.userImg} src={userIcon} alt="userIcon"/>

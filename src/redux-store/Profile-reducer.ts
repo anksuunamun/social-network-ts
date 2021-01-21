@@ -1,5 +1,23 @@
 import {v1} from 'uuid';
 
+const ADD_POST = 'ADD_POST';
+
+
+export const addPostAC = (postText: string | number | readonly string[] | undefined) => {
+    return {
+        type: ADD_POST,
+        postText
+    }
+}
+
+type AddPostACType = {
+    type: string
+    postText: string
+}
+
+type ActionsType = AddPostACType
+
+
 export type ProfileReducerStateType = {
     posts: Array<PostsType>
 }
@@ -35,6 +53,22 @@ const initialState = {
 }
 
 
-export const profileReducer = (state = initialState) => {
-    return state;
+export const profileReducer = (state = initialState, action: ActionsType) => {
+    switch (action.type) {
+        case (ADD_POST): {
+            let newState = {...state};
+            let newPost: PostsType = {
+                text: action.postText,
+                likes: '10',
+                id: v1()
+            }
+            newState.posts.push(newPost)
+            console.log(newState)
+            return newState;
+        }
+        default: {
+            return state;
+        }
+    }
+
 }

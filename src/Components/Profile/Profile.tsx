@@ -6,14 +6,16 @@ import {PostsType} from '../../redux-store/Profile-reducer';
 
 
 type ProfilePropsType = {
-    "posts": Array<PostsType>
+    posts: Array<PostsType>
+    addPost: (postText: string | number | readonly string[] | undefined) => void
 }
 
 function Profile(props: ProfilePropsType) {
+
     return (
         <div className={styles.profileWrapper + ' contentWrapper'}>
-            <ProfileInfo />
-            <PostsBlock posts = {props.posts}/>
+            <ProfileInfo/>
+            <PostsBlock posts={props.posts} addPost={props.addPost}/>
         </div>
     )
 }

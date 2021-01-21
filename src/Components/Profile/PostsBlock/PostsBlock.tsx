@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './PostsBlock.module.css'
 import Post from './Post/Post';
 import {PostsType} from '../../../redux-store/Profile-reducer';
@@ -6,21 +6,35 @@ import {PostsType} from '../../../redux-store/Profile-reducer';
 
 type PostsBlockType = {
     posts: Array<PostsType>
+    addPost: (text: string | number | readonly string[] | undefined) => void
 }
 
-function PostsBlock(props:PostsBlockType) {
+function PostsBlock(props: PostsBlockType) {
+
+    const [newPostText, setNewPostText] = useState<string | number | readonly string[] | undefined>('')
+
+    const onclickHandler = () => {
+        props.addPost(newPostText)
+        setNewPostText('')
+    }
+
+    const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        setNewPostText(event.target.value)
+    }
+
     return (
         <div className={styles.postsBlock}>
             <div>
                 <p>My posts</p>
-                <textarea name="newPost" id="newPost" cols={30} rows={5} placeholder={'Write something here...'} defaultValue={"Write something here..."}></textarea>
+                <textarea name="newPost" id="newPost" cols={30} rows={5} placeholder={'Write something here...'}
+                          value={newPostText} onChange={onChangeHandler}/>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={onclickHandler}>Add post</button>
                 </div>
             </div>
             <div className={styles.posts}>
                 {props.posts.map(
-                    post => <Post {...post}/>
+                    post => <Post {...post} key={post.id}/>
                 )}
             </div>
         </div>
