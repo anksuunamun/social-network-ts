@@ -1,7 +1,4 @@
-
-
-
-
+import {v1} from 'uuid';
 
 export type ProfileReducerStateType = {
     posts: Array<PostsType>
@@ -17,22 +14,22 @@ const initialState = {
     'posts': [{
         'text': 'This is my first post!',
         'likes': '23',
-        'id': '1',
+        'id': v1(),
     },
         {
             'text': 'This is my second post!',
             'likes': '6',
-            'id': '2',
+            'id': v1(),
         },
         {
             'text': 'This is my third post!',
             'likes': '901',
-            'id': '3',
+            'id': v1(),
         },
         {
             'text': ' I like writing posts!!',
             'likes': '0',
-            'id': '4',
+            'id': v1(),
         }
     ],
 }
