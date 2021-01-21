@@ -1,9 +1,14 @@
 import React from 'react';
 import styles from './PostsBlock.module.css'
 import Post from './Post/Post';
+import {PostsType} from '../../../redux-store/Profile-reducer';
 
 
-function PostsBlock() {
+type PostsBlockType = {
+    posts: Array<PostsType>
+}
+
+function PostsBlock(props:PostsBlockType) {
     return (
         <div className={styles.postsBlock}>
             <div>
@@ -14,9 +19,9 @@ function PostsBlock() {
                 </div>
             </div>
             <div className={styles.posts}>
-                <Post/>
-                <Post/>
-                <Post/>
+                {props.posts.map(
+                    post => <Post {...post}/>
+                )}
             </div>
         </div>
     )
