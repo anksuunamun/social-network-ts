@@ -7,7 +7,7 @@ function ProfileInfo() {
     return (
         <div className={styles.profileInfoWrapper}>
             <div className={styles.profileInfoImg}>
-                <img src={picture} alt="picture"/>
+                <img src={picture} alt="profilePhoto"/>
             </div>
 
             <div className={styles.textInfo}>

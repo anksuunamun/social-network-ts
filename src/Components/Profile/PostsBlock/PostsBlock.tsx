@@ -8,7 +8,7 @@ function PostsBlock() {
         <div className={styles.postsBlock}>
             <div>
                 <p>My posts</p>
-                <textarea name="newPost" id="newPost" cols={30} rows={5} placeholder={'Write something here...'}>Write something here...</textarea>
+                <textarea name="newPost" id="newPost" cols={30} rows={5} placeholder={'Write something here...'} defaultValue={"Write something here..."}></textarea>
                 <div>
                     <button>Add post</button>
                 </div>
