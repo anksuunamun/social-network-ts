@@ -8,6 +8,7 @@ import {PostsType} from '../../redux-store/Profile-reducer';
 type ProfilePropsType = {
     posts: Array<PostsType>
     addPost: (postText: string | number | readonly string[] | undefined) => void
+    changeLikes: (id: string, upOrDown: 'up' | 'down') => void
 }
 
 function Profile(props: ProfilePropsType) {
@@ -15,7 +16,7 @@ function Profile(props: ProfilePropsType) {
     return (
         <div className={styles.profileWrapper + ' contentWrapper'}>
             <ProfileInfo/>
-            <PostsBlock posts={props.posts} addPost={props.addPost}/>
+            <PostsBlock posts={props.posts} addPost={props.addPost} changeLikes={props.changeLikes}/>
         </div>
     )
 }

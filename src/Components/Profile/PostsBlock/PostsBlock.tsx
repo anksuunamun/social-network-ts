@@ -7,6 +7,7 @@ import {PostsType} from '../../../redux-store/Profile-reducer';
 type PostsBlockType = {
     posts: Array<PostsType>
     addPost: (text: string | number | readonly string[] | undefined) => void
+    changeLikes: (id: string, upOrDown: 'up' | 'down') => void
 }
 
 function PostsBlock(props: PostsBlockType) {
@@ -34,7 +35,7 @@ function PostsBlock(props: PostsBlockType) {
             </div>
             <div className={styles.posts}>
                 {props.posts.map(
-                    post => <Post {...post} key={post.id}/>
+                    post => <Post {...post} key={post.id} changeLikes={props.changeLikes}/>
                 )}
             </div>
         </div>
