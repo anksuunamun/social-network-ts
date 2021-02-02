@@ -1,0 +1,25 @@
+.dialogsWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+}
+
+.usersWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.usersWrapper a {
+    color: white;
+    text-decoration: none;
+}
+.usersWrapper a:hover {
+    color: #ae54d8;
+}
+.activeUser {
+    color: #7e26a6;
+}
+
+.messagesWrapper {
+
+}
