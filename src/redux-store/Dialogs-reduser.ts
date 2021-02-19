@@ -63,6 +63,6 @@ const initialState: DialogsReducerStateType = {
 }
 
 
-export const dialogsReducer = (state: DialogsReducerStateType = initialState, action: any) => {
+export const dialogsReducer = (state: DialogsReducerStateType = initialState, action: any): DialogsReducerStateType => {
     return state
 }

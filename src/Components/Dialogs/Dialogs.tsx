@@ -1,12 +1,7 @@
 import React from 'react';
 import styles from './Dialogs.module.css';
-import {DialogType, MessageType} from '../../redux-store/Dialogs-reduser';
 import {NavLink} from 'react-router-dom';
-
-type DialogsPropsType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-}
+import {DialogsPropsType} from './DialogsContainer';
 
 function Dialogs(props: DialogsPropsType) {
     const dialogs = props.dialogs.map(
