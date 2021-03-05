@@ -19,23 +19,7 @@
     justify-items: end;
 }
 
-.authButtonWrapper {
-    width: 110px;
-    background-color: #7e26a6;
-    border: none;
-    border-radius: 0.25rem;
-    color: white;
-    font-size: 16px;
-    text-decoration: none;
-    text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
 
-.authButtonWrapper:hover {
-    background-color: #ae54d8;
-    cursor: pointer;
-}
 .userName {
     font-size: 19px;
 }

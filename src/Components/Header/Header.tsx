@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './Header.module.css';
 import socialLogo from '../../Assets/Images/socialLogo.png'
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
+import PurpleButton from '../Common/PurpleButton/PurpleButton';
 
 function Header() {
     return (
@@ -11,7 +12,9 @@ function Header() {
             </div>
             <div className={styles.userActionsWrapper}>
                 <div className={styles.userName}>UserName</div>
-                {<button className={styles.authButtonWrapper}>Log out</button> || <NavLink to={'/login'} className={styles.authButtonWrapper}>Log in</NavLink>}
+                {<PurpleButton text={'Log out'} onButtonClick={() => console.log('Log out')}/>
+                || <NavLink to={'/login'}
+                            className={styles.authButtonWrapper}>Log in</NavLink>}
             </div>
         </div>
     )

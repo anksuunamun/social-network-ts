@@ -2,12 +2,13 @@ import React from 'react';
 import {Dispatch} from 'redux';
 import Profile from './Profile';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {addPostAC, changeLikesAC, ProfileReducerStateType} from '../../redux-store/Profile-reducer';
+import {addPostAC, changeLikesAC, PostsType} from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
 
+type ProfileContainerAjaxPropsType = MapDispatchToPropsType & MapStateToPropsType
+type ProfileContainerAjaxStateType = {}
 
-class ProfileContainerAjax extends React.Component<any, any> {
+class ProfileContainerAjax extends React.Component<ProfileContainerAjaxPropsType, ProfileContainerAjaxStateType> {
     render() {
         return (
             <>
@@ -25,13 +26,13 @@ type MapDispatchToPropsType = {
     changeLikesAC: (id: string, upOrDown: 'up' | 'down') => void
 }
 
-// type MapStateToPropsType = {
-//     profilePage: ProfileReducerStateType,
-// }
+type MapStateToPropsType = {
+    'posts': Array<PostsType>,
+}
 
-export type ProfilePropsType = MapDispatchToPropsType & ProfileReducerStateType
+export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType
 
-const mapStateToProps = (state: AppStateType): ProfileReducerStateType => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         'posts': state.profilePage.posts,
     }
@@ -45,6 +46,6 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
 }
 
 
-const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainerAjax))
+const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(ProfileContainerAjax)
 
 export default ProfileContainer;
