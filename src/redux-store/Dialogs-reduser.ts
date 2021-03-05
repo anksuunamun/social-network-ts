@@ -1,5 +1,6 @@
 import {v1} from 'uuid';
 
+const ADD_MESSAGE = 'ADD_MESSAGE';
 
 export type DialogType = {
     userName: string
@@ -10,10 +11,21 @@ export type MessageType = {
     messageText: string
 }
 
+type AddNewMessageActionType = {
+    type: typeof ADD_MESSAGE
+    message: string
+}
+export const addNewMessageAC = (message: string): AddNewMessageActionType => {
+    return {
+        type: ADD_MESSAGE, message
+    }
+}
+
 export type DialogsReducerStateType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
 }
+type ActionType = AddNewMessageActionType
 
 const initialState: DialogsReducerStateType = {
     'dialogs': [
@@ -63,6 +75,16 @@ const initialState: DialogsReducerStateType = {
 }
 
 
-export const dialogsReducer = (state: DialogsReducerStateType = initialState, action: any): DialogsReducerStateType => {
-    return state
+export const dialogsReducer = (state: DialogsReducerStateType = initialState, action: ActionType): DialogsReducerStateType => {
+    switch (action.type) {
+        case 'ADD_MESSAGE': {
+            return {
+                ...state,
+                messages: [...state.messages,
+                    {id: v1(), messageText: action.message}]
+            }
+        }
+        default:
+            return state
+    }
 }
