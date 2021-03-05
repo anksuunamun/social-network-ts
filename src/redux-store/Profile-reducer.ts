@@ -89,6 +89,7 @@ export const profileReducer = (state: ProfileReducerStateType = initialState, ac
                         post.likes = String(+post.likes - 1);
                     }
                 }
+                return post;
             })
 
             return newState;
