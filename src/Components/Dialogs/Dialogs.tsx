@@ -43,9 +43,11 @@ function Dialogs(props: DialogsPropsType) {
                 {messages}
             </div>
 
+            <div className={styles.textareaWrapper}>
             <textarea name="newMessage" id="newMessage" cols={30} rows={5} placeholder={'Write something here...'}
                       value={newMessageText} onChange={onChangeHandler}/>
-            <PurpleButton text={'Add message'} onButtonClick={onClickHandler}/>
+                <PurpleButton text={'Add message'} onButtonClick={onClickHandler}/>
+            </div>
         </div>
     )
 }
