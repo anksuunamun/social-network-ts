@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import styles from './PostsBlock.module.css'
 import Post from './Post/Post';
 import {PostsType} from '../../../redux-store/Profile-reducer';
+import PurpleButton from '../../Common/PurpleButton/PurpleButton';
 
 
 type PostsBlockType = {
@@ -30,7 +31,7 @@ function PostsBlock(props: PostsBlockType) {
                 <textarea name="newPost" id="newPost" cols={30} rows={5} placeholder={'Write something here...'}
                           value={newPostText} onChange={onChangeHandler}/>
                 <div>
-                    <button onClick={onclickHandler}>Add post</button>
+                    <PurpleButton text={'Add post'} onButtonClick={onclickHandler}/>
                 </div>
             </div>
             <div className={styles.posts}>
