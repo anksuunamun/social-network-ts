@@ -3,6 +3,7 @@ import styles from './PostsBlock.module.css'
 import Post from './Post/Post';
 import {PostsType} from '../../../redux-store/Profile-reducer';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
+import CustomTextarea from '../../Common/CustomTextarea/CustomTextarea';
 
 
 type PostsBlockType = {
@@ -28,8 +29,10 @@ function PostsBlock(props: PostsBlockType) {
         <div className={styles.postsBlock}>
             <div>
                 <p>My posts</p>
-                <textarea name="newPost" id="newPost" cols={30} rows={5} placeholder={'Write something here...'}
-                          value={newPostText} onChange={onChangeHandler}/>
+                <CustomTextarea name={'newPost'}
+                                id={'newPost'}
+                                value={newPostText}
+                                onChange={onChangeHandler}/>
                 <div>
                     <PurpleButton text={'Add post'} onButtonClick={onclickHandler}/>
                 </div>

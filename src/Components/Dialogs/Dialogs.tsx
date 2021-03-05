@@ -3,6 +3,7 @@ import styles from './Dialogs.module.css';
 import {NavLink} from 'react-router-dom';
 import {DialogsPropsType} from './DialogsContainer';
 import PurpleButton from '../Common/PurpleButton/PurpleButton';
+import CustomTextarea from '../Common/CustomTextarea/CustomTextarea';
 
 function Dialogs(props: DialogsPropsType) {
 
@@ -19,8 +20,11 @@ function Dialogs(props: DialogsPropsType) {
     const dialogs = props.dialogs.map(
         item => {
             return (
-                <NavLink to={`/messages/${item.id}`} activeClassName={styles.activeUser}
-                         key={item.id}>{item.userName}</NavLink>
+                <NavLink to={`/messages/${item.id}`}
+                         activeClassName={styles.activeUser}
+                         key={item.id}>
+                    {item.userName}
+                </NavLink>
             )
         }
     )
@@ -44,9 +48,12 @@ function Dialogs(props: DialogsPropsType) {
             </div>
 
             <div className={styles.textareaWrapper}>
-            <textarea name="newMessage" id="newMessage" cols={30} rows={5} placeholder={'Write something here...'}
-                      value={newMessageText} onChange={onChangeHandler}/>
-                <PurpleButton text={'Add message'} onButtonClick={onClickHandler}/>
+                <CustomTextarea name={'newMessage'}
+                                id={'newMessage'}
+                                value={newMessageText}
+                                onChange={onChangeHandler}/>
+                <PurpleButton text={'Add message'}
+                              onButtonClick={onClickHandler}/>
             </div>
         </div>
     )
