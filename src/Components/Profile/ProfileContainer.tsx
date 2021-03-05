@@ -22,7 +22,7 @@ class ProfileContainerAjax extends React.Component<ProfileContainerAjaxPropsType
 
 
 type MapDispatchToPropsType = {
-    addPostAC: (postText: string | number | readonly string[] | undefined) => void
+    addPostAC: (postText: string) => void
     changeLikesAC: (id: string, upOrDown: 'up' | 'down') => void
 }
 
@@ -40,7 +40,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        addPostAC: (postText: string | number | readonly string[] | undefined) => dispatch(addPostAC(postText)),
+        addPostAC: (postText: string) => dispatch(addPostAC(postText)),
         changeLikesAC: (id: string, upOrDown: 'up' | 'down') => dispatch(changeLikesAC(id, upOrDown)),
     }
 }

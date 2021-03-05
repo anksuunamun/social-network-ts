@@ -4,14 +4,14 @@ const ADD_POST = 'ADD_POST';
 const CHANGE_LIKES = 'CHANGE_LIKE';
 
 
-export const addPostAC = (postText: string | number | readonly string[] | undefined)=> {
+export const addPostAC = (postText: string): AddPostActionType => {
     return {
         type: ADD_POST,
         postText
     }
 }
 
-export const changeLikesAC = (id: string, upOrDown: 'up' | 'down') => {
+export const changeLikesAC = (id: string, upOrDown: 'up' | 'down'): ChangeLikesActionType => {
     return {
         type: CHANGE_LIKES,
         id,
@@ -23,7 +23,7 @@ export type AddPostActionType = {
     type: typeof ADD_POST
     postText: string
 }
-type ChangeLikesActionType = {
+export type ChangeLikesActionType = {
     type: typeof CHANGE_LIKES
     id: string
     upOrDown: 'up' | 'down'

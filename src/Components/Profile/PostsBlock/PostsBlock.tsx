@@ -6,13 +6,13 @@ import {PostsType} from '../../../redux-store/Profile-reducer';
 
 type PostsBlockType = {
     posts: Array<PostsType>
-    addPost: (text: string | number | readonly string[] | undefined) => void
+    addPost: (text: string) => void
     changeLikes: (id: string, upOrDown: 'up' | 'down') => void
 }
 
 function PostsBlock(props: PostsBlockType) {
 
-    const [newPostText, setNewPostText] = useState<string | number | readonly string[] | undefined>('')
+    const [newPostText, setNewPostText] = useState<string>('')
 
     const onclickHandler = () => {
         props.addPost(newPostText)
