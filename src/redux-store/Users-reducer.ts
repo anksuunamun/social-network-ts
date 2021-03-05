@@ -14,11 +14,11 @@ export type UserType = {
     uniqueUrlName: null | string
 }
 
-type InitialStateType = {
+export type UsersReducerInitialStateType = {
     users: Array<UserType>
 }
 
-const initialState: InitialStateType = {
+const initialState: UsersReducerInitialStateType = {
     // users: [{
     //     followed: false,
     //     id: 15527,
@@ -78,14 +78,14 @@ export const UnFollowUserAC = (id: number): UnFollowUserActionType => {
 }
 type ActionType = SetUsersActionType | FollowUserActionType | UnFollowUserActionType
 
-export const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const usersReducer = (state: UsersReducerInitialStateType = initialState, action: ActionType): UsersReducerInitialStateType => {
     switch (action.type) {
         case (SET_USERS): {
             let localState = {...state}
             localState.users = [...action.users]
             return localState
         }
-        case 'FOLLOW_USER': {
+        case (FOLLOW_USER): {
             return {
                 ...state, users: state.users.map(user => {
                     if (user.id === action.id) {
@@ -94,7 +94,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
                 })
             }
         }
-        case 'UNFOLLOW_USER': {
+        case (UNFOLLOW_USER): {
             return {
                 ...state, users: state.users.map(user => {
                     if (user.id === action.id) {

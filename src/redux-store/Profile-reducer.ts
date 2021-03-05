@@ -4,7 +4,7 @@ const ADD_POST = 'ADD_POST';
 const CHANGE_LIKES = 'CHANGE_LIKE';
 
 
-export const addPostAC = (postText: string | number | readonly string[] | undefined) => {
+export const addPostAC = (postText: string | number | readonly string[] | undefined)=> {
     return {
         type: ADD_POST,
         postText
@@ -19,17 +19,17 @@ export const changeLikesAC = (id: string, upOrDown: 'up' | 'down') => {
     }
 }
 
-type AddPostACType = {
+export type AddPostActionType = {
     type: typeof ADD_POST
     postText: string
 }
-type ChangeLikesType = {
+type ChangeLikesActionType = {
     type: typeof CHANGE_LIKES
     id: string
     upOrDown: 'up' | 'down'
 }
 
-type ActionsType = AddPostACType | ChangeLikesType
+type ActionsType = AddPostActionType | ChangeLikesActionType
 
 
 export type ProfileReducerStateType = {
@@ -77,7 +77,6 @@ export const profileReducer = (state: ProfileReducerStateType = initialState, ac
                 id: v1()
             }
             newState.posts.push(newPost)
-            console.log(newState)
             return newState;
         }
         case (CHANGE_LIKES) : {
