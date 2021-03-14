@@ -7,6 +7,25 @@ import Paginator from '../Common/Paginator/Paginator';
 import Preloader from '../Common/Preloader/Preloader';
 
 function Users(props: UsersPropsType) {
+    const users = props.users.map(user => {
+        const onFollowHandler = () => {
+            props.followUser(user.id)
+        }
+        const onUnFollowHandler = () => {
+            props.unfollowUser(user.id)
+        }
+        return <div className={styles.userWrapper} key={user.id}>
+            <img src={user.photos.small ? user.photos.small : picture} alt={''}/>
+            <div className={styles.userName}>{user.name}</div>
+            <div>{user.status}</div>
+            <div>{user.followed}</div>
+            {user.followed
+                ? <PurpleButton text={'unfollow'}
+                                onButtonClick={onUnFollowHandler}/>
+                : <PurpleButton text={'follow'}
+                                onButtonClick={onFollowHandler}/>}
+        </div>
+    })
 
     return (
         <>
@@ -15,27 +34,14 @@ function Users(props: UsersPropsType) {
                            currentPage={props.currentPage}
                            portionSize={props.portionSize}
                            pagesPortionSize={10}
-                           onPageClickHandler={props.onPageClickHandler}/>
+                           onPageClickHandler={props.onPageClickHandler}
+                           className={styles.paginator}
+                />
 
                 {props.isLoading
                     ? <Preloader/>
-                    : props.users.map(user => {
-                        const onFollowHandler = () => {
-                            props.followUser(user.id)
-                        }
-                        const onUnFollowHandler = () => {
-                            props.unfollowUser(user.id)
-                        }
-                        return <div className={styles.userWrapper} key={user.id}>
-                            <img src={user.photos.small ? user.photos.small : picture} alt={''}/>
-                            <div>{user.name}</div>
-                            <div>{user.status}</div>
-                            <div>{user.followed}</div>
-                            {user.followed
-                                ? <PurpleButton text={'unfollow'} onButtonClick={onUnFollowHandler}/>
-                                : <PurpleButton text={'follow'} onButtonClick={onFollowHandler}/>}
-                        </div>
-                    })}
+                    : <div className={styles.usersBlockWrapper}>{users}</div>
+                }
             </div>
         </>
     )

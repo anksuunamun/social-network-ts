@@ -5,12 +5,13 @@ type PurpleButtonPropsType = {
     text: string
     onButtonClick: () => void
     small?: boolean
+    className?: string
 }
 
 const PurpleButton: React.FC<PurpleButtonPropsType> = (props: PurpleButtonPropsType) => {
     return (
         <>
-            <button className={`${styles.buttonWrapper} ${props.small ? styles.small : ''}`}
+            <button className={`${styles.buttonWrapper} ${props.small ? styles.small : ''} ${props.className}`}
                     onClick={props.onButtonClick}>{props.text}</button>
         </>
     )

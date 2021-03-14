@@ -1,6 +1,5 @@
 #root {
     width: 100%;
-
 }
 
 body {
@@ -30,7 +29,8 @@ body {
     /*border: 1px solid #73605b;*/
     border-radius: 0.25rem;
     color: white;
-    max-height: 800px;
+    /*max-height: 800px;*/
+    min-height: 700px;
     padding: 20px;
 }
 

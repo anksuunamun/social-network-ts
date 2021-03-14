@@ -2,6 +2,7 @@
     display: inline-block;
     padding: 5px;
     font-size: 1.1em;
+    margin: 0 2px;
 }
 
 .pageDigit:hover {
@@ -13,4 +14,12 @@
     font-weight: bold;
     font-size: 1.2em;
     color: #ae54d8;
+}
+
+.nextButton {
+    margin-left: 10px;
+}
+
+.backButton {
+    margin-right: 10px;
 }

@@ -29,7 +29,7 @@ const initialState: UsersReducerInitialStateType = {
     users: [],
     totalCount: 0,
     currentPage: 1,
-    portionSize: 5,
+    portionSize: 9,
     isLoading: true
 }
 

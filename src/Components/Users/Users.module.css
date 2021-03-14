@@ -1,11 +1,40 @@
 .usersWrapper {
+    text-align: center;
+    height: 920px;
+}
 
+.usersBlockWrapper {
+    display: grid;
+    grid-template-columns:repeat(auto-fill, 220px);
+    column-gap: 20px;
+    row-gap: 30px;
+    grid-auto-rows: 270px;
+    margin-top: 10px;
+    justify-content: center;
 }
 
 .userWrapper {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #473B38;
+    padding: 15px;
+    border-radius: 0.25rem;
+    border: 1px solid #73605b;
 }
 
 .userWrapper img {
     width: 150px;
+}
+
+.paginator {
+
+}
+
+.userName {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ae54d8;
+    font-size: 1.1em;
 }

@@ -9,6 +9,7 @@ type PaginatorPropsType = {
     portionSize: number
     pagesPortionSize: number
     onPageClickHandler: (item: number) => void
+    className?: string
 }
 
 const Paginator: React.FC<PaginatorPropsType> = (props) => {
@@ -50,10 +51,11 @@ const Paginator: React.FC<PaginatorPropsType> = (props) => {
     }
 
     return (
-        <div>
+        <div className={props.className}>
             {leftBorder !== 1
                 ? <PurpleButton text={'back'}
                                 small
+                                className={styles.backButton}
                                 onButtonClick={() => {
                                     onBackButtonClick()
                                 }}/>
@@ -66,6 +68,7 @@ const Paginator: React.FC<PaginatorPropsType> = (props) => {
             {rightBorder !== pagesCount
                 ? <PurpleButton text={'next'}
                                 small
+                                className={styles.nextButton}
                                 onButtonClick={() => {
                                     onNextButtonClick()
                                 }}/>
