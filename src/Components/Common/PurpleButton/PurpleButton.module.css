@@ -1,4 +1,4 @@
-.authButtonWrapper {
+.buttonWrapper {
     width: 110px;
     background-color: #7e26a6;
     border: none;
@@ -12,7 +12,16 @@
     height: 35px;
 }
 
-.authButtonWrapper:hover {
+.buttonWrapper:hover {
     background-color: #ae54d8;
     cursor: pointer;
+}
+.buttonWrapper:focus {
+    outline: none;
+}
+
+.small {
+    width: 55px;
+    height: 25px;
+    font-size: 14px;
 }
