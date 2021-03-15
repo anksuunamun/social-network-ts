@@ -32,8 +32,8 @@ function Post(props: PostPropsType) {
                     />
                 </svg>
             </div>
-            <div>
-                <div>{props.text}</div>
+            <div className={styles.postWrapper}>
+                <div className={styles.postText}>{props.text}</div>
                 <div>{props.likes} likes</div>
             </div>
         </div>

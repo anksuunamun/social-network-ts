@@ -8,8 +8,6 @@
 
 .userImg {
     width: 30px;
-
-
 }
 
 .arrowsWrapper {
@@ -36,5 +34,11 @@
     fill: #ae54d8;
 }
 
+.postText {
 
+}
 
+.postWrapper {
+    overflow: auto;
+    white-space: nowrap;
+}
