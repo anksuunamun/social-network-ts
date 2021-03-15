@@ -2,7 +2,14 @@ import React from 'react';
 import {Dispatch} from 'redux';
 import Profile from './Profile';
 import {connect} from 'react-redux';
-import {addPostAC, changeLikesAC, PostsType, setProfileAC, UserType} from '../../redux-store/Profile-reducer';
+import {
+    addPostAC,
+    changeLikesAC,
+    PostsType,
+    setIsFetchingAC,
+    setProfileAC,
+    UserType
+} from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import axios, {AxiosResponse} from 'axios';
@@ -22,10 +29,11 @@ class ProfileContainer extends React.Component<PropsType> {
         if (!userId) {
             userId = '7870'
         }
+        this.props.setIsFetching(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then((response: AxiosResponse) => {
                     this.props.setProfile(response.data);
-                    console.log(response)
+                    this.props.setIsFetching(false);
                 }
             )
     }
@@ -36,7 +44,9 @@ class ProfileContainer extends React.Component<PropsType> {
                      addPostAC={this.props.addPostAC}
                      changeLikesAC={this.props.changeLikesAC}
                      user={this.props.user}
-                     setProfile={this.props.setProfile}/>
+                     setProfile={this.props.setProfile}
+                     isFetching={this.props.isFetching}
+                     setIsFetching={this.props.setIsFetching}/>
         )
     }
 }
@@ -46,11 +56,13 @@ type MapDispatchToPropsType = {
     addPostAC: (postText: string) => void
     changeLikesAC: (id: string, upOrDown: 'up' | 'down') => void
     setProfile: (user: UserType) => void
+    setIsFetching: (isFetching: boolean) => void
 }
 
 type MapStateToPropsType = {
     'posts': Array<PostsType>,
     'user': UserType | null
+    'isFetching': boolean
 }
 
 export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType
@@ -58,7 +70,8 @@ export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         'posts': state.profilePage.posts,
-        'user': state.profilePage.user
+        'user': state.profilePage.user,
+        'isFetching': state.profilePage.isFetching
     }
 }
 
@@ -66,7 +79,8 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         addPostAC: (postText: string) => dispatch(addPostAC(postText)),
         changeLikesAC: (id: string, upOrDown: 'up' | 'down') => dispatch(changeLikesAC(id, upOrDown)),
-        setProfile: (user: UserType) => dispatch(setProfileAC(user))
+        setProfile: (user: UserType) => dispatch(setProfileAC(user)),
+        setIsFetching: (isFetching: boolean) => dispatch(setIsFetchingAC(isFetching)),
     }
 }
 

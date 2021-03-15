@@ -1,14 +1,15 @@
 .profileInfoWrapper {
-
     display: grid;
     grid-template-columns: 1fr 5fr;
     column-gap: 60px;
-
 }
 
 .profileInfoImg {
     border: 1px solid #73605b;
     border-radius: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .profileInfoImg img {

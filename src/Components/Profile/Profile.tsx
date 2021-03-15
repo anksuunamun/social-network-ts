@@ -8,12 +8,14 @@ import Preloader from '../Common/Preloader/Preloader';
 function Profile(props: ProfilePropsType) {
     return (
         <>
-            {props.user ? <div className={styles.profileWrapper + ' contentWrapper'}>
-                <ProfileInfo user={props.user}/>
-                <PostsBlock posts={props.posts}
-                            addPost={props.addPostAC}
-                            changeLikes={props.changeLikesAC}/>
-            </div> : <Preloader/>}
+            {props.isFetching
+                ? <Preloader/>
+                : <div className={styles.profileWrapper + ' contentWrapper'}>
+                    <ProfileInfo user={props.user}/>
+                    <PostsBlock posts={props.posts}
+                                addPost={props.addPostAC}
+                                changeLikes={props.changeLikesAC}/>
+                </div>}
         </>
     )
 }
