@@ -13,7 +13,8 @@ import {
 } from '../../redux-store/Users-reducer';
 import {connect} from 'react-redux';
 
-const axios = require('axios');
+// const axios = require('axios');
+import axios from 'axios';
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 type UsersContainerStateType = {}
@@ -71,7 +72,6 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersConta
                     this.props.setUsers(response.data.items)
                     this.props.setTotalCount(response.data.totalCount)
                     this.props.setIsLoading(false)
-                    console.log(response.data)
                 }
             )
     }

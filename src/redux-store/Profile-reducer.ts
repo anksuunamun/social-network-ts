@@ -2,6 +2,8 @@ import {v1} from 'uuid';
 
 const ADD_POST = 'ADD_POST';
 const CHANGE_LIKES = 'CHANGE_LIKE';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_IS_FETCHING = 'SET_IS_FETCHING';
 
 
 export const addPostAC = (postText: string): AddPostActionType => {
@@ -18,6 +20,17 @@ export const changeLikesAC = (id: string, upOrDown: 'up' | 'down'): ChangeLikesA
         upOrDown,
     }
 }
+export const setProfileAC = (payload: UserType): SetUserProfileActionType => {
+    return {
+        type: SET_USER_PROFILE,
+        payload
+    }
+}
+export const setIsFetchingAC = (isFetching: boolean): SetIsFetchingActionType => {
+    return {
+        type: SET_IS_FETCHING, isFetching
+    }
+}
 
 export type AddPostActionType = {
     type: typeof ADD_POST
@@ -28,12 +41,46 @@ export type ChangeLikesActionType = {
     id: string
     upOrDown: 'up' | 'down'
 }
+export type SetUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    payload: UserType
+}
+type SetIsFetchingActionType = {
+    type: typeof SET_IS_FETCHING
+    isFetching: boolean
+}
 
-type ActionsType = AddPostActionType | ChangeLikesActionType
+type ActionsType = AddPostActionType
+    | ChangeLikesActionType
+    | SetUserProfileActionType
+    | SetIsFetchingActionType
 
+export type UserType = {
+    aboutMe: string | null
+    contacts: {
+        facebook: string | null
+        github: string | null
+        instagram: string | null
+        mainLink: string | null
+        twitter: string | null
+        vk: string | null
+        website: string | null
+        youtube: string | null
+    }
+    fullName: string | null
+    lookingForAJob: boolean
+    lookingForAJobDescription: string | null
+    photos: {
+        large: string | null
+        small: string | null
+    }
+    userId: number
+}
 
 export type ProfileReducerStateType = {
     posts: Array<PostsType>
+    user: null | UserType
+    isFetching: boolean
 }
 
 export type PostsType = {
@@ -64,6 +111,8 @@ const initialState: ProfileReducerStateType = {
             'id': v1(),
         }
     ],
+    user: null,
+    isFetching: true
 }
 
 
@@ -93,6 +142,15 @@ export const profileReducer = (state: ProfileReducerStateType = initialState, ac
             })
 
             return newState;
+        }
+        case (SET_USER_PROFILE): {
+            return {
+                ...state,
+                user: {...action.payload},
+            }
+        }
+        case (SET_IS_FETCHING): {
+            return {...state, isFetching: action.isFetching}
         }
         default: {
             return state;

@@ -2,8 +2,13 @@ import React from 'react';
 import styles from './ProfileInfo.module.css'
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import picture from '../../../Assets/Images/picture.png'
+import {UserType} from '../../../redux-store/Profile-reducer';
 
-function ProfileInfo() {
+type ProfileInfoPropsType = {
+    user: UserType | null
+}
+
+function ProfileInfo(props: ProfileInfoPropsType) {
     return (
         <div className={styles.profileInfoWrapper}>
             <div className={styles.profileInfoImg}>
@@ -11,11 +16,11 @@ function ProfileInfo() {
             </div>
 
             <div className={styles.textInfo}>
-                <div>Name</div>
+                <div>{props.user?.fullName || 'Name'}</div>
                 <ProfileStatus/>
-                <div>My Facebook: </div>
-                <div>My VK: </div>
-                <div>My email: </div>
+                <div>My Facebook:</div>
+                <div>My VK:</div>
+                <div>My email:</div>
             </div>
 
         </div>
