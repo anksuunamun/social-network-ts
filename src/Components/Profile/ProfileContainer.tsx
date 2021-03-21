@@ -26,9 +26,11 @@ type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerAjaxProps
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId;
+
         if (!userId) {
             userId = '7870'
         }
+        console.log(userId)
         this.props.setIsFetching(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then((response: AxiosResponse) => {
@@ -40,13 +42,7 @@ class ProfileContainer extends React.Component<PropsType> {
 
     render() {
         return (
-            <Profile posts={this.props.posts}
-                     addPostAC={this.props.addPostAC}
-                     changeLikesAC={this.props.changeLikesAC}
-                     user={this.props.user}
-                     setProfile={this.props.setProfile}
-                     isFetching={this.props.isFetching}
-                     setIsFetching={this.props.setIsFetching}/>
+            <Profile {...this.props}/>
         )
     }
 }
@@ -85,5 +81,5 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer));
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer))
 //благодаря withRouter в пропсы компонента приходят доп.пропсы, match, location, history, staticContext
