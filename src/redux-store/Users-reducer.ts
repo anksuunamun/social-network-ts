@@ -4,6 +4,7 @@ const UNFOLLOW_USER = 'UNFOLLOW_USER';
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
 const SET_IS_LOADING = 'SET_IS_LOADING';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_DISABLED_BUTTON = 'SET_DISABLED_BUTTON';
 
 export type UserType = {
     followed: boolean
@@ -23,6 +24,7 @@ export type UsersReducerInitialStateType = {
     currentPage: number
     portionSize: number
     isLoading: boolean
+    disabledButtons: Array<number>
 }
 
 const initialState: UsersReducerInitialStateType = {
@@ -30,7 +32,8 @@ const initialState: UsersReducerInitialStateType = {
     totalCount: 0,
     currentPage: 1,
     portionSize: 9,
-    isLoading: true
+    isLoading: true,
+    disabledButtons: [],
 }
 
 
@@ -57,6 +60,11 @@ type UnFollowUserActionType = {
 type SetCurrentPageActionType = {
     type: typeof SET_CURRENT_PAGE
     currentPage: number
+}
+type SetDisabledButtonActionType = {
+    type: typeof SET_DISABLED_BUTTON,
+    id: number
+    isFetching: boolean
 }
 export const setUsersAC = (users: Array<UserType>): SetUsersActionType => {
     return {
@@ -90,6 +98,12 @@ export const SetCurrentPageAC = (currentPage: number): SetCurrentPageActionType 
         type: SET_CURRENT_PAGE, currentPage
     }
 }
+export const setDisabledButtonAC = (id: number, isFetching: boolean): SetDisabledButtonActionType => {
+    return {
+        type: SET_DISABLED_BUTTON,
+        id, isFetching
+    }
+}
 type ActionType =
     SetUsersActionType
     | FollowUserActionType
@@ -97,6 +111,7 @@ type ActionType =
     | SetTotalCountActionType
     | SetIsLoadingActionType
     | SetCurrentPageActionType
+    | SetDisabledButtonActionType
 
 export const usersReducer = (state: UsersReducerInitialStateType = initialState, action: ActionType): UsersReducerInitialStateType => {
     switch (action.type) {
@@ -131,6 +146,21 @@ export const usersReducer = (state: UsersReducerInitialStateType = initialState,
         }
         case (SET_CURRENT_PAGE): {
             return {...state, currentPage: action.currentPage}
+        }
+        case (SET_DISABLED_BUTTON): {
+            let ids: Array<number>;
+            if (state.disabledButtons.some(id => id === action.id)) {
+                ids = state.disabledButtons.filter(id => id !== action.id)
+            } else {
+                ids = [...state.disabledButtons, action.id]
+            }
+            return {...state, disabledButtons: ids};
+            // return {
+            //     ...state,
+            //     disabledButtons: action.isFetching
+            //         ? [...state.disabledButtons, action.id]
+            //         : state.disabledButtons.filter(id => id !== action.id)
+            // }
         }
         default:
             return state

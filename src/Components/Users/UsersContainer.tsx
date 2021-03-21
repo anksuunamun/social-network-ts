@@ -4,7 +4,7 @@ import {AxiosResponse} from 'axios';
 import {AppStateType} from '../../redux-store/redux-store';
 import {Dispatch} from 'redux';
 import {
-    FollowUserAC, SetCurrentPageAC,
+    FollowUserAC, SetCurrentPageAC, setDisabledButtonAC,
     setIsLoadingAC,
     setTotalCountAC,
     setUsersAC,
@@ -30,6 +30,7 @@ type MapDispatchToPropsType = {
     setTotalCount: (value: number) => void
     setIsLoading: (value: boolean) => void
     setCurrentPage: (page: number) => void
+    setDisabledButton: (id: number, isFetching: boolean) => void
 }
 
 type MapStateToPropsType = {
@@ -38,6 +39,7 @@ type MapStateToPropsType = {
     currentPage: number
     portionSize: number
     isLoading: boolean
+    disabledButtons: number[]
 }
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
@@ -46,6 +48,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         'currentPage': state.usersPage.currentPage,
         'portionSize': state.usersPage.portionSize,
         'isLoading': state.usersPage.isLoading,
+        'disabledButtons': state.usersPage.disabledButtons,
     }
 }
 
@@ -57,6 +60,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         setTotalCount: (totalCount: number) => dispatch(setTotalCountAC(totalCount)),
         setIsLoading: (isLoading: boolean) => dispatch(setIsLoadingAC(isLoading)),
         setCurrentPage: (currentPage: number) => dispatch(SetCurrentPageAC(currentPage)),
+        setDisabledButton: (id: number, isFetching: boolean) => dispatch(setDisabledButtonAC(id, isFetching))
     }
 }
 
@@ -67,11 +71,17 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersConta
     // }
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.portionSize}&page=${this.props.currentPage}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.portionSize}&page=${this.props.currentPage}`, {
+                withCredentials: true,
+                headers: {
+                    'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
+                }
+            }
+        )
             .then((response: AxiosResponse) => {
-                    this.props.setUsers(response.data.items)
-                    this.props.setTotalCount(response.data.totalCount)
-                    this.props.setIsLoading(false)
+                    this.props.setUsers(response.data.items);
+                    this.props.setTotalCount(response.data.totalCount);
+                    this.props.setIsLoading(false);
                 }
             )
     }
@@ -79,11 +89,15 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersConta
     onPageClickHandler = (page: number) => {
         this.props.setIsLoading(true);
         this.props.setCurrentPage(page);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.portionSize}&page=${page}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.portionSize}&page=${page}`, {
+            withCredentials: true,
+            headers: {
+                'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533'
+            }
+        })
             .then((response: AxiosResponse) => {
-                    this.props.setUsers(response.data.items)
-                    this.props.setIsLoading(false)
-                    console.log(response.data)
+                    this.props.setUsers(response.data.items);
+                    this.props.setIsLoading(false);
                 }
             )
     }
@@ -101,6 +115,8 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersConta
                    isLoading={this.props.isLoading}
                    setIsLoading={this.props.setIsLoading}
                    setCurrentPage={this.props.setCurrentPage}
+                   disabledButtons={this.props.disabledButtons}
+                   setDisabledButton={this.props.setDisabledButton}
                    onPageClickHandler={this.onPageClickHandler}
             />
         )
