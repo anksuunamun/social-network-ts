@@ -24,13 +24,12 @@ type PathParamsType = {
 type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerAjaxPropsType & ProfileContainerAjaxStateType
 
 class ProfileContainer extends React.Component<PropsType> {
-    componentDidMount() {
-        let userId = this.props.match.params.userId;
 
+    refreshProfile() {
+        let userId = this.props.match.params.userId;
         if (!userId) {
             userId = '7870'
         }
-        console.log(userId)
         this.props.setIsFetching(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then((response: AxiosResponse) => {
@@ -39,6 +38,17 @@ class ProfileContainer extends React.Component<PropsType> {
                 }
             )
     }
+
+    componentDidMount() {
+        this.refreshProfile();
+    }
+
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (prevProps.match.params.userId !== this.props.match.params.userId) {
+            this.refreshProfile();
+        }
+    }
+
 
     render() {
         return (
