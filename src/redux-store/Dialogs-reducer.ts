@@ -34,7 +34,7 @@ const initialState: DialogsReducerStateType = {
             'id': v1(),
         },
         {
-            'userName': 'Andrew',
+            'userName': 'Anna',
             'id': v1(),
         },
         {

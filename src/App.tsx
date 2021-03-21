@@ -19,7 +19,6 @@ function App() {
             <Route path={'/users'} render={() => <UsersContainer/>}/>
             <Route path={'/news'} render={() => <NewsContainer/>}/>
             <Route path={'/settings'} render={() => <SettingsContainer/>}/>
-
         </div>
     );
 }

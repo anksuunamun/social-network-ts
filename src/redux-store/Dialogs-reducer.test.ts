@@ -1,5 +1,5 @@
 import {v1} from 'uuid';
-import {addNewMessageAC, dialogsReducer, DialogsReducerStateType} from './Dialogs-reduser';
+import {addNewMessageAC, dialogsReducer, DialogsReducerStateType} from './Dialogs-reducer';
 
 
 test('correct message should be added', () => {
