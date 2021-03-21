@@ -16,8 +16,18 @@
     background-color: #ae54d8;
     cursor: pointer;
 }
+
 .buttonWrapper:focus {
     outline: none;
+}
+
+.buttonWrapper:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.buttonWrapper:disabled:hover {
+    background-color: #7e26a6;
 }
 
 .small {

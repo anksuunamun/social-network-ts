@@ -6,13 +6,15 @@ type PurpleButtonPropsType = {
     onButtonClick: () => void
     small?: boolean
     className?: string
+    disabled?: boolean
 }
 
 const PurpleButton: React.FC<PurpleButtonPropsType> = (props: PurpleButtonPropsType) => {
     return (
         <>
             <button className={`${styles.buttonWrapper} ${props.small ? styles.small : ''} ${props.className}`}
-                    onClick={props.onButtonClick}>{props.text}</button>
+                    onClick={props.onButtonClick} disabled={props.disabled}>{props.text}
+            </button>
         </>
     )
 }
