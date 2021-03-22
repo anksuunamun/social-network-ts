@@ -7,7 +7,7 @@ import {
     changeLikesAC,
     PostsType,
     setIsFetchingAC,
-    setProfileAC,
+    setProfileAC, setUserPhotoAC,
     UserType
 } from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
@@ -31,12 +31,16 @@ class ProfileContainer extends React.Component<PropsType> {
             userId = '7870'
         }
         this.props.setIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then((response: AxiosResponse) => {
-                    this.props.setProfile(response.data);
-                    this.props.setIsFetching(false);
-                }
-            )
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`, {
+            withCredentials: true,
+            headers: {
+                'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
+            }
+        }).then((response: AxiosResponse) => {
+                this.props.setProfile(response.data);
+                this.props.setIsFetching(false);
+            }
+        )
     }
 
     componentDidMount() {
@@ -63,12 +67,14 @@ type MapDispatchToPropsType = {
     changeLikesAC: (id: string, upOrDown: 'up' | 'down') => void
     setProfile: (user: UserType) => void
     setIsFetching: (isFetching: boolean) => void
+    setUserPhoto: (photo: string) => void
 }
 
 type MapStateToPropsType = {
-    'posts': Array<PostsType>,
+    'posts': Array<PostsType>
     'user': UserType | null
     'isFetching': boolean
+    'id': number | null
 }
 
 export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType
@@ -77,7 +83,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         'posts': state.profilePage.posts,
         'user': state.profilePage.user,
-        'isFetching': state.profilePage.isFetching
+        'isFetching': state.profilePage.isFetching,
+        'id': state.auth.id
     }
 }
 
@@ -87,6 +94,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         changeLikesAC: (id: string, upOrDown: 'up' | 'down') => dispatch(changeLikesAC(id, upOrDown)),
         setProfile: (user: UserType) => dispatch(setProfileAC(user)),
         setIsFetching: (isFetching: boolean) => dispatch(setIsFetchingAC(isFetching)),
+        setUserPhoto: (photo: string) => dispatch(setUserPhotoAC(photo)),
     }
 }
 

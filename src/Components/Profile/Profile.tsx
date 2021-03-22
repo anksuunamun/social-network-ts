@@ -11,7 +11,9 @@ function Profile(props: ProfilePropsType) {
             {props.isFetching
                 ? <Preloader/>
                 : <div className={styles.profileWrapper + ' contentWrapper'}>
-                    <ProfileInfo user={props.user}/>
+                    <ProfileInfo user={props.user}
+                                 setUserPhoto={props.setUserPhoto}
+                                 userId={props.id}/>
                     <PostsBlock posts={props.posts}
                                 addPost={props.addPostAC}
                                 changeLikes={props.changeLikesAC}/>

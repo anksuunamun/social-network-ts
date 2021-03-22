@@ -49,6 +49,7 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
                     let {id, login, email} = response.data.data;
                     this.props.setUserAuth(id, login, email);
                     this.props.setIsFetching(false);
+
                 }
             }
         )

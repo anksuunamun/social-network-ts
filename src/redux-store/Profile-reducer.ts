@@ -4,6 +4,7 @@ const ADD_POST = 'ADD_POST';
 const CHANGE_LIKES = 'CHANGE_LIKE';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
+const SET_USER_PHOTOS = 'SET_USER_PHOTOS';
 
 
 export const addPostAC = (postText: string): AddPostActionType => {
@@ -31,6 +32,13 @@ export const setIsFetchingAC = (isFetching: boolean): SetIsFetchingActionType =>
         type: SET_IS_FETCHING, isFetching
     }
 }
+export const setUserPhotoAC = (photo: string): SetUserPhotosActionType => {
+    return {
+        type: SET_USER_PHOTOS,
+        photo
+    }
+}
+
 
 export type AddPostActionType = {
     type: typeof ADD_POST
@@ -49,11 +57,16 @@ type SetIsFetchingActionType = {
     type: typeof SET_IS_FETCHING
     isFetching: boolean
 }
+type SetUserPhotosActionType = {
+    type: typeof SET_USER_PHOTOS,
+    photo: string
+}
 
 type ActionsType = AddPostActionType
     | ChangeLikesActionType
     | SetUserProfileActionType
     | SetIsFetchingActionType
+    | SetUserPhotosActionType
 
 export type UserType = {
     aboutMe: string | null
@@ -151,6 +164,17 @@ export const profileReducer = (state: ProfileReducerStateType = initialState, ac
         }
         case (SET_IS_FETCHING): {
             return {...state, isFetching: action.isFetching}
+        }
+        case (SET_USER_PHOTOS) : {
+            let updatedUser = {
+                ...state.user, photos: {
+                    small: action.photo,
+                    large: action.photo
+                }
+            } as UserType
+            return {
+                ...state, user: updatedUser
+            }
         }
         default: {
             return state;

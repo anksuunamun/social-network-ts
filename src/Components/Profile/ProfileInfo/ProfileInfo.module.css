@@ -10,10 +10,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: 170px;
 }
 
 .profileInfoImg img {
-    width: 140px;
+    width: 170px;
+    border-radius: 0.25rem;
 }
 
 .textInfo {
@@ -22,5 +24,15 @@
 }
 
 .textInfo > div:first-child {
-   font-size: 1.4em;
+    font-size: 1.4em;
+}
+
+.profilePhoto {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profilePhoto input {
+    display: none;
 }

@@ -21,7 +21,6 @@ function Header(props: HeaderPropsType) {
                 || <NavLink to={'/login'}
                             className={styles.authButtonWrapper}>Log in</NavLink>}
             </div>
-            <input type="file" id="profile-photo"/>
         </div>
     )
 }
