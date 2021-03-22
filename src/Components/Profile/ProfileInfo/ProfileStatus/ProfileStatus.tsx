@@ -1,11 +1,14 @@
 import React from 'react';
 import styles from './ProfileStatus.module.css';
 
+type ProfileStatusPropsType = {
+    userStatus: string
+}
 
-function ProfileStatus() {
+function ProfileStatus(props: ProfileStatusPropsType) {
     return (
         <div className={styles.statusWrapper}>
-            Status
+            {props.userStatus || 'Status'}
         </div>
     )
 }

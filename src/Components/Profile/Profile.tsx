@@ -13,7 +13,8 @@ function Profile(props: ProfilePropsType) {
                 : <div className={styles.profileWrapper + ' contentWrapper'}>
                     <ProfileInfo user={props.user}
                                  setUserPhoto={props.setUserPhoto}
-                                 userId={props.id}/>
+                                 userId={props.id}
+                                 userStatus={props.userStatus}/>
                     <PostsBlock posts={props.posts}
                                 addPost={props.addPostAC}
                                 changeLikes={props.changeLikesAC}/>

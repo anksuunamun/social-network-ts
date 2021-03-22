@@ -7,7 +7,7 @@ import {
     changeLikesAC,
     PostsType,
     setIsFetchingAC,
-    setProfileAC, setUserPhotoAC,
+    setProfileAC, setUserPhotoAC, setUserStatusAC,
     UserType
 } from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
@@ -38,6 +38,17 @@ class ProfileContainer extends React.Component<PropsType> {
             }
         }).then((response: AxiosResponse) => {
                 this.props.setProfile(response.data);
+                console.log(response.data)
+                axios.get(`https://social-network.samuraijs.com/api/1.0/profile/status/${response.data.userId}`, {
+                    withCredentials: true,
+                    headers: {
+                        'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
+                    }
+                }).then(response => {
+                    this.props.setUserStatus(response.data);
+                    console.log(response.data)
+                })
+
                 this.props.setIsFetching(false);
             }
         )
@@ -68,6 +79,7 @@ type MapDispatchToPropsType = {
     setProfile: (user: UserType) => void
     setIsFetching: (isFetching: boolean) => void
     setUserPhoto: (photo: string) => void
+    setUserStatus: (status: string) => void
 }
 
 type MapStateToPropsType = {
@@ -75,6 +87,7 @@ type MapStateToPropsType = {
     'user': UserType | null
     'isFetching': boolean
     'id': number | null
+    'userStatus': string
 }
 
 export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType
@@ -84,7 +97,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         'posts': state.profilePage.posts,
         'user': state.profilePage.user,
         'isFetching': state.profilePage.isFetching,
-        'id': state.auth.id
+        'id': state.auth.id,
+        'userStatus': state.profilePage.userStatus,
     }
 }
 
@@ -95,6 +109,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         setProfile: (user: UserType) => dispatch(setProfileAC(user)),
         setIsFetching: (isFetching: boolean) => dispatch(setIsFetchingAC(isFetching)),
         setUserPhoto: (photo: string) => dispatch(setUserPhotoAC(photo)),
+        setUserStatus: (status: string) => dispatch(setUserStatusAC(status)),
     }
 }
 

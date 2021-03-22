@@ -49,11 +49,16 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
                     let {id, login, email} = response.data.data;
                     this.props.setUserAuth(id, login, email);
                     this.props.setIsFetching(false);
-
                 }
             }
         )
-
+    //
+        //     axios.put(`https://social-network.samuraijs.com/api/1.0/profile/status`, {status: 'Всё уже получается! 🚀'}, {
+        //         withCredentials: true,
+        //         headers: {
+        //             'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
+        //         }
+        //     }).then(response=> console.log(response))
     }
 
     render() {

@@ -5,6 +5,7 @@ const CHANGE_LIKES = 'CHANGE_LIKE';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
 const SET_USER_PHOTOS = 'SET_USER_PHOTOS';
+const SET_USER_STATUS = 'SET_USER_STATUS';
 
 
 export const addPostAC = (postText: string): AddPostActionType => {
@@ -38,6 +39,12 @@ export const setUserPhotoAC = (photo: string): SetUserPhotosActionType => {
         photo
     }
 }
+export const setUserStatusAC = (status: string): SetUserStatusActionType => {
+    return {
+        type: SET_USER_STATUS,
+        status
+    }
+}
 
 
 export type AddPostActionType = {
@@ -62,11 +69,17 @@ type SetUserPhotosActionType = {
     photo: string
 }
 
+type SetUserStatusActionType = {
+    type: typeof SET_USER_STATUS,
+    status: string
+}
+
 type ActionsType = AddPostActionType
     | ChangeLikesActionType
     | SetUserProfileActionType
     | SetIsFetchingActionType
     | SetUserPhotosActionType
+    | SetUserStatusActionType
 
 export type UserType = {
     aboutMe: string | null
@@ -94,6 +107,7 @@ export type ProfileReducerStateType = {
     posts: Array<PostsType>
     user: null | UserType
     isFetching: boolean
+    userStatus: string
 }
 
 export type PostsType = {
@@ -125,7 +139,8 @@ const initialState: ProfileReducerStateType = {
         }
     ],
     user: null,
-    isFetching: true
+    isFetching: true,
+    userStatus: '',
 }
 
 
@@ -175,6 +190,9 @@ export const profileReducer = (state: ProfileReducerStateType = initialState, ac
             return {
                 ...state, user: updatedUser
             }
+        }
+        case (SET_USER_STATUS) : {
+            return {...state, userStatus: action.status}
         }
         default: {
             return state;
