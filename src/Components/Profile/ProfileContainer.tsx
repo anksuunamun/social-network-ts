@@ -12,7 +12,7 @@ import {
 } from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import axios, {AxiosResponse} from 'axios';
+import {profileAPI} from '../../data-access-layer/api';
 
 type ProfileContainerAjaxPropsType = MapDispatchToPropsType & MapStateToPropsType
 type ProfileContainerAjaxStateType = {}
@@ -31,24 +31,11 @@ class ProfileContainer extends React.Component<PropsType> {
             userId = '7870'
         }
         this.props.setIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`, {
-            withCredentials: true,
-            headers: {
-                'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
-            }
-        }).then((response: AxiosResponse) => {
-                this.props.setProfile(response.data);
-                console.log(response.data)
-                axios.get(`https://social-network.samuraijs.com/api/1.0/profile/status/${response.data.userId}`, {
-                    withCredentials: true,
-                    headers: {
-                        'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
-                    }
-                }).then(response => {
-                    this.props.setUserStatus(response.data);
-                    console.log(response.data)
+        profileAPI.getUserProfile(+userId).then((response: UserType) => {
+                this.props.setProfile(response);
+                profileAPI.getUserStatus(response.userId).then(response => {
+                    this.props.setUserStatus(response);
                 })
-
                 this.props.setIsFetching(false);
             }
         )
@@ -64,14 +51,12 @@ class ProfileContainer extends React.Component<PropsType> {
         }
     }
 
-
     render() {
         return (
             <Profile {...this.props}/>
         )
     }
 }
-
 
 type MapDispatchToPropsType = {
     addPostAC: (postText: string) => void

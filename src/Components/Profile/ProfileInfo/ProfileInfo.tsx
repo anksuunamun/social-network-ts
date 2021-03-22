@@ -3,8 +3,8 @@ import styles from './ProfileInfo.module.css'
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import picture from '../../../Assets/Images/picture.png'
 import {UserType} from '../../../redux-store/Profile-reducer';
-import axios from 'axios';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
+import {profileAPI} from '../../../data-access-layer/api';
 
 type ProfileInfoPropsType = {
     user: UserType | null
@@ -20,16 +20,9 @@ function ProfileInfo(props: ProfileInfoPropsType) {
         if (file) {
             const formData = new FormData();
             formData.append('image', file);
-            axios.put(`https://social-network.samuraijs.com/api/1.0/profile/photo`, formData,
-                {
-                    withCredentials: true,
-                    headers: {
-                        'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }).then(response => {
-                    if (response.data.resultCode === 0) {
-                        props.setUserPhoto(response.data.data.photos.small);
+            profileAPI.updateProfilePhoto(formData).then(response => {
+                    if (response.resultCode === 0) {
+                        props.setUserPhoto(response.data.photos.small);
                     }
                 }
             )

@@ -1,6 +1,5 @@
 import React from 'react';
 import Users from './Users';
-import {AxiosResponse} from 'axios';
 import {AppStateType} from '../../redux-store/redux-store';
 import {Dispatch} from 'redux';
 import {
@@ -12,9 +11,8 @@ import {
     UserType
 } from '../../redux-store/Users-reducer';
 import {connect} from 'react-redux';
-
 // const axios = require('axios');
-import axios from 'axios';
+import {usersAPI} from '../../data-access-layer/api';
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 type UsersContainerStateType = {}
@@ -71,16 +69,10 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersConta
     // }
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.portionSize}&page=${this.props.currentPage}`, {
-                withCredentials: true,
-                headers: {
-                    'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
-                }
-            }
-        )
-            .then((response: AxiosResponse) => {
-                    this.props.setUsers(response.data.items);
-                    this.props.setTotalCount(response.data.totalCount);
+        usersAPI.getUsers(this.props.portionSize, this.props.currentPage)
+            .then((response) => {
+                    this.props.setUsers(response.items);
+                    this.props.setTotalCount(response.totalCount);
                     this.props.setIsLoading(false);
                 }
             )
@@ -89,14 +81,9 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersConta
     onPageClickHandler = (page: number) => {
         this.props.setIsLoading(true);
         this.props.setCurrentPage(page);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.portionSize}&page=${page}`, {
-            withCredentials: true,
-            headers: {
-                'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533'
-            }
-        })
-            .then((response: AxiosResponse) => {
-                    this.props.setUsers(response.data.items);
+        usersAPI.getUsers(this.props.portionSize, page)
+            .then((response) => {
+                    this.props.setUsers(response.items);
                     this.props.setIsLoading(false);
                 }
             )

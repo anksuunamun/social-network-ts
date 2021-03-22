@@ -1,11 +1,10 @@
 import React from 'react';
 import Header from './Header';
-import axios from 'axios';
 import {AppStateType} from '../../redux-store/redux-store';
 import {Dispatch} from 'redux';
 import {setIsFetching, setUserAuth} from '../../redux-store/auth-reducer';
 import {connect} from 'react-redux';
-import dva from '../../Assets/Images/146347464817597212.jpg';
+import {authAPI} from '../../data-access-layer/api';
 
 type MapStateToPropsType = {
     id: number | null
@@ -38,21 +37,16 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
         this.props.setIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true,
-            headers: {
-                'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
-            }
-        }).then(
+        authAPI.getAuth().then(
             response => {
-                if (response.data.resultCode === 0) {
-                    let {id, login, email} = response.data.data;
+                if (response.resultCode === 0) {
+                    let {id, login, email} = response.data;
                     this.props.setUserAuth(id, login, email);
                     this.props.setIsFetching(false);
                 }
             }
         )
-    //
+        //
         //     axios.put(`https://social-network.samuraijs.com/api/1.0/profile/status`, {status: 'Всё уже получается! 🚀'}, {
         //         withCredentials: true,
         //         headers: {
