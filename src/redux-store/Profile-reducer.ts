@@ -1,4 +1,7 @@
 import {v1} from 'uuid';
+import {profileAPI} from '../data-access-layer/api';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {AppStateType} from './redux-store';
 
 const ADD_POST = 'ADD_POST';
 const CHANGE_LIKES = 'CHANGE_LIKE';
@@ -14,6 +17,10 @@ export const addPostAC = (postText: string): AddPostActionType => {
         postText
     }
 }
+export type AddPostActionType = {
+    type: typeof ADD_POST
+    postText: string
+}
 
 export const changeLikesAC = (id: string, upOrDown: 'up' | 'down'): ChangeLikesActionType => {
     return {
@@ -22,22 +29,44 @@ export const changeLikesAC = (id: string, upOrDown: 'up' | 'down'): ChangeLikesA
         upOrDown,
     }
 }
+
+export type ChangeLikesActionType = {
+    type: typeof CHANGE_LIKES
+    id: string
+    upOrDown: 'up' | 'down'
+}
+
 export const setProfileAC = (payload: UserType): SetUserProfileActionType => {
     return {
         type: SET_USER_PROFILE,
         payload
     }
 }
+
+export type SetUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    payload: UserType
+}
 export const setIsFetchingAC = (isFetching: boolean): SetIsFetchingActionType => {
     return {
         type: SET_IS_FETCHING, isFetching
     }
+}
+
+type SetIsFetchingActionType = {
+    type: typeof SET_IS_FETCHING
+    isFetching: boolean
 }
 export const setUserPhotoAC = (photo: string): SetUserPhotosActionType => {
     return {
         type: SET_USER_PHOTOS,
         photo
     }
+}
+
+type SetUserPhotosActionType = {
+    type: typeof SET_USER_PHOTOS,
+    photo: string
 }
 export const setUserStatusAC = (status: string): SetUserStatusActionType => {
     return {
@@ -46,35 +75,48 @@ export const setUserStatusAC = (status: string): SetUserStatusActionType => {
     }
 }
 
-
-export type AddPostActionType = {
-    type: typeof ADD_POST
-    postText: string
-}
-export type ChangeLikesActionType = {
-    type: typeof CHANGE_LIKES
-    id: string
-    upOrDown: 'up' | 'down'
-}
-export type SetUserProfileActionType = {
-    type: typeof SET_USER_PROFILE
-    payload: UserType
-}
-type SetIsFetchingActionType = {
-    type: typeof SET_IS_FETCHING
-    isFetching: boolean
-}
-type SetUserPhotosActionType = {
-    type: typeof SET_USER_PHOTOS,
-    photo: string
-}
-
 type SetUserStatusActionType = {
     type: typeof SET_USER_STATUS,
     status: string
 }
+export type ThunkType = ThunkAction<Promise<void> | void, AppStateType, unknown, ActionsType>
 
-type ActionsType = AddPostActionType
+export const getUserProfileThunkAC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>, getState: () => AppStateType) => {
+        console.log('getUserProfileThunkAC works')
+        dispatch(setIsFetchingAC(true));
+        profileAPI.getUserProfile(userId)
+            .then((response) => {
+                dispatch(setProfileAC(response));
+                dispatch(setIsFetchingAC(false));
+            })
+            .catch(response => console.log(response));
+    }
+}
+
+
+export const getUserStatusThunkAC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>, getState: () => AppStateType) => {
+        console.log('getUserStatusThunkAC')
+        profileAPI.getUserStatus(userId)
+            .then(response => dispatch(setUserStatusAC(response)))
+            .catch(response => console.log(response));
+    }
+}
+
+export const updateProfilePhotoThunkAC = (formData: any) => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
+        profileAPI.updateProfilePhoto(formData)
+            .then(response => {
+                if (response.resultCode === 0) {
+                    dispatch(setUserPhotoAC(response.data.photos.small));
+                }
+            })
+            .catch(response => console.log(response));
+    }
+}
+
+export type ActionsType = AddPostActionType
     | ChangeLikesActionType
     | SetUserProfileActionType
     | SetIsFetchingActionType

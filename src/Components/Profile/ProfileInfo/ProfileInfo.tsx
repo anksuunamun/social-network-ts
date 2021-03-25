@@ -11,6 +11,7 @@ type ProfileInfoPropsType = {
     setUserPhoto: (photo: string) => void
     userId: number | null
     userStatus: string
+    updateProfilePhotoThunkAC: (formData: any) => void
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
@@ -20,12 +21,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
         if (file) {
             const formData = new FormData();
             formData.append('image', file);
-            profileAPI.updateProfilePhoto(formData).then(response => {
-                    if (response.resultCode === 0) {
-                        props.setUserPhoto(response.data.photos.small);
-                    }
-                }
-            )
+            props.updateProfilePhotoThunkAC(formData);
         }
         let newFileName = e.currentTarget.value.slice(12)
         setFileName(newFileName);

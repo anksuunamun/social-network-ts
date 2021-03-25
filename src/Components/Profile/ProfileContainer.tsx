@@ -4,15 +4,15 @@ import Profile from './Profile';
 import {connect} from 'react-redux';
 import {
     addPostAC,
-    changeLikesAC,
+    changeLikesAC, getUserProfileThunkAC, getUserStatusThunkAC,
     PostsType,
     setIsFetchingAC,
-    setProfileAC, setUserPhotoAC, setUserStatusAC,
-    UserType
+    setProfileAC, setUserPhotoAC, setUserStatusAC, updateProfilePhotoThunkAC, UserType
 } from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {profileAPI} from '../../data-access-layer/api';
+import {ThunkDispatch} from 'redux-thunk';
+import {ActionsType} from '../../redux-store/Profile-reducer'
 
 type ProfileContainerAjaxPropsType = MapDispatchToPropsType & MapStateToPropsType
 type ProfileContainerAjaxStateType = {}
@@ -30,15 +30,8 @@ class ProfileContainer extends React.Component<PropsType> {
         if (!userId) {
             userId = '7870'
         }
-        this.props.setIsFetching(true);
-        profileAPI.getUserProfile(+userId).then((response: UserType) => {
-                this.props.setProfile(response);
-                profileAPI.getUserStatus(response.userId).then(response => {
-                    this.props.setUserStatus(response);
-                })
-                this.props.setIsFetching(false);
-            }
-        )
+        this.props.getUserProfileThunkAC(+userId);
+        this.props.getUserStatusThunkAC(+userId);
     }
 
     componentDidMount() {
@@ -65,6 +58,9 @@ type MapDispatchToPropsType = {
     setIsFetching: (isFetching: boolean) => void
     setUserPhoto: (photo: string) => void
     setUserStatus: (status: string) => void
+    getUserProfileThunkAC: (userId: number) => void
+    getUserStatusThunkAC: (userId: number) => void
+    updateProfilePhotoThunkAC: (formData: any) => void
 }
 
 type MapStateToPropsType = {
@@ -87,7 +83,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unknown, ActionsType>): MapDispatchToPropsType => {
     return {
         addPostAC: (postText: string) => dispatch(addPostAC(postText)),
         changeLikesAC: (id: string, upOrDown: 'up' | 'down') => dispatch(changeLikesAC(id, upOrDown)),
@@ -95,6 +91,9 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         setIsFetching: (isFetching: boolean) => dispatch(setIsFetchingAC(isFetching)),
         setUserPhoto: (photo: string) => dispatch(setUserPhotoAC(photo)),
         setUserStatus: (status: string) => dispatch(setUserStatusAC(status)),
+        getUserProfileThunkAC: (userId: number) => dispatch(getUserProfileThunkAC(userId)),
+        getUserStatusThunkAC: (userId: number) => dispatch(getUserStatusThunkAC(userId)),
+        updateProfilePhotoThunkAC: (formData: any) => dispatch(updateProfilePhotoThunkAC(formData)),
     }
 }
 

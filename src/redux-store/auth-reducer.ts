@@ -1,3 +1,7 @@
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {AppStateType} from './redux-store';
+import {authAPI} from '../data-access-layer/api';
+
 const SET_AUTH_USER = 'SET_AUTH_USER';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
 
@@ -41,7 +45,25 @@ export const setIsFetching = (isFetching: boolean): SetIsFetchingActionType => {
     }
 }
 
-type ActionsType = SetUserAuthActionType | SetIsFetchingActionType;
+type ThunkType = ThunkAction<Promise<void> | void, AppStateType, unknown, ActionsType>
+
+export const getAuthThunkAC = (): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
+        dispatch(setIsFetching(true));
+        authAPI.getAuth()
+            .then(
+                response => {
+                    if (response.resultCode === 0) {
+                        let {id, login, email} = response.data;
+                        dispatch(setUserAuth(id, login, email));
+                        dispatch(setIsFetching(false));
+                    }
+                })
+            .catch(response => console.log(response));
+    }
+}
+
+export type ActionsType = SetUserAuthActionType | SetIsFetchingActionType;
 
 export const authReducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
