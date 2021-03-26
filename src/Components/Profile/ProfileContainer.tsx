@@ -13,6 +13,7 @@ import {AppStateType} from '../../redux-store/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {ThunkDispatch} from 'redux-thunk';
 import {ActionsType} from '../../redux-store/Profile-reducer'
+import {withAuthRedirect} from '../../HOC/withAuthRedirect/withAuthRedirect';
 
 type ProfileContainerAjaxPropsType = MapDispatchToPropsType & MapStateToPropsType
 type ProfileContainerAjaxStateType = {}
@@ -98,5 +99,5 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
 }
 
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer))
+export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer)))
 //благодаря withRouter в пропсы компонента приходят доп.пропсы, match, location, history, staticContext

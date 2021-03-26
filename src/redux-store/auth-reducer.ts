@@ -4,12 +4,14 @@ import {authAPI} from '../data-access-layer/api';
 
 const SET_AUTH_USER = 'SET_AUTH_USER';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
+const SET_IS_AUTH = 'SET_IS_AUTH';
 
 const initialState: initialStateType = {
     id: null,
     login: null,
     email: null,
     isFetching: false,
+    isAuth: false,
 }
 
 type initialStateType = {
@@ -17,6 +19,7 @@ type initialStateType = {
     login: string | null
     email: string | null
     isFetching: boolean
+    isAuth: boolean
 }
 
 type SetUserAuthActionType = {
@@ -45,6 +48,18 @@ export const setIsFetching = (isFetching: boolean): SetIsFetchingActionType => {
     }
 }
 
+type SetIsAuthActionType = {
+    type: typeof SET_IS_AUTH,
+    isAuth: boolean
+}
+
+export const setIsAuthAC = (isAuth: boolean): SetIsAuthActionType => {
+    return {
+        type: SET_IS_AUTH,
+        isAuth
+    }
+}
+
 type ThunkType = ThunkAction<Promise<void> | void, AppStateType, unknown, ActionsType>
 
 export const getAuthThunkAC = (): ThunkType => {
@@ -57,13 +72,14 @@ export const getAuthThunkAC = (): ThunkType => {
                         let {id, login, email} = response.data;
                         dispatch(setUserAuth(id, login, email));
                         dispatch(setIsFetching(false));
+                        dispatch(setIsAuthAC(true));
                     }
                 })
             .catch(response => console.log(response));
     }
 }
 
-export type ActionsType = SetUserAuthActionType | SetIsFetchingActionType;
+export type ActionsType = SetUserAuthActionType | SetIsFetchingActionType | SetIsAuthActionType;
 
 export const authReducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
@@ -73,8 +89,11 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
         case (SET_IS_FETCHING): {
             return {...state, isFetching: action.isFetching}
         }
+        case (SET_IS_AUTH) : {
+            return {...state, isAuth: action.isAuth}
+        }
         default: {
-            return state
+            return state;
         }
     }
 }

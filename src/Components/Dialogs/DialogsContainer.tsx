@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux-store/redux-store';
 import {addNewMessageAC, DialogsReducerStateType} from '../../redux-store/Dialogs-reducer';
 import {Dispatch} from 'redux';
+import {withAuthRedirect} from '../../HOC/withAuthRedirect/withAuthRedirect';
 
 
 // function DialogsContainerAjax(props: any) {
@@ -35,4 +36,4 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+export default withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(Dialogs));

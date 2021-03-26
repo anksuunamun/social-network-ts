@@ -13,6 +13,8 @@ import {
 import {connect} from 'react-redux';
 // const axios = require('axios');
 import {usersAPI} from '../../data-access-layer/api';
+import {withAuthRedirect} from '../../HOC/withAuthRedirect/withAuthRedirect';
+
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 type UsersContainerStateType = {}
@@ -110,4 +112,4 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersConta
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(UsersContainer));
