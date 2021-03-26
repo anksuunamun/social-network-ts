@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dispatch} from 'redux';
+import {compose, Dispatch} from 'redux';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {
@@ -98,6 +98,10 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
     }
 }
 
+export default compose<React.ComponentType>(
+    withRouter,
+    withAuthRedirect,
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)
+)(ProfileContainer)
 
-export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer)))
 //благодаря withRouter в пропсы компонента приходят доп.пропсы, match, location, history, staticContext

@@ -1,3 +1,7 @@
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {AppStateType} from './redux-store';
+import {usersAPI} from '../data-access-layer/api';
+
 const SET_USERS = 'SET_USERS';
 const FOLLOW_USER = 'FOLLOW_USER';
 const UNFOLLOW_USER = 'UNFOLLOW_USER';
@@ -32,7 +36,7 @@ const initialState: UsersReducerInitialStateType = {
     totalCount: 0,
     currentPage: 1,
     portionSize: 9,
-    isLoading: true,
+    isLoading: false,
     disabledButtons: [],
 }
 
@@ -104,7 +108,37 @@ export const setDisabledButtonAC = (id: number, isFetching: boolean): SetDisable
         id, isFetching
     }
 }
-type ActionType =
+
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
+
+export const getUsersThunkAC = (portionSize: number, currentPage: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
+        dispatch(setIsLoadingAC(true));
+        usersAPI.getUsers(portionSize, currentPage)
+            .then(response => {
+                dispatch(setUsersAC(response.items));
+                dispatch(setTotalCountAC(response.totalCount));
+                dispatch(setIsLoadingAC(false));
+            })
+            .catch(response => console.log(response))
+    }
+}
+
+export const onPageClickThunkAC = (portionSize: number, currentPage: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
+        dispatch(setIsLoadingAC(true));
+        dispatch(SetCurrentPageAC(currentPage));
+        usersAPI.getUsers(portionSize, currentPage)
+            .then(response => {
+                dispatch(setUsersAC(response.items));
+                dispatch(setIsLoadingAC(false));
+            })
+            .catch(reason => console.log(reason))
+    }
+}
+
+
+export type ActionType =
     SetUsersActionType
     | FollowUserActionType
     | UnFollowUserActionType

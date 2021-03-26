@@ -1,9 +1,10 @@
 import React from 'react';
 import Users from './Users';
 import {AppStateType} from '../../redux-store/redux-store';
-import {Dispatch} from 'redux';
+import {compose, Dispatch} from 'redux';
 import {
-    FollowUserAC, SetCurrentPageAC, setDisabledButtonAC,
+    ActionType,
+    FollowUserAC, getUsersThunkAC, onPageClickThunkAC, SetCurrentPageAC, setDisabledButtonAC,
     setIsLoadingAC,
     setTotalCountAC,
     setUsersAC,
@@ -14,6 +15,7 @@ import {connect} from 'react-redux';
 // const axios = require('axios');
 import {usersAPI} from '../../data-access-layer/api';
 import {withAuthRedirect} from '../../HOC/withAuthRedirect/withAuthRedirect';
+import {ThunkDispatch} from 'redux-thunk';
 
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -31,6 +33,8 @@ type MapDispatchToPropsType = {
     setIsLoading: (value: boolean) => void
     setCurrentPage: (page: number) => void
     setDisabledButton: (id: number, isFetching: boolean) => void
+    getUsersThunkAC: (portionSize: number, currentPage: number) => void
+    onPageClickThunkAC: (portionSize: number, currentPage: number) => void
 }
 
 type MapStateToPropsType = {
@@ -52,7 +56,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unknown, ActionType>): MapDispatchToPropsType => {
     return {
         setUsers: (users: Array<UserType>) => dispatch(setUsersAC(users)),
         followUser: (id: number) => dispatch(FollowUserAC(id)),
@@ -60,7 +64,9 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         setTotalCount: (totalCount: number) => dispatch(setTotalCountAC(totalCount)),
         setIsLoading: (isLoading: boolean) => dispatch(setIsLoadingAC(isLoading)),
         setCurrentPage: (currentPage: number) => dispatch(SetCurrentPageAC(currentPage)),
-        setDisabledButton: (id: number, isFetching: boolean) => dispatch(setDisabledButtonAC(id, isFetching))
+        setDisabledButton: (id: number, isFetching: boolean) => dispatch(setDisabledButtonAC(id, isFetching)),
+        getUsersThunkAC: (portionSize: number, currentPage: number) => dispatch(getUsersThunkAC(portionSize, currentPage)),
+        onPageClickThunkAC: (portionSize: number, currentPage: number) => dispatch(onPageClickThunkAC(portionSize, currentPage)),
     }
 }
 
@@ -71,45 +77,24 @@ class UsersContainer extends React.Component<UsersContainerPropsType, UsersConta
     // }
 
     componentDidMount() {
-        usersAPI.getUsers(this.props.portionSize, this.props.currentPage)
-            .then((response) => {
-                    this.props.setUsers(response.items);
-                    this.props.setTotalCount(response.totalCount);
-                    this.props.setIsLoading(false);
-                }
-            )
+        this.props.getUsersThunkAC(this.props.portionSize, this.props.currentPage);
     }
 
     onPageClickHandler = (page: number) => {
-        this.props.setIsLoading(true);
-        this.props.setCurrentPage(page);
-        usersAPI.getUsers(this.props.portionSize, page)
-            .then((response) => {
-                    this.props.setUsers(response.items);
-                    this.props.setIsLoading(false);
-                }
-            )
+        this.props.onPageClickThunkAC(this.props.portionSize, page);
     }
 
     render() {
         return (
-            <Users users={this.props.users}
-                   setUsers={this.props.setUsers}
-                   followUser={this.props.followUser}
-                   unfollowUser={this.props.unfollowUser}
-                   setTotalCount={this.props.setTotalCount}
-                   totalCount={this.props.totalCount}
-                   portionSize={this.props.portionSize}
-                   currentPage={this.props.currentPage}
-                   isLoading={this.props.isLoading}
-                   setIsLoading={this.props.setIsLoading}
-                   setCurrentPage={this.props.setCurrentPage}
-                   disabledButtons={this.props.disabledButtons}
-                   setDisabledButton={this.props.setDisabledButton}
+            <Users {...this.props}
                    onPageClickHandler={this.onPageClickHandler}
             />
         )
     }
+
 }
 
-export default withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(UsersContainer));
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, mapDispatchToProps)
+)(UsersContainer)
