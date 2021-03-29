@@ -7,17 +7,13 @@ import Paginator from '../Common/Paginator/Paginator';
 import Preloader from '../Common/Preloader/Preloader';
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
+import {followAPI} from '../../data-access-layer/api';
 
 function Users(props: UsersPropsType) {
     const onFollowHandler = (userId: number) => {
         props.setDisabledButton(userId, true);
-        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {}, {
-            withCredentials: true,
-            headers: {
-                'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
-            }
-        }).then(response => {
-            if (response.data.resultCode === 0) {
+        followAPI.follow(userId).then(response => {
+            if (response.resultCode === 0) {
                 props.followUser(userId);
             }
             props.setDisabledButton(userId, false);
@@ -26,14 +22,9 @@ function Users(props: UsersPropsType) {
     }
     const onUnFollowHandler = (userId: number) => {
         props.setDisabledButton(userId, true);
-        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
-            withCredentials: true,
-            headers: {
-                'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
-            }
-        }).then(
+        followAPI.unfollow(userId).then(
             response => {
-                if (response.data.resultCode === 0) {
+                if (response.resultCode === 0) {
                     props.unfollowUser(userId);
                 }
                 props.setDisabledButton(userId, false);

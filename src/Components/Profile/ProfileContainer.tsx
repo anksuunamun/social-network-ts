@@ -7,7 +7,7 @@ import {
     changeLikesAC, getUserProfileThunkAC, getUserStatusThunkAC,
     PostsType,
     setIsFetchingAC,
-    setProfileAC, setUserPhotoAC, setUserStatusAC, updateProfilePhotoThunkAC, UserType
+    setProfileAC, setUserPhotoAC, setUserStatusAC, updateProfilePhotoThunkAC, UserProfileType
 } from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
@@ -55,7 +55,7 @@ class ProfileContainer extends React.Component<PropsType> {
 type MapDispatchToPropsType = {
     addPostAC: (postText: string) => void
     changeLikesAC: (id: string, upOrDown: 'up' | 'down') => void
-    setProfile: (user: UserType) => void
+    setProfile: (user: UserProfileType) => void
     setIsFetching: (isFetching: boolean) => void
     setUserPhoto: (photo: string) => void
     setUserStatus: (status: string) => void
@@ -66,7 +66,7 @@ type MapDispatchToPropsType = {
 
 type MapStateToPropsType = {
     'posts': Array<PostsType>
-    'user': UserType | null
+    'user': UserProfileType | null
     'isFetching': boolean
     'id': number | null
     'userStatus': string
@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
     return {
         addPostAC: (postText: string) => dispatch(addPostAC(postText)),
         changeLikesAC: (id: string, upOrDown: 'up' | 'down') => dispatch(changeLikesAC(id, upOrDown)),
-        setProfile: (user: UserType) => dispatch(setProfileAC(user)),
+        setProfile: (user: UserProfileType) => dispatch(setProfileAC(user)),
         setIsFetching: (isFetching: boolean) => dispatch(setIsFetchingAC(isFetching)),
         setUserPhoto: (photo: string) => dispatch(setUserPhotoAC(photo)),
         setUserStatus: (status: string) => dispatch(setUserStatusAC(status)),

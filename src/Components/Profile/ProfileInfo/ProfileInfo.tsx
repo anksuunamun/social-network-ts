@@ -2,12 +2,11 @@ import React, {ChangeEvent, useState} from 'react';
 import styles from './ProfileInfo.module.css'
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import picture from '../../../Assets/Images/picture.png'
-import {UserType} from '../../../redux-store/Profile-reducer';
+import {UserProfileType} from '../../../redux-store/Profile-reducer';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
-import {profileAPI} from '../../../data-access-layer/api';
 
 type ProfileInfoPropsType = {
-    user: UserType | null
+    user: UserProfileType | null
     setUserPhoto: (photo: string) => void
     userId: number | null
     userStatus: string

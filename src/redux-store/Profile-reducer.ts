@@ -36,7 +36,7 @@ export type ChangeLikesActionType = {
     upOrDown: 'up' | 'down'
 }
 
-export const setProfileAC = (payload: UserType): SetUserProfileActionType => {
+export const setProfileAC = (payload: UserProfileType): SetUserProfileActionType => {
     return {
         type: SET_USER_PROFILE,
         payload
@@ -45,7 +45,7 @@ export const setProfileAC = (payload: UserType): SetUserProfileActionType => {
 
 export type SetUserProfileActionType = {
     type: typeof SET_USER_PROFILE
-    payload: UserType
+    payload: UserProfileType
 }
 export const setIsFetchingAC = (isFetching: boolean): SetIsFetchingActionType => {
     return {
@@ -104,7 +104,7 @@ export const getUserStatusThunkAC = (userId: number): ThunkType => {
     }
 }
 
-export const updateProfilePhotoThunkAC = (formData: any) => {
+export const updateProfilePhotoThunkAC = (formData: Object) => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
         profileAPI.updateProfilePhoto(formData)
             .then(response => {
@@ -123,7 +123,7 @@ export type ActionsType = AddPostActionType
     | SetUserPhotosActionType
     | SetUserStatusActionType
 
-export type UserType = {
+export type UserProfileType = {
     aboutMe: string | null
     contacts: {
         facebook: string | null
@@ -147,7 +147,7 @@ export type UserType = {
 
 export type ProfileReducerStateType = {
     posts: Array<PostsType>
-    user: null | UserType
+    user: null | UserProfileType
     isFetching: boolean
     userStatus: string
 }
@@ -228,7 +228,7 @@ export const profileReducer = (state: ProfileReducerStateType = initialState, ac
                     small: action.photo,
                     large: action.photo
                 }
-            } as UserType
+            } as UserProfileType
             return {
                 ...state, user: updatedUser
             }
