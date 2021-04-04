@@ -3,11 +3,11 @@ import Users from './Users';
 import {AppStateType} from '../../redux-store/redux-store';
 import {compose, Dispatch} from 'redux';
 import {
-    ActionType,
+    ActionType, followThunkAC,
     FollowUserAC, getUsersThunkAC, onPageClickThunkAC, SetCurrentPageAC, setDisabledButtonAC,
     setIsLoadingAC,
     setTotalCountAC,
-    setUsersAC,
+    setUsersAC, unfollowThunkAC,
     UnFollowUserAC,
     UserType
 } from '../../redux-store/Users-reducer';
@@ -35,6 +35,8 @@ type MapDispatchToPropsType = {
     setDisabledButton: (id: number, isFetching: boolean) => void
     getUsersThunkAC: (portionSize: number, currentPage: number) => void
     onPageClickThunkAC: (portionSize: number, currentPage: number) => void
+    onFollow: (userId: number) => void
+    onUnfollow: (userId: number) => void
 }
 
 type MapStateToPropsType = {
@@ -67,6 +69,8 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
         setDisabledButton: (id: number, isFetching: boolean) => dispatch(setDisabledButtonAC(id, isFetching)),
         getUsersThunkAC: (portionSize: number, currentPage: number) => dispatch(getUsersThunkAC(portionSize, currentPage)),
         onPageClickThunkAC: (portionSize: number, currentPage: number) => dispatch(onPageClickThunkAC(portionSize, currentPage)),
+        onFollow: (userId: number) => dispatch(followThunkAC(userId)),
+        onUnfollow: (userId: number) => dispatch(unfollowThunkAC(userId)),
     }
 }
 

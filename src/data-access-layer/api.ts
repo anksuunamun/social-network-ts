@@ -29,7 +29,7 @@ const instance = axios.create({
     'baseURL': 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
-        'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
+        'API-KEY': 'ab4073b3-e602-4190-9ab5-ec0d40796ddb',
     }
 })
 
@@ -37,7 +37,7 @@ const instanceForMedia = axios.create({
     'baseURL': 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
-        'API-KEY': '7adf2309-2d93-43e6-88f1-3d5c166ae533',
+        'API-KEY': 'ab4073b3-e602-4190-9ab5-ec0d40796ddb',
         'Content-Type': 'multipart/form-data'
     }
 })
