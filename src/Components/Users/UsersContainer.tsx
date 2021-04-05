@@ -4,16 +4,11 @@ import {AppStateType} from '../../redux-store/redux-store';
 import {compose, Dispatch} from 'redux';
 import {
     ActionType, followThunkAC,
-    FollowUserAC, getUsersThunkAC, onPageClickThunkAC, SetCurrentPageAC, setDisabledButtonAC,
-    setIsLoadingAC,
-    setTotalCountAC,
-    setUsersAC, unfollowThunkAC,
-    UnFollowUserAC,
+    getUsersThunkAC, onPageClickThunkAC,
+    unfollowThunkAC,
     UserType
 } from '../../redux-store/Users-reducer';
 import {connect} from 'react-redux';
-// const axios = require('axios');
-import {usersAPI} from '../../data-access-layer/api';
 import {withAuthRedirect} from '../../HOC/withAuthRedirect/withAuthRedirect';
 import {ThunkDispatch} from 'redux-thunk';
 
@@ -26,13 +21,6 @@ type UsersOwnProps = {
 }
 
 type MapDispatchToPropsType = {
-    setUsers: (users: Array<UserType>) => void
-    followUser: (id: number) => void
-    unfollowUser: (id: number) => void
-    setTotalCount: (value: number) => void
-    setIsLoading: (value: boolean) => void
-    setCurrentPage: (page: number) => void
-    setDisabledButton: (id: number, isFetching: boolean) => void
     getUsersThunkAC: (portionSize: number, currentPage: number) => void
     onPageClickThunkAC: (portionSize: number, currentPage: number) => void
     onFollow: (userId: number) => void
@@ -60,13 +48,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unknown, ActionType>): MapDispatchToPropsType => {
     return {
-        setUsers: (users: Array<UserType>) => dispatch(setUsersAC(users)),
-        followUser: (id: number) => dispatch(FollowUserAC(id)),
-        unfollowUser: (id: number) => dispatch(UnFollowUserAC(id)),
-        setTotalCount: (totalCount: number) => dispatch(setTotalCountAC(totalCount)),
-        setIsLoading: (isLoading: boolean) => dispatch(setIsLoadingAC(isLoading)),
-        setCurrentPage: (currentPage: number) => dispatch(SetCurrentPageAC(currentPage)),
-        setDisabledButton: (id: number, isFetching: boolean) => dispatch(setDisabledButtonAC(id, isFetching)),
         getUsersThunkAC: (portionSize: number, currentPage: number) => dispatch(getUsersThunkAC(portionSize, currentPage)),
         onPageClickThunkAC: (portionSize: number, currentPage: number) => dispatch(onPageClickThunkAC(portionSize, currentPage)),
         onFollow: (userId: number) => dispatch(followThunkAC(userId)),
