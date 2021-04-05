@@ -116,6 +116,17 @@ export const updateProfilePhotoThunkAC = (formData: Object) => {
     }
 }
 
+export const updateUserStatusThunkAC = (status: string): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
+        profileAPI.updateUserStatus(status)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setUserStatusAC(status));
+                }
+            })
+    }
+}
+
 export type ActionsType = AddPostActionType
     | ChangeLikesActionType
     | SetUserProfileActionType

@@ -11,6 +11,7 @@ type ProfileInfoPropsType = {
     userId: number | null
     userStatus: string
     updateProfilePhotoThunkAC: (formData: any) => void
+    updateUserStatusThunkAC: (status: string) => void
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
@@ -42,7 +43,8 @@ function ProfileInfo(props: ProfileInfoPropsType) {
             </div>
             <div className={styles.textInfo}>
                 <div>{props.user?.fullName || 'Name'}</div>
-                <ProfileStatus userStatus={props.userStatus}/>
+                <ProfileStatus userStatus={props.userStatus}
+                               updateUserStatusThunkAC={props.updateUserStatusThunkAC}/>
                 <div>{props.user?.contacts.facebook || 'My Facebook'}</div>
                 <div>{props.user?.contacts.vk || 'My VK'}</div>
                 <div>{props.user?.contacts.website || 'My website'}</div>

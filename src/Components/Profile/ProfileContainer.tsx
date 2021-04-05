@@ -7,7 +7,7 @@ import {
     changeLikesAC, getUserProfileThunkAC, getUserStatusThunkAC,
     PostsType,
     setIsFetchingAC,
-    setProfileAC, setUserPhotoAC, setUserStatusAC, updateProfilePhotoThunkAC, UserProfileType
+    setProfileAC, setUserPhotoAC, setUserStatusAC, updateProfilePhotoThunkAC, updateUserStatusThunkAC, UserProfileType
 } from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
@@ -32,7 +32,7 @@ class ProfileContainer extends React.Component<PropsType> {
             userId = '7870'
         }
         this.props.getUserProfileThunkAC(+userId);
-        this.props.getUserStatusThunkAC(+userId);
+        this.props.getUserStatusThunkAC(+userId)
     }
 
     componentDidMount() {
@@ -62,6 +62,7 @@ type MapDispatchToPropsType = {
     getUserProfileThunkAC: (userId: number) => void
     getUserStatusThunkAC: (userId: number) => void
     updateProfilePhotoThunkAC: (formData: any) => void
+    updateUserStatusThunkAC: (status: string) => void
 }
 
 type MapStateToPropsType = {
@@ -95,6 +96,7 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
         getUserProfileThunkAC: (userId: number) => dispatch(getUserProfileThunkAC(userId)),
         getUserStatusThunkAC: (userId: number) => dispatch(getUserStatusThunkAC(userId)),
         updateProfilePhotoThunkAC: (formData: any) => dispatch(updateProfilePhotoThunkAC(formData)),
+        updateUserStatusThunkAC: (status: string) => dispatch(updateUserStatusThunkAC(status)),
     }
 }
 

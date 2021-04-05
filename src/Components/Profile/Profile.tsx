@@ -15,7 +15,8 @@ function Profile(props: ProfilePropsType) {
                                  setUserPhoto={props.setUserPhoto}
                                  userId={props.id}
                                  userStatus={props.userStatus}
-                                 updateProfilePhotoThunkAC={props.updateProfilePhotoThunkAC}/>
+                                 updateProfilePhotoThunkAC={props.updateProfilePhotoThunkAC}
+                                 updateUserStatusThunkAC={props.updateUserStatusThunkAC}/>
                     <PostsBlock posts={props.posts}
                                 addPost={props.addPostAC}
                                 changeLikes={props.changeLikesAC}/>
