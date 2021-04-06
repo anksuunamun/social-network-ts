@@ -4,7 +4,7 @@ import {dialogsReducer} from './Dialogs-reducer';
 import {usersReducer} from './Users-reducer';
 import {authReducer} from './auth-reducer';
 import thunk from 'redux-thunk';
-
+import {reducer as formReducer} from 'redux-form';
 
 
 //в итоге возвращается один большой rootReducer а не reducers
@@ -14,6 +14,7 @@ let rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    form: formReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
