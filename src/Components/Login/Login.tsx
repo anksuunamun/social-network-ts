@@ -1,34 +1,40 @@
 import React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
+import {Input} from '../Common/FieldControls/FieldControls';
+import {maxLength, minLength, required} from '../../utils/validators/formValidators';
+import PurpleButton from '../Common/PurpleButton/PurpleButton';
 
-type LoginPropsType = {}
 
-type FormDataType = {
+export type LoginPropsType = {}
+
+export type FormDataType = {
     login: string
     password: string
     rememberMe: boolean
 }
 
+const maxLength15 = maxLength(15);
+const minLength5 = minLength(5);
+
 let LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={'input'}
-                       type={'text'}
-                       name={'login'}/>
-            </div>
-            <div>
-                <Field component={'input'}
-                       type={'text'}
-                       name={'password'}/>
-            </div>
-            <div>
-                <Field component={'input'}
-                       type={'checkbox'}
-                       name={'rememberMe'}/>
-            </div>
-            <button>Submit
-            </button>
+            <Field component={Input}
+                   type={'text'}
+                   name={'login'}
+                   validate={[required, maxLength15, minLength5]}
+                   label={'Login'}
+                   id={'userLogin'}/>
+            <Field component={Input}
+                   name={'password'}
+                   type={'password'}
+                   validate={[required, maxLength15, minLength5]}
+                   label={'Password'}
+                   id={'userPassword'}/>
+            <Field component={'input'}
+                   type={'checkbox'}
+                   name={'rememberMe'}/>
+            <button>Log in</button>
         </form>
     )
 }
@@ -41,7 +47,6 @@ const Login: React.FC<LoginPropsType> = (props) => {
     }
     return (
         <div className={'contentWrapper'}>
-            Login
             <LoginReduxForm onSubmit={onHandleSubmit}/>
         </div>
     )
