@@ -73,9 +73,22 @@ export const getAuthThunkAC = (): ThunkType => {
                         dispatch(setUserAuth(id, login, email));
                         dispatch(setIsFetching(false));
                         dispatch(setIsAuthAC(true));
+                    } else if (response.resultCode === 1) {
+                        dispatch(setIsFetching(false));
                     }
                 })
             .catch(response => console.log(response));
+    }
+}
+
+export const logInThunk = (email: string, password: string, rememberMe: boolean): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
+        authAPI.login(email, password, rememberMe)
+            .then(response => {
+                if (response.resultCode === 0) {
+                    dispatch(getAuthThunkAC());
+                }
+            })
     }
 }
 

@@ -81,6 +81,12 @@ export const authAPI = {
             response => response.data
         )
     },
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post<CommonResponseType<{ userId: number } | {}>>(`auth/login`, {email, password, rememberMe})
+            .then(
+                response => response.data
+            )
+    },
 }
 
 export const followAPI = {
