@@ -4,7 +4,24 @@ import Post from './Post/Post';
 import {PostsType} from '../../../redux-store/Profile-reducer';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
 import CustomTextarea from '../../Common/CustomTextarea/CustomTextarea';
+import {InjectedFormProps, reduxForm, Field} from 'redux-form';
 
+
+type OwnAddPostFormPropsType = {
+    newPostText: string
+}
+let AddPostForm: React.FC<InjectedFormProps<OwnAddPostFormPropsType>> = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field name={'newPostText'}
+                   component={'textarea'}/>
+            <button>submit</button>
+        </form>
+
+    )
+}
+
+const AddPostReduxForm = reduxForm<OwnAddPostFormPropsType>({form: 'addPostForm'})(AddPostForm)
 
 type PostsBlockType = {
     posts: Array<PostsType>
@@ -33,6 +50,9 @@ function PostsBlock(props: PostsBlockType) {
                                 id={'newPost'}
                                 value={newPostText}
                                 onChange={onChangeHandler}/>
+                <AddPostReduxForm onSubmit={(data) => {
+                    console.log(data)
+                }}/>
                 <div>
                     <PurpleButton text={'Add post'} onButtonClick={onclickHandler}/>
                 </div>
@@ -45,5 +65,6 @@ function PostsBlock(props: PostsBlockType) {
         </div>
     )
 }
+
 
 export default PostsBlock;
