@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomTextarea from '../CustomTextarea/CustomTextarea';
 
 
 export const FieldControls: React.FC<any> = (props) => {
@@ -17,5 +18,12 @@ export const Input: React.FC<any> = (props) => {
     const {input, meta, ...restProps} = props;
     return (
         <FieldControls {...props}><input {...input} {...restProps}/></FieldControls>
+    )
+}
+
+export const TextArea: React.FC<any> = (props) => {
+    const {input, meta, ...restProps} = props;
+    return (
+        <FieldControls {...props}><CustomTextarea {...input} {...restProps}/></FieldControls>
     )
 }
