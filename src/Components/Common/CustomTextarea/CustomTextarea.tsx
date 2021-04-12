@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import styles from './CustomTextarea.module.css';
 
-type CustomTextareaPropsType = {
+export type CustomTextareaPropsType = {
     name: string
     id: string
     cols?: number

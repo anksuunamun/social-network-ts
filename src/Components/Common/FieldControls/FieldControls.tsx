@@ -1,27 +1,27 @@
 import React from 'react';
-import CustomTextarea from '../CustomTextarea/CustomTextarea';
+import CustomTextarea, {CustomTextareaPropsType} from '../CustomTextarea/CustomTextarea';
+import CustomInput, {CustomInputPropsType} from '../CustomInput/CustomInput';
+import {WrappedFieldProps} from 'redux-form';
 
-
-export const FieldControls: React.FC<any> = (props) => {
+type CustomComponentPropsType = CustomInputPropsType | CustomTextareaPropsType
+export const FieldControls: React.FC<WrappedFieldProps & CustomComponentPropsType> = (props) => {
     return (
         <div>
-            <div>
-                <label htmlFor={props.id}>{props.label}</label>
-            </div>
             {props.children}
             {props.meta.error && props.meta.touched ? <div>{props.meta.error}</div> : ''}
         </div>
     )
 }
 
-export const Input: React.FC<any> = (props) => {
+export const Input: React.FC<WrappedFieldProps & CustomInputPropsType> = (props) => {
     const {input, meta, ...restProps} = props;
+    console.log(props)
     return (
-        <FieldControls {...props}><input {...input} {...restProps}/></FieldControls>
+        <FieldControls {...props}><CustomInput {...input} {...restProps}/></FieldControls>
     )
 }
 
-export const TextArea: React.FC<any> = (props) => {
+export const TextArea: React.FC<WrappedFieldProps & CustomTextareaPropsType> = (props) => {
     const {input, meta, ...restProps} = props;
     return (
         <FieldControls {...props}><CustomTextarea {...input} {...restProps}/></FieldControls>
