@@ -3,7 +3,7 @@ import styles from './PurpleButton.module.css';
 
 type PurpleButtonPropsType = {
     text: string
-    onButtonClick: () => void
+    onButtonClick?: () => void
     small?: boolean
     className?: string
     disabled?: boolean
