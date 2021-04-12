@@ -1,6 +1,31 @@
-# Getting Started with Create React App
+# Social Network React SPA (SoNet)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##Description
+
+This project is a single page application, which contains base functionality of modern social networks.
+
+It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+##Application features
+
+* after entering the password and login on the authorization page and after confirmation from the server, you can use the social network as an authorized user;
+  
+* on profile page user can:
+    *  upload photo for his profile;
+    *  update status;
+    *  edit profile information;
+    *  add new post;
+    *  change likes count.
+    
+* on users page:
+    *   follow or unfollow another network user;
+    *   switch between pages with users;
+
+* you can try to log in with free account:
+
+    login | password
+        ------------ | -------------
+    free@samuraijs.com | free
 
 ## Available Scripts
 
@@ -39,7 +64,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
