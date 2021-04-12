@@ -87,6 +87,10 @@ export const authAPI = {
                 response => response.data
             )
     },
+    logout() {
+        return instance.delete<CommonResponseType<{}>>(`/auth/login`)
+            .then(response => response.data)
+    }
 }
 
 export const followAPI = {

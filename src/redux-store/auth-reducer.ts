@@ -26,9 +26,9 @@ type initialStateType = {
 type SetUserAuthActionType = {
     type: typeof SET_AUTH_USER
     payload: {
-        id: number
-        login: string
-        email: string
+        id: number | null
+        login: string | null
+        email: string | null
     }
 }
 type SetIsFetchingActionType = {
@@ -36,7 +36,7 @@ type SetIsFetchingActionType = {
     isFetching: boolean
 }
 
-export const setUserAuth = (id: number, login: string, email: string): SetUserAuthActionType => {
+export const setUserAuth = (id: number | null, login: string | null, email: string | null): SetUserAuthActionType => {
     return {
         type: SET_AUTH_USER,
         payload: {id, login, email},
@@ -93,6 +93,16 @@ export const logInThunk = (email: string, password: string, rememberMe: boolean)
                 }
             })
     }
+}
+
+export const logOutThunk = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType | FormAction>) => {
+    authAPI.logout().then(response => {
+        if (response.resultCode === 0) {
+            dispatch(setUserAuth(null, null, null));
+            dispatch(setIsAuthAC(false));
+
+        }
+    })
 }
 
 export type ActionsType = SetUserAuthActionType | SetIsFetchingActionType | SetIsAuthActionType;
