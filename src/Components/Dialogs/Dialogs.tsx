@@ -1,20 +1,34 @@
-import React, {ChangeEvent, useState} from 'react';
+import React from 'react';
 import styles from './Dialogs.module.css';
 import {NavLink} from 'react-router-dom';
 import {DialogsPropsType} from './DialogsContainer';
 import PurpleButton from '../Common/PurpleButton/PurpleButton';
-import CustomTextarea from '../Common/CustomTextarea/CustomTextarea';
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {TextArea} from '../Common/FieldControls/FieldControls';
+
+type FormPropsType = {
+    addMessage: string
+}
+
+const AddMessageForm: React.FC<InjectedFormProps<FormPropsType>> = (props) => {
+    return (
+        <>
+            <form onSubmit={props.handleSubmit}>
+                <Field component={TextArea}
+                       name={'addMessage'}/>
+                <PurpleButton text={'add message'}/>
+            </form>
+        </>
+    )
+}
+
+const AddMessageReduxForm = reduxForm<FormPropsType>({form: 'addMessageForm'})(AddMessageForm)
+
 
 function Dialogs(props: DialogsPropsType) {
 
-    const [newMessageText, setNewMessageText] = useState<string>('');
-
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setNewMessageText(e.currentTarget.value);
-    }
-    const onClickHandler = () => {
-        props.addMessage(newMessageText);
-        setNewMessageText('');
+    const onAddMessageFormSubmit = (data: FormPropsType) => {
+        props.addMessage(data.addMessage);
     }
 
     const dialogs = props.dialogs.map(
@@ -46,14 +60,8 @@ function Dialogs(props: DialogsPropsType) {
             <div className={styles.messagesWrapper}>
                 {messages}
             </div>
-
             <div className={styles.textareaWrapper}>
-                <CustomTextarea name={'newMessage'}
-                                id={'newMessage'}
-                                value={newMessageText}
-                                onChange={onChangeHandler}/>
-                <PurpleButton text={'Add message'}
-                              onButtonClick={onClickHandler}/>
+                <AddMessageReduxForm onSubmit={onAddMessageFormSubmit}/>
             </div>
         </div>
     )
