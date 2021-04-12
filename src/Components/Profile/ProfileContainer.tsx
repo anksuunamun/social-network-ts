@@ -29,7 +29,7 @@ class ProfileContainer extends React.Component<PropsType> {
     refreshProfile() {
         let userId = this.props.match.params.userId;
         if (!userId) {
-            userId = '7870'
+            userId = String(this.props.authUserId)
         }
         this.props.getUserProfileThunkAC(+userId);
         this.props.getUserStatusThunkAC(+userId)
@@ -71,6 +71,8 @@ type MapStateToPropsType = {
     'isFetching': boolean
     'id': number | null
     'userStatus': string
+    'isAuth': boolean
+    authUserId: number | null
 }
 
 export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType
@@ -82,6 +84,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         'isFetching': state.profilePage.isFetching,
         'id': state.auth.id,
         'userStatus': state.profilePage.userStatus,
+        isAuth: state.auth.isAuth,
+        authUserId: state.auth.id,
     }
 }
 
