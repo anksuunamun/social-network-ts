@@ -15,7 +15,6 @@ export const FieldControls: React.FC<WrappedFieldProps & CustomComponentPropsTyp
 
 export const Input: React.FC<WrappedFieldProps & CustomInputPropsType> = (props) => {
     const {input, meta, ...restProps} = props;
-    console.log(props)
     return (
         <FieldControls {...props}><CustomInput {...input} {...restProps}/></FieldControls>
     )

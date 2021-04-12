@@ -6,15 +6,6 @@ import {addNewMessageAC, DialogsReducerStateType} from '../../redux-store/Dialog
 import {Dispatch} from 'redux';
 import {withAuthRedirect} from '../../HOC/withAuthRedirect/withAuthRedirect';
 
-
-// function DialogsContainerAjax(props: any) {
-//     return (
-//         <>
-//             <Dialogs messages={props.messages} dialogs={props.dialogs}/>
-//         </>
-//     )
-// }
-
 type MapDispatchToPropsType = {
     addMessage: (newMessage: string) => void
 }

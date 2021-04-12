@@ -6,8 +6,6 @@ import PurpleButton from '../Common/PurpleButton/PurpleButton';
 import Paginator from '../Common/Paginator/Paginator';
 import Preloader from '../Common/Preloader/Preloader';
 import {NavLink} from 'react-router-dom';
-import {followAPI} from '../../data-access-layer/api';
-
 function Users(props: UsersPropsType) {
 
     const users = props.users.map(user => {
