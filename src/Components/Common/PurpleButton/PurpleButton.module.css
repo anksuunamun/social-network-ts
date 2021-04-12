@@ -35,3 +35,7 @@
     height: 25px;
     font-size: 14px;
 }
+.buttonWrapper a {
+    color: white;
+    text-decoration: none;
+}
