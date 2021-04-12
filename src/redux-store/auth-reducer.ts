@@ -1,6 +1,7 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AppStateType} from './redux-store';
 import {authAPI} from '../data-access-layer/api';
+import {FormAction, stopSubmit} from 'redux-form';
 
 const SET_AUTH_USER = 'SET_AUTH_USER';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
@@ -82,11 +83,13 @@ export const getAuthThunkAC = (): ThunkType => {
 }
 
 export const logInThunk = (email: string, password: string, rememberMe: boolean): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType | FormAction>) => {
         authAPI.login(email, password, rememberMe)
             .then(response => {
                 if (response.resultCode === 0) {
                     dispatch(getAuthThunkAC());
+                } else if (response.resultCode === 1) {
+                    dispatch(stopSubmit('loginForm', {_error: response.messages[0] ? response.messages[0] : 'Some error'}))
                 }
             })
     }

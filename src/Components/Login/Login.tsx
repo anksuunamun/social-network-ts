@@ -22,25 +22,27 @@ const maxLength30 = maxLength(30);
 const minLength5 = minLength(5);
 
 let LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <Field component={Input}
-                   type={'text'}
-                   name={'login'}
-                   validate={[required, maxLength30, minLength5]}
-                   label={'Login'}
-                   id={'userLogin'}/>
-            <Field component={Input}
-                   name={'password'}
-                   type={'password'}
-                   validate={[required, maxLength30, minLength5]}
-                   label={'Password'}
-                   id={'userPassword'}/>
-            <Field component={'input'}
-                   type={'checkbox'}
-                   name={'rememberMe'}/>
-            <button>Log in</button>
-        </form>
+    return (<>
+            <form onSubmit={props.handleSubmit}>
+                <Field component={Input}
+                       type={'text'}
+                       name={'login'}
+                       validate={[required, maxLength30, minLength5]}
+                       label={'Login'}
+                       id={'userLogin'}/>
+                <Field component={Input}
+                       name={'password'}
+                       type={'password'}
+                       validate={[required, maxLength30, minLength5]}
+                       label={'Password'}
+                       id={'userPassword'}/>
+                {props.error ? <div>{props.error}</div> : ''}
+                <Field component={'input'}
+                       type={'checkbox'}
+                       name={'rememberMe'}/>
+                <PurpleButton text={'log in'}/>
+            </form>
+        </>
     )
 }
 
@@ -48,7 +50,6 @@ const LoginReduxForm = reduxForm<FormDataType>({form: 'loginForm'})(LoginForm)
 
 const Login: React.FC<LoginPropsType & MapDispatchToPropsType> = (props) => {
     const onHandleSubmit = (formData: FormDataType) => {
-        console.log(formData)
         props.logInThunk(formData.login, formData.password, formData.rememberMe)
     }
     return (
