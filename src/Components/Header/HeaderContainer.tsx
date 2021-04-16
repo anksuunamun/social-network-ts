@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-        this.props.getAuthThunkAC();
+        // this.props.getAuthThunkAC();
     }
 
     render() {
