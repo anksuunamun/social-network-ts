@@ -1,5 +1,5 @@
 import {
-    FollowUserAC,
+    FollowUserAC, SetCurrentPageAC, setDisabledButtonAC, setIsLoadingAC, setTotalCountAC,
     setUsersAC,
     UnFollowUserAC,
     usersReducer,
@@ -103,4 +103,31 @@ test('correct users should be set', () => {
     expect(endState.users[0].id).toBe(15527);
     expect(endState.users[1].id).toBe(15521);
     expect(endState.users.length).toBe(2);
+})
+
+test('totalCount should be correct', () => {
+    let endState = usersReducer(startState, setTotalCountAC(10));
+
+    expect(endState.totalCount).toBe(10);
+    expect(startState.totalCount).toBe(0);
+})
+
+test('isLoading should be correct', () => {
+    let endState = usersReducer(startState, setIsLoadingAC(true));
+
+    expect(endState.isLoading).toBe(true);
+    expect(startState.isLoading).toBe(false);
+})
+
+test('currentPage should be correct', () => {
+    let endState = usersReducer(startState, SetCurrentPageAC(5));
+
+    expect(endState.currentPage).toBe(5);
+    expect(startState.currentPage).toBe(1);
+})
+
+test('disabledButtons should be correct', () => {
+    let endState = usersReducer(startState, setDisabledButtonAC(15527, true));
+
+    expect(endState.disabledButtons).toEqual([15527])
 })

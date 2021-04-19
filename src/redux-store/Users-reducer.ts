@@ -119,14 +119,14 @@ export const setDisabledButtonAC = (id: number, isFetching: boolean): SetDisable
     }
 }
 
-const actions = {
-    setDisabledButtonAC: (id: number, isFetching: boolean): SetDisabledButtonActionType => {
-        return {
-            type: SET_DISABLED_BUTTON,
-            id, isFetching
-        }
-    }
-}
+// const actions = {
+//     setDisabledButtonAC: (id: number, isFetching: boolean): SetDisabledButtonActionType => {
+//         return {
+//             type: SET_DISABLED_BUTTON,
+//             id, isFetching
+//         }
+//     }
+// }
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
 
