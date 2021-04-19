@@ -13,22 +13,22 @@ type UserPropsType = {
 }
 
 const User: React.FC<UserPropsType> = (props) => {
-    const {user, onFollow, onUnfollow,} = props
+    const {user: {id, photos, followed, status, name}, onFollow, onUnfollow, disabledButtons} = props
     return (
-        <div className={styles.userWrapper} key={user.id}>
-            <NavLink to={'/profile/' + user.id}>
-                <img src={user.photos.small ? user.photos.small : picture} alt={''}/>
+        <div className={styles.userWrapper}>
+            <NavLink to={'/profile/' + id}>
+                <img src={photos.small ? photos.small : picture} alt={''}/>
             </NavLink>
-            <div className={styles.userName}>{user.name}</div>
-            <div>{user.status}</div>
-            <div>{user.followed}</div>
-            {user.followed
+            <div className={styles.userName}>{name}</div>
+            <div>{status}</div>
+            <div>{followed}</div>
+            {followed
                 ? <PurpleButton text={'unfollow'}
-                                onButtonClick={() => props.onUnfollow(user.id)}
-                                disabled={props.disabledButtons.some(id => id === user.id)}/>
+                                onButtonClick={() => onUnfollow(id)}
+                                disabled={disabledButtons.some(itemId => itemId === id)}/>
                 : <PurpleButton text={'follow'}
-                                onButtonClick={() => props.onFollow(user.id)}
-                                disabled={props.disabledButtons.some(id => id === user.id)}/>}
+                                onButtonClick={() => onFollow(id)}
+                                disabled={disabledButtons.some(itemId => itemId === id)}/>}
         </div>
     )
 }
