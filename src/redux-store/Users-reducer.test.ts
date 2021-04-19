@@ -7,9 +7,10 @@ import {
     UserType
 } from './Users-reducer';
 
+let startState: UsersReducerInitialStateType;
 
-test('correct user should be followed', () => {
-    let startState: UsersReducerInitialStateType = {
+beforeEach(() => {
+    startState = {
         users: [{
             followed: false,
             id: 15527,
@@ -33,9 +34,17 @@ test('correct user should be followed', () => {
                     },
                 status: null,
                 uniqueUrlName: null,
-            }]
+            }],
+        totalCount: 0,
+        currentPage: 1,
+        portionSize: 9,
+        isLoading: false,
+        disabledButtons: [],
     }
+})
 
+
+test('correct user should be followed', () => {
     let userIdForFollow = 15527;
     let endState = usersReducer(startState, FollowUserAC(userIdForFollow));
 
@@ -45,32 +54,6 @@ test('correct user should be followed', () => {
 })
 
 test('correct user should be unfollowed', () => {
-    let startState: UsersReducerInitialStateType = {
-        users: [{
-            followed: false,
-            id: 15527,
-            name: 'grigory95',
-            photos:
-                {
-                    small: null,
-                    large: null
-                },
-            status: null,
-            uniqueUrlName: null,
-        },
-            {
-                followed: true,
-                id: 15521,
-                name: 'grigory95',
-                photos:
-                    {
-                        small: null,
-                        large: null
-                    },
-                status: null,
-                uniqueUrlName: null,
-            }]
-    }
 
     let userIdForFollow = 15521;
     let endState = usersReducer(startState, UnFollowUserAC(userIdForFollow));
@@ -82,7 +65,12 @@ test('correct user should be unfollowed', () => {
 
 test('correct users should be set', () => {
     let startState: UsersReducerInitialStateType = {
-        users: []
+        users: [],
+        totalCount: 0,
+        currentPage: 1,
+        portionSize: 9,
+        isLoading: false,
+        disabledButtons: [],
     }
 
     let users: Array<UserType> = [{
