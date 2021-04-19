@@ -13,28 +13,7 @@
     justify-content: center;
 }
 
-.userWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #473B38;
-    padding: 15px;
-    border-radius: 0.25rem;
-    border: 1px solid #73605b;
-}
-
-.userWrapper img {
-    width: 150px;
-}
-
 .paginator {
 
 }
 
-.userName {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #ae54d8;
-    font-size: 1.1em;
-}
