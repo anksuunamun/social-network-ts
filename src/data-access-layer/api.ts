@@ -3,7 +3,7 @@ import {UserType} from '../redux-store/Users-reducer';
 import {UserProfileType} from '../redux-store/Profile-reducer';
 
 
-type CommonResponseType<T> = {
+export type CommonResponseType<T> = {
     resultCode: number
     messages: string[]
     data: T

@@ -167,6 +167,15 @@ export const followThunkAC = (userId: number): ThunkType => {
         })
     }
 }
+// export const followThunkAC = (userId: number): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
+//     dispatch(setDisabledButtonAC(userId, true));
+//     let response = await followAPI.follow(userId)
+//     if (response.resultCode === 0) {
+//         dispatch(FollowUserAC(userId))
+//     }
+//     dispatch(setDisabledButtonAC(userId, false))
+// }
+
 
 export const unfollowThunkAC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
