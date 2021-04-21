@@ -9,6 +9,7 @@ const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
 const SET_IS_LOADING = 'SET_IS_LOADING';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_DISABLED_BUTTON = 'SET_DISABLED_BUTTON';
+const SET_SEARCH_FILTER = 'SET_SEARCH_FILTER';
 
 // enum USERS_REDUCER_ACTIONS_TYPE {
 //     SET_USERS = 'SET_USERS',
@@ -39,7 +40,13 @@ export type UsersReducerInitialStateType = {
     portionSize: number
     isLoading: boolean
     disabledButtons: Array<number>
+    filter: {
+        friend: boolean | null,
+        term: string
+    }
 }
+
+export type SearchFilterType = typeof initialState.filter;
 
 const initialState: UsersReducerInitialStateType = {
     users: [],
@@ -48,6 +55,10 @@ const initialState: UsersReducerInitialStateType = {
     portionSize: 9,
     isLoading: false,
     disabledButtons: [],
+    filter: {
+        friend: false,
+        term: ''
+    }
 }
 
 
@@ -79,6 +90,11 @@ type SetDisabledButtonActionType = {
     type: typeof SET_DISABLED_BUTTON,
     id: number
     isFetching: boolean
+}
+type SetSearchFilterActionType = {
+    type: typeof SET_SEARCH_FILTER,
+    term: string
+    friend: boolean | null
 }
 export const setUsersAC = (users: Array<UserType>): SetUsersActionType => {
     return {
@@ -119,6 +135,12 @@ export const setDisabledButtonAC = (id: number, isFetching: boolean): SetDisable
     }
 }
 
+export const SetSearchFilterAC = (term: string, friend: boolean | null): SetSearchFilterActionType => {
+    return {
+        type: SET_SEARCH_FILTER, term, friend
+    }
+}
+
 // const actions = {
 //     setDisabledButtonAC: (id: number, isFetching: boolean): SetDisabledButtonActionType => {
 //         return {
@@ -130,24 +152,25 @@ export const setDisabledButtonAC = (id: number, isFetching: boolean): SetDisable
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
 
-export const getUsersThunkAC = (portionSize: number, currentPage: number): ThunkType => {
+export const getUsersThunkAC = (portionSize: number, currentPage: number, term: string = '', friend: boolean | null = null): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
         dispatch(setIsLoadingAC(true));
-        usersAPI.getUsers(portionSize, currentPage)
+        usersAPI.getUsers(portionSize, currentPage, term, friend)
             .then(response => {
                 dispatch(setUsersAC(response.items));
                 dispatch(setTotalCountAC(response.totalCount));
                 dispatch(setIsLoadingAC(false));
+                dispatch(SetSearchFilterAC(term, friend));
             })
             .catch(response => console.log(response))
     }
 }
 
-export const onPageClickThunkAC = (portionSize: number, currentPage: number): ThunkType => {
+export const onPageClickThunkAC = (portionSize: number, currentPage: number, term: string = '', friend: boolean | null = null): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
         dispatch(setIsLoadingAC(true));
         dispatch(SetCurrentPageAC(currentPage));
-        usersAPI.getUsers(portionSize, currentPage)
+        usersAPI.getUsers(portionSize, currentPage, term, friend)
             .then(response => {
                 dispatch(setUsersAC(response.items));
                 dispatch(setIsLoadingAC(false));
@@ -200,6 +223,7 @@ export type ActionType =
     | SetIsLoadingActionType
     | SetCurrentPageActionType
     | SetDisabledButtonActionType
+    | SetSearchFilterActionType
 
 export const usersReducer = (state: UsersReducerInitialStateType = initialState, action: ActionType): UsersReducerInitialStateType => {
     switch (action.type) {
@@ -249,6 +273,14 @@ export const usersReducer = (state: UsersReducerInitialStateType = initialState,
             //         ? [...state.disabledButtons, action.id]
             //         : state.disabledButtons.filter(id => id !== action.id)
             // }
+        }
+        case (SET_SEARCH_FILTER): {
+            return {
+                ...state, filter: {
+                    friend: action.friend,
+                    term: action.term
+                }
+            }
         }
         default:
             return state

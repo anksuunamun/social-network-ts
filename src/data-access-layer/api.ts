@@ -68,10 +68,10 @@ export const profileAPI = {
 }
 
 export const usersAPI = {
-    getUsers(portionSize: number, currentPage: number) {
-        return instance.get<UserResponseType>(`users?count=${portionSize}&page=${currentPage}`).then(
-            response => response.data
-        )
+    getUsers(portionSize: number, currentPage: number, term: string = '', friend: boolean | null = null) {
+        return instance.get<UserResponseType>(`users?count=${portionSize}&page=${currentPage}&term=${term}` + (friend === null ? '' : `&friend=${friend}`))
+            .then(response => response.data
+            )
     }
 }
 

@@ -19,11 +19,9 @@ class App extends React.Component<MStPType & MDTPType> {
 
     componentDidMount() {
         this.props.setAppInitTC();
-        console.log(this.props)
     }
 
     render() {
-        console.log(this.props)
         return (
             <>
                 {this.props.isAppInitialized
