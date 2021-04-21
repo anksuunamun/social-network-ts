@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux-store/redux-store';
 import {Dispatch} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
+import {Redirect} from 'react-router-dom';
 
 
 export type LoginPropsType = {}
@@ -48,19 +49,27 @@ let LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'loginForm'})(LoginForm)
 
-const Login: React.FC<LoginPropsType & MapDispatchToPropsType> = (props) => {
+const Login: React.FC<LoginPropsType & MapDispatchToPropsType & MapStateToPropsType> = (props) => {
     const onHandleSubmit = (formData: FormDataType) => {
         props.logInThunk(formData.login, formData.password, formData.rememberMe)
     }
     return (
         <div className={'contentWrapper'}>
-            <LoginReduxForm onSubmit={onHandleSubmit}/>
+            {props.isAuth ? <Redirect to={'/profile'}/> : <LoginReduxForm onSubmit={onHandleSubmit}/>}
         </div>
     )
 }
 
 type MapDispatchToPropsType = {
     logInThunk: (email: string, password: string, rememberMe: boolean) => void
+}
+type MapStateToPropsType = {
+    isAuth: boolean
+}
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        isAuth: state.auth.isAuth
+    }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unknown, ActionsType>): MapDispatchToPropsType => {
@@ -69,4 +78,4 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
