@@ -26,7 +26,10 @@ const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
                     onSubmit={onSearchFormSubmitHandler}>
                 {({isSubmitting}) => (
                     <Form className={styles.formWrapper}>
-                        <Field type="text" name="term" className={styles.input}/>
+                        <Field type="text"
+                               name="term"
+                               className={styles.input}
+                               placeholder={'Find by name...'}/>
                         <Field name="friend" as="select">
                             <option value="null">All</option>
                             <option value="true">Only followed</option>
