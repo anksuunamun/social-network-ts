@@ -1,6 +1,7 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AppStateType} from './redux-store';
 import {followAPI, usersAPI} from '../data-access-layer/api';
+import {updateObjectInArray} from '../utils/objectHelpers';
 
 const SET_USERS = 'SET_USERS';
 const FOLLOW_USER = 'FOLLOW_USER';
@@ -234,20 +235,14 @@ export const usersReducer = (state: UsersReducerInitialStateType = initialState,
         }
         case (FOLLOW_USER): {
             return {
-                ...state, users: state.users.map(user => {
-                    if (user.id === action.id) {
-                        return {...user, followed: true}
-                    } else return user
-                })
+                ...state,
+                users: updateObjectInArray(state.users, action.id, 'id', {followed: true})
             }
         }
         case (UNFOLLOW_USER): {
             return {
-                ...state, users: state.users.map(user => {
-                    if (user.id === action.id) {
-                        return {...user, followed: false}
-                    } else return user
-                })
+                ...state,
+                users: updateObjectInArray(state.users, action.id, 'id', {followed: false})
             }
         }
         case (SET_TOTAL_COUNT): {
