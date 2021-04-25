@@ -1,6 +1,6 @@
 import React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
-import {Input} from '../Common/FieldControls/FieldControls';
+import {createField, Input} from '../Common/FieldControls/FieldControls';
 import {maxLength, minLength, required} from '../../utils/validators/formValidators';
 import PurpleButton from '../Common/PurpleButton/PurpleButton';
 import {ActionsType, logInThunk} from '../../redux-store/auth-reducer';
@@ -25,22 +25,10 @@ const minLength5 = minLength(5);
 let LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (<>
             <form onSubmit={props.handleSubmit}>
-                <Field component={Input}
-                       type={'text'}
-                       name={'login'}
-                       validate={[required, maxLength30, minLength5]}
-                       label={'Login'}
-                       id={'userLogin'}/>
-                <Field component={Input}
-                       name={'password'}
-                       type={'password'}
-                       validate={[required, maxLength30, minLength5]}
-                       label={'Password'}
-                       id={'userPassword'}/>
+                {createField(Input, 'login', 'text', [required, maxLength30, minLength5], 'Login', 'userLogin')}
+                {createField(Input, 'password', 'password', [required, maxLength30, minLength5], 'Password', 'userPassword')}
                 {props.error ? <div>{props.error}</div> : ''}
-                <Field component={'input'}
-                       type={'checkbox'}
-                       name={'rememberMe'}/>
+                {createField('input', 'rememberMe', 'checkbox')}
                 <PurpleButton text={'log in'}/>
             </form>
         </>

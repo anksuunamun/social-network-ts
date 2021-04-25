@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {ComponentType, FC} from 'react';
 import CustomTextarea, {CustomTextareaPropsType} from '../CustomTextarea/CustomTextarea';
 import CustomInput, {CustomInputPropsType} from '../CustomInput/CustomInput';
-import {WrappedFieldProps} from 'redux-form';
+import {Field, WrappedFieldProps} from 'redux-form';
+import {required} from '../../../utils/validators/formValidators';
 
 type CustomComponentPropsType = CustomInputPropsType | CustomTextareaPropsType
 export const FieldControls: React.FC<WrappedFieldProps & CustomComponentPropsType> = (props) => {
@@ -26,3 +27,18 @@ export const TextArea: React.FC<WrappedFieldProps & CustomTextareaPropsType> = (
         <FieldControls {...props}><CustomTextarea {...input} {...restProps}/></FieldControls>
     )
 }
+
+
+type ReceivedComponentType =
+    FC<WrappedFieldProps & CustomTextareaPropsType>
+    | FC<WrappedFieldProps & CustomInputPropsType>
+    | string
+
+export const createField = (component: ReceivedComponentType, name: string, type?: string, validate?: Array<Function>, label?: string, id?: string, placeholder?: string) => (
+    <Field component={component}
+           type={type}
+           name={name}
+           validate={validate}
+           label={label}
+           id={id}/>
+)

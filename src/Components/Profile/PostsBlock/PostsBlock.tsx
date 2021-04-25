@@ -4,7 +4,7 @@ import Post from './Post/Post';
 import {PostsType} from '../../../redux-store/Profile-reducer';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
 import {InjectedFormProps, reduxForm, Field} from 'redux-form';
-import {TextArea} from '../../Common/FieldControls/FieldControls';
+import {createField, TextArea} from '../../Common/FieldControls/FieldControls';
 
 
 type OwnAddPostFormPropsType = {
@@ -15,8 +15,7 @@ type OwnAddPostFormPropsType = {
 let AddPostForm: React.FC<InjectedFormProps<OwnAddPostFormPropsType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Field name={'newPostText'}
-                   component={TextArea}/>
+            {createField(TextArea, 'newPostText')}
             <PurpleButton text={'add post'}/>
         </form>
 

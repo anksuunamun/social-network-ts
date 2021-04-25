@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom';
 import {DialogsPropsType} from './DialogsContainer';
 import PurpleButton from '../Common/PurpleButton/PurpleButton';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {TextArea} from '../Common/FieldControls/FieldControls';
+import {createField, TextArea} from '../Common/FieldControls/FieldControls';
 
 type FormPropsType = {
     addMessage: string
@@ -14,8 +14,7 @@ const AddMessageForm: React.FC<InjectedFormProps<FormPropsType>> = (props) => {
     return (
         <>
             <form onSubmit={props.handleSubmit}>
-                <Field component={TextArea}
-                       name={'addMessage'}/>
+                {createField(TextArea, 'addMessage')}
                 <PurpleButton text={'add message'}/>
             </form>
         </>
