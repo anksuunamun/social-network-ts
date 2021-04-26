@@ -1,6 +1,6 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AppStateType} from './redux-store';
-import {followAPI, usersAPI} from '../data-access-layer/api';
+import {CommonResponseType, followAPI, usersAPI} from '../data-access-layer/api';
 import {updateObjectInArray} from '../utils/objectHelpers';
 
 const SET_USERS = 'SET_USERS';
@@ -180,41 +180,32 @@ export const onPageClickThunkAC = (portionSize: number, currentPage: number, ter
     }
 }
 
+const followUnfollowFlow = (userId: number, dispatch: ThunkDispatch<AppStateType, unknown, ActionType>,
+                            actionCreator: (id: number) => FollowUserActionType | UnFollowUserActionType,
+                            apiMethod: (userId: number) => Promise<CommonResponseType<{}>>) => {
+    dispatch(setDisabledButtonAC(userId, true));
+    apiMethod(userId).then(response => {
+        if (response.resultCode === 0) {
+            dispatch(actionCreator(userId))
+        }
+        dispatch(setDisabledButtonAC(userId, false))
+    })
+}
+
 export const followThunkAC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
-        dispatch(setDisabledButtonAC(userId, true));
-        followAPI.follow(userId).then(response => {
-            if (response.resultCode === 0) {
-                dispatch(FollowUserAC(userId))
-            }
-            dispatch(setDisabledButtonAC(userId, false))
-        })
+        const apiMethod = followAPI.follow.bind(followAPI);
+        followUnfollowFlow(userId, dispatch, FollowUserAC, apiMethod);
     }
 }
-// export const followThunkAC = (userId: number): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
-//     dispatch(setDisabledButtonAC(userId, true));
-//     let response = await followAPI.follow(userId)
-//     if (response.resultCode === 0) {
-//         dispatch(FollowUserAC(userId))
-//     }
-//     dispatch(setDisabledButtonAC(userId, false))
-// }
-
 
 export const unfollowThunkAC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
-        dispatch(setDisabledButtonAC(userId, true));
-        followAPI.unfollow(userId).then(
-            response => {
-                if (response.resultCode === 0) {
-                    dispatch(UnFollowUserAC(userId));
-                }
-                dispatch(setDisabledButtonAC(userId, false))
-            }
-        )
+        const apiMethod = followAPI.unfollow.bind(followAPI);
+        followUnfollowFlow(userId, dispatch, UnFollowUserAC, apiMethod);
+
     }
 }
-
 
 export type ActionType =
     SetUsersActionType
@@ -262,6 +253,7 @@ export const usersReducer = (state: UsersReducerInitialStateType = initialState,
                 ids = [...state.disabledButtons, action.id]
             }
             return {...state, disabledButtons: ids};
+            //Another variant.
             // return {
             //     ...state,
             //     disabledButtons: action.isFetching
