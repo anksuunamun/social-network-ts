@@ -75,7 +75,7 @@ type MapStateToPropsType = {
     'id': number | null
     'userStatus': string
     'isAuth': boolean
-    authUserId: number | null
+    'authUserId': number | null
 }
 
 export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType
@@ -87,8 +87,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         'isFetching': state.profilePage.isFetching,
         'id': state.auth.id,
         'userStatus': state.profilePage.userStatus,
-        isAuth: state.auth.isAuth,
-        authUserId: state.auth.id,
+        'isAuth': state.auth.isAuth,
+        'authUserId': state.auth.id,
     }
 }
 
