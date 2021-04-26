@@ -29,7 +29,7 @@ let LoginForm = React.memo(function (props: InjectedFormProps<FormDataType>) {
                 {createField(Input, 'password', 'password', [required, maxLength30, minLength5], 'Password', 'userPassword')}
                 {props.error ? <div>{props.error}</div> : ''}
                 {createField('input', 'rememberMe', 'checkbox')}
-                <PurpleButton text={'log in'}/>
+                <PurpleButton text={'log in'}  type={'submit'}/>
             </form>
         </>
     )

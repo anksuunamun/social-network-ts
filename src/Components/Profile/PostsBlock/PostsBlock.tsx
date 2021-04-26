@@ -16,7 +16,7 @@ let AddPostForm = React.memo(function (props: InjectedFormProps<OwnAddPostFormPr
     return (
         <form onSubmit={props.handleSubmit}>
             {createField(TextArea, 'newPostText')}
-            <PurpleButton text={'add post'}/>
+            <PurpleButton text={'add post'} type={'submit'}/>
         </form>
     )
 })

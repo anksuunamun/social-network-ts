@@ -15,7 +15,7 @@ const AddMessageForm = React.memo(function (props: InjectedFormProps<FormPropsTy
         <>
             <form onSubmit={props.handleSubmit}>
                 {createField(TextArea, 'addMessage')}
-                <PurpleButton text={'add message'}/>
+                <PurpleButton text={'add message'} type={'submit'}/>
             </form>
         </>
     )
