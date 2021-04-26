@@ -12,7 +12,7 @@ type UserPropsType = {
     disabledButtons: number[]
 }
 
-const User: React.FC<UserPropsType> = (props) => {
+const User = React.memo(function (props: UserPropsType) {
     const {user: {id, photos, followed, status, name}, onFollow, onUnfollow, disabledButtons} = props
     return (
         <div className={styles.userWrapper}>
@@ -31,6 +31,6 @@ const User: React.FC<UserPropsType> = (props) => {
                                 disabled={disabledButtons.some(itemId => itemId === id)}/>}
         </div>
     )
-}
+})
 
 export default User;

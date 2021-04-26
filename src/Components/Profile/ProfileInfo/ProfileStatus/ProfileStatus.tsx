@@ -10,7 +10,7 @@ type ProfileStatusStateType = {
     editMode: boolean
 }
 
-class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatusStateType> {
+class ProfileStatus extends React.PureComponent<ProfileStatusPropsType, ProfileStatusStateType> {
 
     constructor(props: ProfileStatusPropsType) {
         super(props)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 import {createField, Input} from '../Common/FieldControls/FieldControls';
 import {maxLength, minLength, required} from '../../utils/validators/formValidators';
@@ -22,7 +22,7 @@ export type FormDataType = {
 const maxLength30 = maxLength(30);
 const minLength5 = minLength(5);
 
-let LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+let LoginForm = React.memo(function (props: InjectedFormProps<FormDataType>) {
     return (<>
             <form onSubmit={props.handleSubmit}>
                 {createField(Input, 'login', 'text', [required, maxLength30, minLength5], 'Login', 'userLogin')}
@@ -33,21 +33,20 @@ let LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
             </form>
         </>
     )
-}
+})
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'loginForm'})(LoginForm)
 
-const Login: React.FC<LoginPropsType & MapDispatchToPropsType & MapStateToPropsType> = (props) => {
-    const onHandleSubmit = (formData: FormDataType) => {
+const Login = React.memo(function (props: LoginPropsType & MapDispatchToPropsType & MapStateToPropsType) {
+    const onHandleSubmit = useCallback((formData: FormDataType) => {
         props.logInThunk(formData.login, formData.password, formData.rememberMe)
-    }
+    }, [props.logInThunk])
     return (
         <div className={'contentWrapper'}>
             {props.isAuth ? <Redirect to={'/profile'}/> : <LoginReduxForm onSubmit={onHandleSubmit}/>}
         </div>
     )
-}
-
+})
 type MapDispatchToPropsType = {
     logInThunk: (email: string, password: string, rememberMe: boolean) => void
 }

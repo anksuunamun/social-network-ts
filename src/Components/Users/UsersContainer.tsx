@@ -4,7 +4,7 @@ import {AppStateType} from '../../redux-store/redux-store';
 import {compose, Dispatch} from 'redux';
 import {
     ActionType, followThunkAC,
-    getUsersThunkAC, onPageClickThunkAC, SetSearchFilterAC,
+    getUsersThunkAC, onPageClickThunkAC,
     unfollowThunkAC,
     UserType
 } from '../../redux-store/Users-reducer';
@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
     }
 }
 
-class UsersContainer extends React.Component<UsersContainerPropsType, UsersContainerStateType> {
+class UsersContainer extends React.PureComponent<UsersContainerPropsType, UsersContainerStateType> {
 
     // constructor(props: UsersContainerPropsType) {
     //     super(props);

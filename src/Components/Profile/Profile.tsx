@@ -5,7 +5,7 @@ import PostsBlock from './PostsBlock/PostsBlock';
 import {ProfilePropsType} from './ProfileContainer';
 import Preloader from '../Common/Preloader/Preloader';
 
-function Profile(props: ProfilePropsType) {
+const Profile = function (props: ProfilePropsType) {
     return (
         <>
             {props.isFetching

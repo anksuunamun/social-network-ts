@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useCallback, useState} from 'react';
 import styles from './ProfileInfo.module.css'
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import picture from '../../../Assets/Images/picture.png'
@@ -14,9 +14,10 @@ type ProfileInfoPropsType = {
     updateUserStatusThunkAC: (status: string) => void
 }
 
-function ProfileInfo(props: ProfileInfoPropsType) {
+const ProfileInfo = function (props: ProfileInfoPropsType) {
     const [fileName, setFileName] = useState('Update photo');
-    const onPhotoUpload = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const onPhotoUpload = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let file = e.target.files ? e.target.files[0] : '';
         if (file) {
             const formData = new FormData();
@@ -25,7 +26,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
         }
         let newFileName = e.currentTarget.value.slice(12)
         setFileName(newFileName);
-    }
+    }, [props.updateProfilePhotoThunkAC])
 
     return (
         <div className={styles.profileInfoWrapper}>

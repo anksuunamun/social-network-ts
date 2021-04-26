@@ -24,7 +24,7 @@ type PathParamsType = {
 
 type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerAjaxPropsType & ProfileContainerAjaxStateType
 
-class ProfileContainer extends React.Component<PropsType> {
+class ProfileContainer extends React.PureComponent<PropsType> {
 
     refreshProfile() {
         let userId = this.props.match.params.userId;

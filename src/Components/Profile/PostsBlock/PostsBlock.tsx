@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styles from './PostsBlock.module.css'
 import Post from './Post/Post';
 import {PostsType} from '../../../redux-store/Profile-reducer';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
-import {InjectedFormProps, reduxForm, Field} from 'redux-form';
+import {InjectedFormProps, reduxForm} from 'redux-form';
 import {createField, TextArea} from '../../Common/FieldControls/FieldControls';
 
 
@@ -12,17 +12,16 @@ type OwnAddPostFormPropsType = {
 }
 
 
-let AddPostForm: React.FC<InjectedFormProps<OwnAddPostFormPropsType>> = (props) => {
+let AddPostForm = React.memo(function (props: InjectedFormProps<OwnAddPostFormPropsType>) {
     return (
         <form onSubmit={props.handleSubmit}>
             {createField(TextArea, 'newPostText')}
             <PurpleButton text={'add post'}/>
         </form>
-
     )
-}
+})
 
-const AddPostReduxForm = reduxForm<OwnAddPostFormPropsType>({form: 'addPostForm'})(AddPostForm)
+const AddPostReduxForm = React.memo(reduxForm<OwnAddPostFormPropsType>({form: 'addPostForm'})(AddPostForm))
 
 type PostsBlockType = {
     posts: Array<PostsType>
@@ -30,12 +29,11 @@ type PostsBlockType = {
     changeLikes: (id: string, upOrDown: 'up' | 'down') => void
 }
 
-function PostsBlock(props: PostsBlockType) {
+const PostsBlock = React.memo(function (props: PostsBlockType) {
 
-    const onFormSubmit = (data: OwnAddPostFormPropsType) => {
-        console.log(data)
+    const onFormSubmit = useCallback((data: OwnAddPostFormPropsType) => {
         props.addPost(data.newPostText);
-    }
+    }, [props.addPost])
 
     return (
         <div className={styles.postsBlock}>
@@ -50,7 +48,7 @@ function PostsBlock(props: PostsBlockType) {
             </div>
         </div>
     )
-}
+})
 
 
 export default PostsBlock;

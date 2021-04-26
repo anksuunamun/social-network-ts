@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import styles from './Dialogs.module.css';
 import {NavLink} from 'react-router-dom';
 import {DialogsPropsType} from './DialogsContainer';
 import PurpleButton from '../Common/PurpleButton/PurpleButton';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {InjectedFormProps, reduxForm} from 'redux-form';
 import {createField, TextArea} from '../Common/FieldControls/FieldControls';
 
 type FormPropsType = {
     addMessage: string
 }
 
-const AddMessageForm: React.FC<InjectedFormProps<FormPropsType>> = (props) => {
+const AddMessageForm = React.memo(function (props: InjectedFormProps<FormPropsType>) {
     return (
         <>
             <form onSubmit={props.handleSubmit}>
@@ -19,18 +19,18 @@ const AddMessageForm: React.FC<InjectedFormProps<FormPropsType>> = (props) => {
             </form>
         </>
     )
-}
+})
 
 const AddMessageReduxForm = reduxForm<FormPropsType>({form: 'addMessageForm'})(AddMessageForm)
 
 
-function Dialogs(props: DialogsPropsType) {
+const Dialogs = React.memo(function (props: DialogsPropsType) {
 
-    const onAddMessageFormSubmit = (data: FormPropsType) => {
+    const onAddMessageFormSubmit = useCallback((data: FormPropsType) => {
         props.addMessage(data.addMessage);
-    }
+    }, [props.addMessage])
 
-    const dialogs = props.dialogs.map(
+    const dialogs = useMemo(() => props.dialogs.map(
         item => {
             return (
                 <NavLink to={`/messages/${item.id}`}
@@ -40,8 +40,9 @@ function Dialogs(props: DialogsPropsType) {
                 </NavLink>
             )
         }
-    )
-    const messages = props.messages.map(
+    ), [props.dialogs])
+
+    const messages = useMemo(() => props.messages.map(
         item => {
             return (
                 <div key={item.id}>
@@ -49,7 +50,7 @@ function Dialogs(props: DialogsPropsType) {
                 </div>
             )
         }
-    )
+    ), [props.messages])
 
     return (
         <div className={styles.dialogsWrapper + ' contentWrapper'}>
@@ -64,6 +65,6 @@ function Dialogs(props: DialogsPropsType) {
             </div>
         </div>
     )
-}
+})
 
 export default Dialogs;

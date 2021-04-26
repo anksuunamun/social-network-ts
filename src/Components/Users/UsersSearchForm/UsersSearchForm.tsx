@@ -1,25 +1,22 @@
 import {Field, Form, Formik} from 'formik';
-import React from 'react';
+import React, {useCallback} from 'react';
 import styles from './UsersSearchForm.module.css';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
-import {createField} from '../../Common/FieldControls/FieldControls';
 
 type UsersSearchFormPropsType = {
     onFilterChanged: (term: string, friend: boolean | null) => void
 }
 
-
-const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
+const UsersSearchForm = React.memo(function (props: UsersSearchFormPropsType) {
     type SearchFormPropsType = {
         term: string
         friend: boolean | null
     }
 
-    const onSearchFormSubmitHandler = (values: SearchFormPropsType, {setSubmitting}: any) => {
+    const onSearchFormSubmitHandler = useCallback((values: SearchFormPropsType, {setSubmitting}: any) => {
         props.onFilterChanged(values.term, values.friend);
-        console.log(values)
         setSubmitting(false);
-    }
+    }, [props.onFilterChanged])
 
     return (
         <>
@@ -31,7 +28,6 @@ const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
                                name="term"
                                className={styles.input}
                                placeholder={'Find by name...'}/>
-
                         <Field name="friend" as="select">
                             <option value="null">All</option>
                             <option value="true">Only followed</option>
@@ -39,12 +35,13 @@ const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
                         </Field>
                         <PurpleButton text={'Find'}
                                       disabled={isSubmitting}
-                                      small/>
+                                      small
+                                      type={'submit'}/>
                     </Form>
                 )}
             </Formik>
         </>)
-}
+})
 
 export default UsersSearchForm;
 

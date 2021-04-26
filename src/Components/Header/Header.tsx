@@ -5,7 +5,7 @@ import PurpleButton from '../Common/PurpleButton/PurpleButton';
 import {HeaderPropsType} from './HeaderContainer';
 import Preloader from '../Common/Preloader/Preloader';
 
-function Header(props: HeaderPropsType) {
+const Header = React.memo(function (props: HeaderPropsType) {
     return (
         <div className={styles.headerWrapper}>
             <div className={styles.logo}>
@@ -14,7 +14,7 @@ function Header(props: HeaderPropsType) {
             <div className={styles.userActionsWrapper}>
                 {props.isFetching
                     ? <Preloader/>
-                    : <div className={styles.userName}>{props.login ? props.login : 'UserName'}</div>
+                    : <div className={styles.userName}>{props.login ? props.login : 'not authorized'}</div>
                 }
                 {props.isAuth ? <PurpleButton text={'Log out'} onButtonClick={() => props.logOutThunk()}/>
                     : <PurpleButton text={'Log in'} navLink={'/login'}>
@@ -22,6 +22,6 @@ function Header(props: HeaderPropsType) {
             </div>
         </div>
     )
-}
+})
 
 export default Header;

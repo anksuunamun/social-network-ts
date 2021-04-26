@@ -36,14 +36,11 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
         setUserAuth: (id: number, login: string, email: string) => dispatch(setUserAuth(id, login, email)),
         setIsFetching: (isFetching: boolean) => dispatch(setIsFetching(isFetching)),
         getAuthThunkAC: () => dispatch(getAuthThunkAC()),
-        logOutThunk : () => dispatch(logOutThunk()),
+        logOutThunk: () => dispatch(logOutThunk()),
     }
 }
 
-class HeaderContainer extends React.Component<HeaderContainerPropsType> {
-    componentDidMount() {
-        // this.props.getAuthThunkAC();
-    }
+class HeaderContainer extends React.PureComponent<HeaderContainerPropsType> {
 
     render() {
         return (
@@ -54,6 +51,5 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     }
 
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);
