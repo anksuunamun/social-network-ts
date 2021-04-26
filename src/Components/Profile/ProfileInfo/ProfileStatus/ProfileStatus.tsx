@@ -39,7 +39,6 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatu
     componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<ProfileStatusStateType>, snapshot?: any) {
         if (prevProps.userStatus !== this.props.userStatus) {
             this.setState({status: this.props.userStatus});
-            console.log('State was updated')
         }
     }
 

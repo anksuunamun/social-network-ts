@@ -83,7 +83,6 @@ export type ThunkType = ThunkAction<Promise<void> | void, AppStateType, unknown,
 
 export const getUserProfileThunkAC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>, getState: () => AppStateType) => {
-        console.log('getUserProfileThunkAC works')
         dispatch(setIsFetchingAC(true));
         profileAPI.getUserProfile(userId)
             .then((response) => {
@@ -97,7 +96,6 @@ export const getUserProfileThunkAC = (userId: number): ThunkType => {
 
 export const getUserStatusThunkAC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>, getState: () => AppStateType) => {
-        console.log('getUserStatusThunkAC')
         profileAPI.getUserStatus(userId)
             .then(response => dispatch(setUserStatusAC(response)))
             .catch(response => console.log(response));
