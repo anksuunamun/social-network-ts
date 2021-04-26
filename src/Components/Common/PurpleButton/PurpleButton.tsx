@@ -9,6 +9,7 @@ type PurpleButtonPropsType = {
     className?: string
     disabled?: boolean
     navLink?: string
+    type?: 'button' | 'submit' | 'reset' | undefined
 }
 
 const PurpleButton: React.FC<PurpleButtonPropsType> = (props: PurpleButtonPropsType) => {
@@ -16,7 +17,8 @@ const PurpleButton: React.FC<PurpleButtonPropsType> = (props: PurpleButtonPropsT
         <>
             <button className={`${styles.buttonWrapper} ${props.small ? styles.small : ''} ${props.className}`}
                     onClick={props.onButtonClick}
-                    disabled={props.disabled}>
+                    disabled={props.disabled}
+                    type={props.type ? props.type : 'button'}>
                 {props.navLink ? <NavLink to={props.navLink}>{props.text}</NavLink> : props.text}
             </button>
         </>
