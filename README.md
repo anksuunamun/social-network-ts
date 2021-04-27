@@ -21,7 +21,8 @@ It was bootstrapped with [Create React App](https://github.com/facebook/create-r
 * on users page:
     * follow or unfollow another network user;
     * switch between pages with users;
-
+    * filter users by followed/unfollowed status or search people by name; 
+    
 * you can try to log in with free account:
 
 login | password
