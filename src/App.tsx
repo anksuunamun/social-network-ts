@@ -2,18 +2,20 @@ import React, {ComponentType} from 'react';
 import './App.css';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import NavbarContainer from './Components/Navbar/NavbarContainer';
-import ProfileContainer from './Components/Profile/ProfileContainer';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
-import DialogsContainer from './Components/Dialogs/DialogsContainer';
-import UsersContainer from './Components/Users/UsersContainer';
-import SettingsContainer from './Components/Settings/SettingsContainer';
-import NewsContainer from './Components/News/NewsContainer';
 import Login from './Components/Login/Login';
 import {compose} from 'redux';
 import {connect, Provider} from 'react-redux';
 import store, {AppStateType} from './redux-store/redux-store';
 import {setAppInitTC} from './redux-store/app-reducer';
 import Preloader from './Components/Common/Preloader/Preloader';
+import {withSuspense} from './HOC/withSuspense/withSuspense';
+
+const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
+const DialogsContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'));
+const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
+const NewsContainer = React.lazy(() => import('./Components/News/NewsContainer'));
+const SettingsContainer = React.lazy(() => import('./Components/Settings/SettingsContainer'));
 
 class App extends React.Component<MStPType & MDTPType> {
 
@@ -28,11 +30,11 @@ class App extends React.Component<MStPType & MDTPType> {
                     ? <div className="appWrapper">
                         <HeaderContainer/>
                         <NavbarContainer/>
-                        <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
-                        <Route path={'/messages'} render={() => <DialogsContainer/>}/>
-                        <Route path={'/users'} render={() => <UsersContainer/>}/>
-                        <Route path={'/news'} render={() => <NewsContainer/>}/>
-                        <Route path={'/settings'} render={() => <SettingsContainer/>}/>
+                        <Route path={'/profile/:userId?'} component={withSuspense(ProfileContainer)}/>
+                        <Route path={'/messages'} component={withSuspense(DialogsContainer)}/>
+                        <Route path={'/users'} component={withSuspense(UsersContainer)}/>
+                        <Route path={'/news'} component={withSuspense(NewsContainer)}/>
+                        <Route path={'/settings'} component={withSuspense(SettingsContainer)}/>
                         <Route path={'/login'} render={() => <Login/>}/>
                     </div>
                     : <Preloader/>
@@ -40,19 +42,27 @@ class App extends React.Component<MStPType & MDTPType> {
         )
 
     }
+
 }
 
-const mapStateToProps = (state: AppStateType): MStPType => ({isAppInitialized: state.app.isAppInitialized})
-type MStPType = {
-    isAppInitialized: boolean
-}
-type MDTPType = {
-    setAppInitTC: () => void
-}
+const mapStateToProps = (state: AppStateType): MStPType => ({
+        isAppInitialized: state.app.isAppInitialized
+    }
 
-const AppContainer = compose<ComponentType>(withRouter,
-    connect(mapStateToProps, {setAppInitTC})
-)(App)
+)
+type MStPType =
+    {
+        isAppInitialized: boolean
+    }
+type MDTPType =
+    {
+        setAppInitTC: () => void
+    }
+
+const AppContainer = compose
+    < ComponentType > (withRouter,
+            connect(mapStateToProps, {setAppInitTC})
+    )(App)
 
 const FinalAppComponent: React.FC = () => {
     return (
