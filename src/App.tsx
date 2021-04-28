@@ -3,15 +3,15 @@ import './App.css';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import NavbarContainer from './Components/Navbar/NavbarContainer';
 import ProfileContainer from './Components/Profile/ProfileContainer';
-import {Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
 import UsersContainer from './Components/Users/UsersContainer';
 import SettingsContainer from './Components/Settings/SettingsContainer';
 import NewsContainer from './Components/News/NewsContainer';
 import Login from './Components/Login/Login';
 import {compose} from 'redux';
-import {connect} from 'react-redux';
-import {AppStateType} from './redux-store/redux-store';
+import {connect, Provider} from 'react-redux';
+import store, {AppStateType} from './redux-store/redux-store';
 import {setAppInitTC} from './redux-store/app-reducer';
 import Preloader from './Components/Common/Preloader/Preloader';
 
@@ -50,7 +50,18 @@ type MDTPType = {
     setAppInitTC: () => void
 }
 
-
-export default compose<ComponentType>(withRouter,
+const AppContainer = compose<ComponentType>(withRouter,
     connect(mapStateToProps, {setAppInitTC})
-)(App);
+)(App)
+
+const FinalAppComponent: React.FC = () => {
+    return (
+        <BrowserRouter>
+            <Provider store={store}>
+                <AppContainer/>
+            </Provider>
+        </BrowserRouter>
+    )
+}
+
+export default FinalAppComponent;

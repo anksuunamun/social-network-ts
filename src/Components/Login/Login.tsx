@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {reduxForm, Field, InjectedFormProps} from 'redux-form';
+import {reduxForm, InjectedFormProps} from 'redux-form';
 import {createField, Input} from '../Common/FieldControls/FieldControls';
 import {maxLength, minLength, required} from '../../utils/validators/formValidators';
 import PurpleButton from '../Common/PurpleButton/PurpleButton';
