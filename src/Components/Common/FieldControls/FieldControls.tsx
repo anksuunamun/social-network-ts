@@ -1,8 +1,7 @@
-import React, {ComponentType, FC} from 'react';
+import React, {FC} from 'react';
 import CustomTextarea, {CustomTextareaPropsType} from '../CustomTextarea/CustomTextarea';
 import CustomInput, {CustomInputPropsType} from '../CustomInput/CustomInput';
 import {Field, WrappedFieldProps} from 'redux-form';
-import {required} from '../../../utils/validators/formValidators';
 
 type CustomComponentPropsType = CustomInputPropsType | CustomTextareaPropsType
 export const FieldControls: React.FC<WrappedFieldProps & CustomComponentPropsType> = (props) => {
