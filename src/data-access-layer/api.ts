@@ -55,7 +55,7 @@ export const profileAPI = {
         )
     },
 
-    updateProfilePhoto(formData: any) {
+    updateProfilePhoto(formData: Blob) {
         return instanceForMedia.put<CommonResponseType<PhotoResponseType>>(`profile/photo`, formData).then(
             response => response.data
         )

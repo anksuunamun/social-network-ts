@@ -102,7 +102,7 @@ export const getUserStatusThunkAC = (userId: number): ThunkType => {
     }
 }
 
-export const updateProfilePhotoThunkAC = (formData: Object) => {
+export const updateProfilePhotoThunkAC = (formData: Blob) => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
         profileAPI.updateProfilePhoto(formData)
             .then(response => {
