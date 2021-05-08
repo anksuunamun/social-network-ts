@@ -8,10 +8,10 @@ import PurpleButton from '../../Common/PurpleButton/PurpleButton';
 type ProfileInfoPropsType = {
     user: UserProfileType | null
     setUserPhoto: (photo: string) => void
-    userId: number | null
     userStatus: string
     updateProfilePhotoThunkAC: (formData: any) => void
     updateUserStatusThunkAC: (status: string) => void
+    isOwner: boolean
 }
 
 const ProfileInfo = function (props: ProfileInfoPropsType) {
@@ -34,7 +34,7 @@ const ProfileInfo = function (props: ProfileInfoPropsType) {
                 <div className={styles.profileInfoImg}>
                     <img src={props.user?.photos.large || picture} alt="profilePhoto"/>
                 </div>
-                {props.user?.userId === props.userId
+                {props.isOwner
                     ? <label htmlFor="upload-profile-photo">
                         <span>{fileName}</span> <PurpleButton text={'upload'} onButtonClick={() => {
                     }} small/>
@@ -45,7 +45,8 @@ const ProfileInfo = function (props: ProfileInfoPropsType) {
             <div className={styles.textInfo}>
                 <div>{props.user?.fullName || 'Name'}</div>
                 <ProfileStatus userStatus={props.userStatus}
-                               updateUserStatusThunkAC={props.updateUserStatusThunkAC}/>
+                               updateUserStatusThunkAC={props.updateUserStatusThunkAC}
+                               isOwner={props.isOwner}/>
                 <div>{props.user?.contacts.facebook || 'My Facebook'}</div>
                 <div>{props.user?.contacts.vk || 'My VK'}</div>
                 <div>{props.user?.contacts.website || 'My website'}</div>

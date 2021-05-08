@@ -4,6 +4,8 @@ import styles from './ProfileStatus.module.css';
 type ProfileStatusPropsType = {
     userStatus: string
     updateUserStatusThunkAC: (status: string) => void
+
+    isOwner: boolean
 }
 type ProfileStatusStateType = {
     status: string
@@ -46,7 +48,7 @@ class ProfileStatus extends React.PureComponent<ProfileStatusPropsType, ProfileS
     render() {
         return (
             <div className={styles.statusWrapper}>
-                {this.state.editMode
+                {this.state.editMode && this.props.isOwner
                     ? <input type="text"
                              autoFocus={true}
                              onBlur={this.onDeactivateEditMode}

@@ -50,7 +50,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
 
     render() {
         return (
-            <Profile {...this.props}/>
+            <Profile {...this.props} isOwner={!this.props.match.params.userId}/>
         )
     }
 }
@@ -72,20 +72,18 @@ type MapStateToPropsType = {
     'posts': Array<PostsType>
     'user': UserProfileType | null
     'isFetching': boolean
-    'id': number | null
     'userStatus': string
     'isAuth': boolean
     'authUserId': number | null
 }
 
-export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType
+export type ProfilePropsType = MapDispatchToPropsType & MapStateToPropsType & { isOwner: boolean }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         'posts': state.profilePage.posts,
         'user': state.profilePage.user,
         'isFetching': state.profilePage.isFetching,
-        'id': state.auth.id,
         'userStatus': state.profilePage.userStatus,
         'isAuth': state.auth.isAuth,
         'authUserId': state.auth.id,
