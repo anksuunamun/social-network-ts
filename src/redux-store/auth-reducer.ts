@@ -92,6 +92,7 @@ export const logInThunk = (email: string, password: string, rememberMe: boolean)
                     dispatch(stopSubmit('loginForm', {_error: response.messages[0] ? response.messages[0] : 'Some error'}))
                 }
             })
+            .catch(error => console.log(error))
     }
 }
 
@@ -100,7 +101,9 @@ export const logOutThunk = (): ThunkType => (dispatch: ThunkDispatch<AppStateTyp
         if (response.resultCode === 0) {
             dispatch(setUserAuth(null, null, null));
             dispatch(setIsAuthAC(false));
-
+            dispatch(setIsFetching(false));
+        } else if (response.resultCode === 1) {
+            dispatch(setIsFetching(false));
         }
     })
 }
