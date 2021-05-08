@@ -10,7 +10,7 @@ export const maxLength = (maxLength: number) => {
 
 export const minLength = (minLength: number) => {
     return (value: string) => {
-        return value && value.length > minLength
+        return value && value.length >= minLength
             ? undefined
             : `Length should be min ${minLength} symbols!`
     }

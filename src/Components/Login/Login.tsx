@@ -20,13 +20,13 @@ export type FormDataType = {
 }
 
 const maxLength30 = maxLength(30);
-const minLength5 = minLength(5);
+const minLength4 = minLength(4);
 
 let LoginForm = React.memo(function (props: InjectedFormProps<FormDataType>) {
     return (<>
             <form onSubmit={props.handleSubmit}>
-                {createField(Input, 'login', 'text', [required, maxLength30, minLength5], 'Login', 'userLogin')}
-                {createField(Input, 'password', 'password', [required, maxLength30, minLength5], 'Password', 'userPassword')}
+                {createField(Input, 'login', 'text', [required, maxLength30, minLength4], 'Login', 'userLogin')}
+                {createField(Input, 'password', 'password', [required, maxLength30, minLength4], 'Password', 'userPassword')}
                 {props.error ? <div>{props.error}</div> : ''}
                 {createField('input', 'rememberMe', 'checkbox')}
                 <PurpleButton text={'log in'}  type={'submit'}/>
