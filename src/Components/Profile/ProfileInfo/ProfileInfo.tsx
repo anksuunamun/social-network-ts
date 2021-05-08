@@ -4,6 +4,7 @@ import ProfileStatus from './ProfileStatus/ProfileStatus';
 import picture from '../../../Assets/Images/picture.png'
 import {UserProfileType} from '../../../redux-store/Profile-reducer';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
+import ProfileContacts from './ProfileContacts/ProfileContacts';
 
 type ProfileInfoPropsType = {
     user: UserProfileType | null
@@ -47,9 +48,7 @@ const ProfileInfo = function (props: ProfileInfoPropsType) {
                 <ProfileStatus userStatus={props.userStatus}
                                updateUserStatusThunkAC={props.updateUserStatusThunkAC}
                                isOwner={props.isOwner}/>
-                <div>{props.user?.contacts.facebook || 'My Facebook'}</div>
-                <div>{props.user?.contacts.vk || 'My VK'}</div>
-                <div>{props.user?.contacts.website || 'My website'}</div>
+                <ProfileContacts contacts={props.user?.contacts || null}/>
             </div>
 
         </div>
