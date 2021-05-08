@@ -2,7 +2,7 @@ import React, {ComponentType} from 'react';
 import './App.css';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import NavbarContainer from './Components/Navbar/NavbarContainer';
-import {BrowserRouter, HashRouter, Route, withRouter} from 'react-router-dom';
+import {Switch, HashRouter, Route, withRouter, Redirect} from 'react-router-dom';
 import Login from './Components/Login/Login';
 import {compose} from 'redux';
 import {connect, Provider} from 'react-redux';
@@ -30,12 +30,16 @@ class App extends React.Component<MStPType & MDTPType> {
                     ? <div className="appWrapper">
                         <HeaderContainer/>
                         <NavbarContainer/>
-                        <Route path={'/profile/:userId?'} component={withSuspense(ProfileContainer)}/>
-                        <Route path={'/messages'} component={withSuspense(DialogsContainer)}/>
-                        <Route path={'/users'} component={withSuspense(UsersContainer)}/>
-                        <Route path={'/news'} component={withSuspense(NewsContainer)}/>
-                        <Route path={'/settings'} component={withSuspense(SettingsContainer)}/>
-                        <Route path={'/login'} render={() => <Login/>}/>
+                        <Switch>
+                            <Route exact path={'/'}
+                                   render={() => <Redirect to={`${this.props.isAuth ? '/profile' : '/login'}`}/>}/>
+                            <Route path={'/profile/:userId?'} component={withSuspense(ProfileContainer)}/>
+                            <Route path={'/messages'} component={withSuspense(DialogsContainer)}/>
+                            <Route path={'/users'} component={withSuspense(UsersContainer)}/>
+                            <Route path={'/news'} component={withSuspense(NewsContainer)}/>
+                            <Route path={'/settings'} component={withSuspense(SettingsContainer)}/>
+                            <Route path={'/login'} render={() => <Login/>}/>
+                        </Switch>
                     </div>
                     : <Preloader/>
                 }</>
@@ -46,13 +50,15 @@ class App extends React.Component<MStPType & MDTPType> {
 }
 
 const mapStateToProps = (state: AppStateType): MStPType => ({
-        isAppInitialized: state.app.isAppInitialized
+        isAppInitialized: state.app.isAppInitialized,
+        isAuth: state.auth.isAuth
     }
 
 )
 type MStPType =
     {
         isAppInitialized: boolean
+        isAuth: boolean
     }
 type MDTPType =
     {
