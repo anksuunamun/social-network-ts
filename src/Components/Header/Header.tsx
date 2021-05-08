@@ -13,7 +13,7 @@ const Header = React.memo(function (props: HeaderPropsType) {
             </div>
             <div className={styles.userActionsWrapper}>
                 {props.isFetching
-                    ? <Preloader/>
+                    ? <Preloader small/>
                     : <div className={styles.userName}>{props.login ? props.login : 'not authorized'}</div>
                 }
                 {props.isAuth ? <PurpleButton text={'Log out'} onButtonClick={() => props.logOutThunk()}/>

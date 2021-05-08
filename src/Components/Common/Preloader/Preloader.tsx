@@ -1,12 +1,17 @@
 import React from 'react';
 import preloader from '../../../Assets/Images/preloader.gif';
+import styles from './Preloader.module.css';
 
-type PreloaderPropsType = {}
+type PreloaderPropsType = {
+    small?: boolean
+}
 
-const Preloader: React.FC<PreloaderPropsType> = () => {
+const Preloader: React.FC<PreloaderPropsType> = (props) => {
     return (
         <div>
-            <img src={preloader} alt=""/>
+            <img src={preloader}
+                 className={`${props.small ? styles.smallPreloader : ''}`}
+                 alt="preloader"/>
         </div>
     )
 }
