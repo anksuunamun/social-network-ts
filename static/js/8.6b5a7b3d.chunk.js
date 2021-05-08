@@ -1,0 +1,2 @@
+(this["webpackJsonpsocial-network-ts"]=this["webpackJsonpsocial-network-ts"]||[]).push([[8],{310:function(t,e,s){t.exports={settingsWrapper:"Settings_settingsWrapper__E1gvL"}},316:function(t,e,s){"use strict";s.r(e);s(0);var n=s(310),r=s.n(n),a=s(1);var c=function(){return Object(a.jsx)("div",{className:r.a.settingsWrapper+" contentWrapper"})};e.default=function(){return Object(a.jsx)(a.Fragment,{children:Object(a.jsx)(c,{})})}}}]);
+//# sourceMappingURL=8.6b5a7b3d.chunk.js.map
