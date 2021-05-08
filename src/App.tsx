@@ -2,7 +2,7 @@ import React, {ComponentType} from 'react';
 import './App.css';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import NavbarContainer from './Components/Navbar/NavbarContainer';
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, HashRouter, Route, withRouter} from 'react-router-dom';
 import Login from './Components/Login/Login';
 import {compose} from 'redux';
 import {connect, Provider} from 'react-redux';
@@ -66,11 +66,11 @@ const AppContainer = compose
 
 const FinalAppComponent: React.FC = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Provider store={store}>
                 <AppContainer/>
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
