@@ -132,18 +132,20 @@ export type ActionsType = AddPostActionType
     | SetUserPhotosActionType
     | SetUserStatusActionType
 
+export type UserContactsType = {
+    facebook: string | null
+    github: string | null
+    instagram: string | null
+    mainLink: string | null
+    twitter: string | null
+    vk: string | null
+    website: string | null
+    youtube: string | null
+}
+
 export type UserProfileType = {
     aboutMe: string | null
-    contacts: {
-        facebook: string | null
-        github: string | null
-        instagram: string | null
-        mainLink: string | null
-        twitter: string | null
-        vk: string | null
-        website: string | null
-        youtube: string | null
-    }
+    contacts: UserContactsType
     fullName: string | null
     lookingForAJob: boolean
     lookingForAJobDescription: string | null
