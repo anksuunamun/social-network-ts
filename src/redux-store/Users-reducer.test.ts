@@ -1,5 +1,11 @@
 import {
-    FollowUserAC, SetCurrentPageAC, setDisabledButtonAC, setIsLoadingAC, setTotalCountAC,
+    FollowUserAC,
+    SearchFilterType,
+    SetCurrentPageAC,
+    setDisabledButtonAC,
+    setIsLoadingAC,
+    SetSearchFilterAC,
+    setTotalCountAC,
     setUsersAC,
     UnFollowUserAC,
     usersReducer,
@@ -138,4 +144,13 @@ test('disabledButtons should be correct', () => {
     let endState = usersReducer(startState, setDisabledButtonAC(15527, true));
 
     expect(endState.disabledButtons).toEqual([15527])
+})
+
+test('search filters should be correct', () => {
+    let endState = usersReducer(startState, SetSearchFilterAC('1', true));
+
+    expect(endState.filter).toEqual({
+        friend: true,
+        term: '1'
+    });
 })
