@@ -81,14 +81,23 @@ export const authAPI = {
             response => response.data
         )
     },
-    login(email: string, password: string, rememberMe: boolean) {
-        return instance.post<CommonResponseType<{ userId: number } | {}>>(`auth/login`, {email, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean, captcha: string = '') {
+        return instance.post<CommonResponseType<{ userId: number } | {}>>(`auth/login`, {
+            email,
+            password,
+            rememberMe,
+            captcha
+        })
             .then(
                 response => response.data
             )
     },
     logout() {
         return instance.delete<CommonResponseType<{}>>(`/auth/login`)
+            .then(response => response.data)
+    },
+    getCaptchaUrl() {
+        return instance.get<CommonResponseType<{ url: string }>>('/security/get-captcha-url')
             .then(response => response.data)
     }
 }

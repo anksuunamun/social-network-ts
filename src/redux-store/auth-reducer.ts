@@ -6,6 +6,7 @@ import {FormAction, stopSubmit} from 'redux-form';
 const SET_AUTH_USER = 'SET_AUTH_USER';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
 const SET_IS_AUTH = 'SET_IS_AUTH';
+const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
 
 const initialState: initialStateType = {
     id: null,
@@ -13,6 +14,7 @@ const initialState: initialStateType = {
     email: null,
     isFetching: false,
     isAuth: false,
+    captchaURL: null
 }
 
 type initialStateType = {
@@ -21,6 +23,7 @@ type initialStateType = {
     email: string | null
     isFetching: boolean
     isAuth: boolean
+    captchaURL: string | null
 }
 
 type SetUserAuthActionType = {
@@ -61,6 +64,13 @@ export const setIsAuthAC = (isAuth: boolean): SetIsAuthActionType => {
     }
 }
 
+type SetCaptchaUrlAC = {
+    type: typeof SET_CAPTCHA_URL,
+    url: string
+}
+
+export const setCaptchaURLAC = (url: string): SetCaptchaUrlAC => ({type: SET_CAPTCHA_URL, url})
+
 type ThunkType = ThunkAction<Promise<void> | void, AppStateType, unknown, ActionsType>
 
 export const getAuthThunkAC = (): ThunkType => {
@@ -82,14 +92,16 @@ export const getAuthThunkAC = (): ThunkType => {
     }
 }
 
-export const logInThunk = (email: string, password: string, rememberMe: boolean): ThunkType => {
+export const logInThunk = (email: string, password: string, rememberMe: boolean, captcha?: string): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType | FormAction>) => {
-        authAPI.login(email, password, rememberMe)
+        authAPI.login(email, password, rememberMe, captcha)
             .then(response => {
                 if (response.resultCode === 0) {
                     dispatch(getAuthThunkAC());
                 } else if (response.resultCode === 1) {
                     dispatch(stopSubmit('loginForm', {_error: response.messages[0] ? response.messages[0] : 'Some error'}))
+                } else if (response.resultCode === 10) {
+                    dispatch(getCaptchaTC());
                 }
             })
             .catch(error => console.log(error))
@@ -108,7 +120,14 @@ export const logOutThunk = (): ThunkType => (dispatch: ThunkDispatch<AppStateTyp
     })
 }
 
-export type ActionsType = SetUserAuthActionType | SetIsFetchingActionType | SetIsAuthActionType;
+export const getCaptchaTC = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
+    authAPI.getCaptchaUrl()
+        .then(response => {
+            dispatch(setCaptchaURLAC(response.data.url))
+        })
+}
+
+export type ActionsType = SetUserAuthActionType | SetIsFetchingActionType | SetIsAuthActionType | SetCaptchaUrlAC;
 
 export const authReducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
@@ -120,6 +139,9 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
         }
         case (SET_IS_AUTH) : {
             return {...state, isAuth: action.isAuth}
+        }
+        case (SET_CAPTCHA_URL): {
+            return {...state, captchaURL: action.url}
         }
         default: {
             return state;
