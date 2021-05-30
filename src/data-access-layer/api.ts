@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {UserType} from '../redux-store/Users-reducer';
 import {UserProfileType} from '../redux-store/Profile-reducer';
+import {FormDataType} from '../Components/Profile/ProfileInfo/ProfileContacts/ProfileContactsEditForm';
 
 
 export type CommonResponseType<T> = {
@@ -24,6 +25,8 @@ type PhotoResponseType = {
         large: string
     }
 }
+
+export type UpdateProfileRequestType = FormDataType & { userId: string }
 
 const instance = axios.create({
     'baseURL': 'https://social-network.samuraijs.com/api/1.0/',
@@ -65,6 +68,10 @@ export const profileAPI = {
             response => response
         )
     },
+    updateUserProfile(data: UpdateProfileRequestType) {
+        return instance.put<CommonResponseType<{}>>('/profile', data)
+            .then(response => response.data)
+    }
 }
 
 export const usersAPI = {
@@ -97,7 +104,7 @@ export const authAPI = {
             .then(response => response.data)
     },
     getCaptchaUrl() {
-        return instance.get<{url: string}>('/security/get-captcha-url')
+        return instance.get<{ url: string }>('/security/get-captcha-url')
             .then(response => response.data)
     }
 }
