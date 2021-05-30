@@ -123,7 +123,7 @@ export const logOutThunk = (): ThunkType => (dispatch: ThunkDispatch<AppStateTyp
 export const getCaptchaTC = (): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>) => {
     authAPI.getCaptchaUrl()
         .then(response => {
-            dispatch(setCaptchaURLAC(response.data.url))
+            dispatch(setCaptchaURLAC(response.url))
         })
 }
 

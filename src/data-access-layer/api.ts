@@ -97,7 +97,7 @@ export const authAPI = {
             .then(response => response.data)
     },
     getCaptchaUrl() {
-        return instance.get<CommonResponseType<{ url: string }>>('/security/get-captcha-url')
+        return instance.get<{url: string}>('/security/get-captcha-url')
             .then(response => response.data)
     }
 }
