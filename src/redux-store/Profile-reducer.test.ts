@@ -1,8 +1,11 @@
 import {addPostAC, changeLikesAC, profileReducer, ProfileReducerStateType} from './Profile-reducer';
 import {v1} from 'uuid';
 
-test('correct post should be added', () => {
-    let startState: ProfileReducerStateType = {
+
+let startState: ProfileReducerStateType;
+
+beforeEach(() => {
+    startState = {
         'posts': [{
             'text': 'This is my first post!',
             'likes': '23',
@@ -23,10 +26,14 @@ test('correct post should be added', () => {
                 'likes': '0',
                 'id': v1(),
             }
-        ]
+        ],
+        user: null,
+        isFetching: true,
+        userStatus: '',
     }
+})
 
-
+test('correct post should be added', () => {
     let newPostText = 'New post text';
     let endState = profileReducer(startState, addPostAC(newPostText));
 
@@ -36,32 +43,7 @@ test('correct post should be added', () => {
 })
 
 test('correct likes count should be added to correct post', () => {
-    let id = v1()
-    let startState: ProfileReducerStateType = {
-        'posts': [{
-            'text': 'This is my first post!',
-            'likes': '23',
-            'id': id,
-        },
-            {
-                'text': 'This is my second post!',
-                'likes': '6',
-                'id': v1(),
-            },
-            {
-                'text': 'This is my third post!',
-                'likes': '901',
-                'id': v1(),
-            },
-            {
-                'text': ' I like writing posts!!',
-                'likes': '0',
-                'id': v1(),
-            }
-        ]
-    }
-
-    let endState = profileReducer(startState, changeLikesAC(id, 'up'));
+    let endState = profileReducer(startState, changeLikesAC(startState.posts[0].id, 'up'));
 
     expect(endState.posts.length).toBe(4);
     expect(endState.posts[0].likes).toBe('24');
@@ -69,32 +51,7 @@ test('correct likes count should be added to correct post', () => {
 })
 
 test('correct likes count should be deleted from correct post', () => {
-    let id = v1()
-    let startState: ProfileReducerStateType = {
-        'posts': [{
-            'text': 'This is my first post!',
-            'likes': '23',
-            'id': id,
-        },
-            {
-                'text': 'This is my second post!',
-                'likes': '6',
-                'id': v1(),
-            },
-            {
-                'text': 'This is my third post!',
-                'likes': '901',
-                'id': v1(),
-            },
-            {
-                'text': ' I like writing posts!!',
-                'likes': '0',
-                'id': v1(),
-            }
-        ]
-    }
-
-    let endState = profileReducer(startState, changeLikesAC(id, 'down'));
+    let endState = profileReducer(startState, changeLikesAC(startState.posts[0].id, 'down'));
 
     expect(endState.posts.length).toBe(4);
     expect(endState.posts[0].likes).toBe('22');
