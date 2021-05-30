@@ -40,6 +40,10 @@ beforeEach(() => {
         portionSize: 9,
         isLoading: false,
         disabledButtons: [],
+        filter: {
+            friend: false,
+            term: ''
+        }
     }
 })
 
@@ -71,6 +75,10 @@ test('correct users should be set', () => {
         portionSize: 9,
         isLoading: false,
         disabledButtons: [],
+        filter: {
+            friend: false,
+            term: ''
+        }
     }
 
     let users: Array<UserType> = [{
