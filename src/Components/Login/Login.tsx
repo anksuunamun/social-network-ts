@@ -19,8 +19,7 @@ export type FormDataType = {
     rememberMe: boolean
     captcha?: string
 }
-// shishkina_veronika_10@mail.ru
-// lalala123
+
 const maxLength30 = maxLength(30);
 const minLength4 = minLength(4);
 
