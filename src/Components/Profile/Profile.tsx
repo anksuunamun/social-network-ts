@@ -17,6 +17,7 @@ const Profile = function (props: ProfilePropsType) {
                                  updateProfilePhotoThunkAC={props.updateProfilePhotoThunkAC}
                                  updateUserStatusThunkAC={props.updateUserStatusThunkAC}
                                  isOwner={props.isOwner}
+                                 updateUserProfileTC={props.updateUserProfileTC}
                     />
                     <PostsBlock posts={props.posts}
                                 addPost={props.addPostAC}

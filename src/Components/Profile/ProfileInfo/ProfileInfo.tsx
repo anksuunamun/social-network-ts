@@ -5,6 +5,7 @@ import picture from '../../../Assets/Images/picture.png'
 import {UserProfileType} from '../../../redux-store/Profile-reducer';
 import PurpleButton from '../../Common/PurpleButton/PurpleButton';
 import ProfileContacts from './ProfileContacts/ProfileContacts';
+import {UpdateProfileRequestType} from '../../../data-access-layer/api';
 
 type ProfileInfoPropsType = {
     user: UserProfileType | null
@@ -13,6 +14,7 @@ type ProfileInfoPropsType = {
     updateProfilePhotoThunkAC: (formData: any) => void
     updateUserStatusThunkAC: (status: string) => void
     isOwner: boolean
+    updateUserProfileTC: (data: UpdateProfileRequestType) => void
 }
 
 const ProfileInfo = function (props: ProfileInfoPropsType) {
@@ -48,7 +50,8 @@ const ProfileInfo = function (props: ProfileInfoPropsType) {
                 <ProfileStatus userStatus={props.userStatus}
                                updateUserStatusThunkAC={props.updateUserStatusThunkAC}
                                isOwner={props.isOwner}/>
-                <ProfileContacts contacts={props.user?.contacts || null}/>
+                <ProfileContacts user={props.user}
+                                 updateUserProfileTC={props.updateUserProfileTC}/>
             </div>
 
         </div>

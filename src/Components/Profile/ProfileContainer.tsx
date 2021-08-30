@@ -4,16 +4,25 @@ import Profile from './Profile';
 import {connect} from 'react-redux';
 import {
     addPostAC,
-    changeLikesAC, getUserProfileThunkAC, getUserStatusThunkAC,
+    changeLikesAC,
+    getUserProfileThunkAC,
+    getUserStatusThunkAC,
     PostsType,
     setIsFetchingAC,
-    setProfileAC, setUserPhotoAC, setUserStatusAC, updateProfilePhotoThunkAC, updateUserStatusThunkAC, UserProfileType
+    setProfileAC,
+    setUserPhotoAC,
+    setUserStatusAC,
+    updateProfilePhotoThunkAC,
+    updateUserProfileTC,
+    updateUserStatusThunkAC,
+    UserProfileType
 } from '../../redux-store/Profile-reducer';
 import {AppStateType} from '../../redux-store/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {ThunkDispatch} from 'redux-thunk';
 import {ActionsType} from '../../redux-store/Profile-reducer'
 import {withAuthRedirect} from '../../HOC/withAuthRedirect/withAuthRedirect';
+import {UpdateProfileRequestType} from '../../data-access-layer/api';
 
 type ProfileContainerAjaxPropsType = MapDispatchToPropsType & MapStateToPropsType
 type ProfileContainerAjaxStateType = {}
@@ -66,6 +75,7 @@ type MapDispatchToPropsType = {
     getUserStatusThunkAC: (userId: number) => void
     updateProfilePhotoThunkAC: (formData: any) => void
     updateUserStatusThunkAC: (status: string) => void
+    updateUserProfileTC: (data: UpdateProfileRequestType) => void
 }
 
 type MapStateToPropsType = {
@@ -102,6 +112,7 @@ const mapDispatchToProps = (dispatch: Dispatch & ThunkDispatch<AppStateType, unk
         getUserStatusThunkAC: (userId: number) => dispatch(getUserStatusThunkAC(userId)),
         updateProfilePhotoThunkAC: (formData: any) => dispatch(updateProfilePhotoThunkAC(formData)),
         updateUserStatusThunkAC: (status: string) => dispatch(updateUserStatusThunkAC(status)),
+        updateUserProfileTC: (data: UpdateProfileRequestType) => dispatch(updateUserProfileTC(data)),
     }
 }
 

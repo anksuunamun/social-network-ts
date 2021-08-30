@@ -1,5 +1,5 @@
 import {v1} from 'uuid';
-import {profileAPI} from '../data-access-layer/api';
+import {profileAPI, UpdateProfileRequestType} from '../data-access-layer/api';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AppStateType} from './redux-store';
 
@@ -123,6 +123,16 @@ export const updateUserStatusThunkAC = (status: string): ThunkType => {
                 }
             })
     }
+}
+
+export const updateUserProfileTC = (data: UpdateProfileRequestType): ThunkType => (dispatch, getState) => {
+    profileAPI.updateUserProfile(data)
+        .then(response => {
+            if (response.resultCode === 0) {
+                const userId = getState().auth.id;
+                userId && getUserProfileThunkAC(userId);
+            }
+        })
 }
 
 export type ActionsType = AddPostActionType
