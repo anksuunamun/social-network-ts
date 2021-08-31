@@ -9,7 +9,7 @@ const Header = React.memo(function (props: HeaderPropsType) {
     return (
         <div className={styles.headerWrapper}>
             <div className={styles.logo}>
-                <img src={socialLogo} alt=""/>
+                <img src={socialLogo} alt="socialLogo"/>
             </div>
             <div className={styles.userActionsWrapper}>
                 {props.isFetching

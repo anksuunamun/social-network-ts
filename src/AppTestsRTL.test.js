@@ -33,10 +33,22 @@ import React from "react";
 import App from "./App";
 import { render, screen } from "@testing-library/react";
 
-test("1", () => {
+test("1", async () => {
   render(<App/>);
 
-  expect(screen.getByAltText(/preloader/)).toHaveAttribute('src', 'preloader.gif');
-  screen.debug()
+  expect(screen.getByAltText(/preloader/i)).toHaveAttribute('src', 'preloader.gif');
 
+  expect(await screen.findByAltText(/socialLogo/i)).toHaveAttribute('src', 'socialLogo.png');
+  expect(await screen.findByAltText(/socialLogo/i)).toBeEmpty();
+  expect(await screen.findByAltText(/preloader/i)).toHaveClass('smallPreloader');
+  expect(await screen.findByText(/Profile/i)).toHaveClass('navbarItemWrapper');
+  expect(await screen.findByText(/Messages/i)).toHaveAttribute('href', '#/messages');
+  expect(await screen.findByLabelText(/login/i)).toHaveAttribute('name', 'login');
+  expect(await screen.findAllByPlaceholderText(/Write something here.../i)).toHaveLength(2);
+  expect(await screen.findAllByRole('button')).toHaveLength(2);
+  expect(await screen.findAllByDisplayValue('')).toHaveLength(3);
+  expect(await screen.findByText('Log in')).toHaveClass('active');
+  expect(await screen.findByText('Log in')).toHaveAttribute('href', '#/login');
+
+  screen.debug();
 })
