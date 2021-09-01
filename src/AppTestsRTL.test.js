@@ -29,26 +29,52 @@
 // 3) to show that initially there was no element, but when the asynchronous code is running, it will appear - findBy
 // if multiple items getAllBy, findAllBy, queryAllBy
 
+//to simulate user interaction with the interface - fireEvent
+
 import React from "react";
 import App from "./App";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
-test("1", async () => {
-  render(<App/>);
+describe("Tests for App with React Testing Library", () => {
+  test("Renders App (preloader; then log in form)", async () => {
+    render(<App/>);
 
-  expect(screen.getByAltText(/preloader/i)).toHaveAttribute('src', 'preloader.gif');
+    expect(screen.getByAltText(/preloader/i)).toHaveAttribute('src', 'preloader.gif');
+    expect(await screen.findByAltText(/socialLogo/i)).toHaveAttribute('src', 'socialLogo.png');
+    expect(await screen.findByAltText(/socialLogo/i)).toBeEmpty();
+    expect(await screen.findByAltText(/preloader/i)).toHaveClass('smallPreloader');
+    expect(await screen.findByText(/Profile/i)).toHaveClass('navbarItemWrapper');
+    expect(await screen.findByText(/Messages/i)).toHaveAttribute('href', '#/messages');
+    expect(await screen.findByLabelText(/login/i)).toHaveAttribute('name', 'login');
+    expect(await screen.findAllByPlaceholderText(/Write something here.../i)).toHaveLength(2);
+    expect(await screen.findAllByRole('button')).toHaveLength(2);
+    expect(await screen.findAllByDisplayValue('')).toHaveLength(3);
+    expect(await screen.findByText('Log in')).toHaveClass('active');
+    expect(await screen.findByText('Log in')).toHaveAttribute('href', '#/login');
 
-  expect(await screen.findByAltText(/socialLogo/i)).toHaveAttribute('src', 'socialLogo.png');
-  expect(await screen.findByAltText(/socialLogo/i)).toBeEmpty();
-  expect(await screen.findByAltText(/preloader/i)).toHaveClass('smallPreloader');
-  expect(await screen.findByText(/Profile/i)).toHaveClass('navbarItemWrapper');
-  expect(await screen.findByText(/Messages/i)).toHaveAttribute('href', '#/messages');
-  expect(await screen.findByLabelText(/login/i)).toHaveAttribute('name', 'login');
-  expect(await screen.findAllByPlaceholderText(/Write something here.../i)).toHaveLength(2);
-  expect(await screen.findAllByRole('button')).toHaveLength(2);
-  expect(await screen.findAllByDisplayValue('')).toHaveLength(3);
-  expect(await screen.findByText('Log in')).toHaveClass('active');
-  expect(await screen.findByText('Log in')).toHaveAttribute('href', '#/login');
+    screen.debug();
+  });
 
-  screen.debug();
+  test("Test login form inputs and submit button with fireEvent", async () => {
+    render(<App/>);
+
+    expect(await screen.findByRole('checkbox')).toBeInTheDocument();
+    expect(await screen.findByRole('checkbox')).not.toBeChecked();
+
+    const checkbox = await screen.findByRole('checkbox');
+    fireEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
+
+    const passwordInput = await screen.findByLabelText('Password');
+    expect(passwordInput).not.toHaveFocus();
+    passwordInput.focus();
+    expect(passwordInput).toHaveFocus();
+
+    const handleChange = jest.fn();
+    passwordInput.onchange = handleChange;
+
+    fireEvent.change(passwordInput);
+    expect(handleChange).toBeCalledTimes(1);
+
+  });
 })
