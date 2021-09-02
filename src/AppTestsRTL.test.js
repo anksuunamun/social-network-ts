@@ -31,9 +31,13 @@
 
 //to simulate user interaction with the interface - fireEvent
 
+//RTL comes with an extensive library of custom events that is built on top of the API fireEvent
+//userEvent simulates real browser behavior more accurately (as close as possible to real interaction between the user and the interface)
+
 import React from "react";
 import App from "./App";
 import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 describe("Tests for App with React Testing Library", () => {
   test("Renders App (preloader; then log in form)", async () => {
@@ -76,5 +80,41 @@ describe("Tests for App with React Testing Library", () => {
     fireEvent.change(passwordInput);
     expect(handleChange).toBeCalledTimes(1);
 
+  });
+
+  test("Testing login form using userEvent", async () => {
+    render(<App />);
+
+    const passwordInput = await screen.findByLabelText('Password');
+    const loginInput = await screen.findByLabelText('Login');
+    const rememberMeCheckbox = await screen.findByRole('checkbox');
+
+    userEvent.paste(loginInput, "myLogin");
+    expect(loginInput).toHaveValue("myLogin");
+    expect(loginInput).toHaveFocus();
+
+    userEvent.tab();
+
+    expect(passwordInput).toHaveFocus();
+    expect(loginInput).not.toHaveFocus();
+
+    userEvent.type(passwordInput, "myPassword");
+    expect(passwordInput).toHaveValue("myPassword");
+
+    userEvent.clear(passwordInput);
+
+    expect(passwordInput).toBeEmpty();
+
+    userEvent.tab();
+
+    expect(loginInput).not.toHaveFocus();
+    expect(passwordInput).not.toHaveFocus();
+    expect(rememberMeCheckbox).toHaveFocus();
+
+    userEvent.click(rememberMeCheckbox);
+
+    expect(rememberMeCheckbox).toBeChecked();
+
+    screen.debug()
   });
 })
