@@ -1,0 +1,2 @@
+(this["webpackJsonpsocial-network-ts"]=this["webpackJsonpsocial-network-ts"]||[]).push([[7],{310:function(e,n,t){e.exports={newsWrapper:"News_newsWrapper__2KyJX"}},316:function(e,n,t){"use strict";t.r(n);t(0);var r=t(310),s=t.n(r),a=t(1);var c=function(){return Object(a.jsx)("div",{className:s.a.newsWrapper+" contentWrapper"})};n.default=function(){return Object(a.jsx)(a.Fragment,{children:Object(a.jsx)(c,{})})}}}]);
+//# sourceMappingURL=7.6bc89954.chunk.js.map
