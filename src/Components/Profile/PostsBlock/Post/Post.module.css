@@ -1,44 +1,44 @@
 .post {
-    display: grid;
-    grid-template-columns: 1fr 0.2fr 7fr;
-    column-gap: 20px;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 0.2fr 7fr;
+  column-gap: 20px;
+  align-items: center;
 }
 
-
 .userImg {
-    width: 30px;
+  width: 30px;
 }
 
 .arrowsWrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
-.upTriangle, .downTriangle {
-    width: 15px;
-
+.upTriangle,
+.downTriangle {
+  width: 15px;
 }
 
 .downTriangle {
-    transform: rotate(180deg)
+  transform: rotate(180deg);
 }
 
-.upTriangle:hover, .downTriangle:hover {
-    cursor: pointer;
+.upTriangle:hover,
+.downTriangle:hover {
+  cursor: pointer;
 }
 
-.upTriangle polygon:hover, .downTriangle polygon:hover {
-    fill: #ae54d8;
+.upTriangle polygon:hover,
+.downTriangle polygon:hover {
+  fill: #ae54d8;
 }
 
 .postText {
-
 }
 
 .postWrapper {
-    overflow: auto;
-    white-space: nowrap;
+  overflow: auto;
+  white-space: nowrap;
 }

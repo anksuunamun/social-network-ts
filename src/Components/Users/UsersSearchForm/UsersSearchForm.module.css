@@ -1,39 +1,39 @@
 .input {
-    background-color: #473B38;
-    color: white;
-    font-size: 16px;
-    border-radius: 0.25rem;
-    border: 1px solid #73605b;
+  background-color: #473b38;
+  color: white;
+  font-size: 16px;
+  border-radius: 0.25rem;
+  border: 1px solid #73605b;
 }
 
 .input:focus {
-    outline-color: #73605b;
-    border-color: #73605b;
-    background-color: #73605b;
+  outline-color: #73605b;
+  border-color: #73605b;
+  background-color: #73605b;
 }
 
 .formWrapper {
-    margin: 0 auto;
-    width: 60%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  margin: 0 auto;
+  width: 60%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .formWrapper select {
-    color: white;
-    background-color: #473B38;
-    height: 22px;
-    font-size: 16px;
-    border-radius: 0.25rem;
-    border: 1px solid #73605b;
+  color: white;
+  background-color: #473b38;
+  height: 22px;
+  font-size: 16px;
+  border-radius: 0.25rem;
+  border: 1px solid #73605b;
 }
 
 .formWrapper select:focus {
-    outline-color: #73605b;
-    border-color: #73605b;
+  outline-color: #73605b;
+  border-color: #73605b;
 }
 
 .formWrapper option:hover {
-    background-color: #73605b;
+  background-color: #73605b;
 }

@@ -1,25 +1,23 @@
 .headerWrapper {
-    grid-area: header;
-    height: 110px;
-    background-color: inherit;
-    color: white;
-    display: grid;
-    grid-template-columns: 12fr 3fr;
-    align-content: center;
-
+  grid-area: header;
+  height: 110px;
+  background-color: inherit;
+  color: white;
+  display: grid;
+  grid-template-columns: 12fr 3fr;
+  align-content: center;
 }
 
 .logo img {
-    height: 65px;
+  height: 65px;
 }
 
 .userActionsWrapper {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    justify-items: end;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-items: end;
 }
 
-
 .userName {
-    font-size: 19px;
+  font-size: 19px;
 }

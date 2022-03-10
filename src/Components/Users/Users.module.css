@@ -1,19 +1,17 @@
 .usersWrapper {
-    text-align: center;
-    height: 920px;
+  text-align: center;
+  height: 920px;
 }
 
 .usersBlockWrapper {
-    display: grid;
-    grid-template-columns:repeat(auto-fill, 220px);
-    column-gap: 20px;
-    row-gap: 30px;
-    grid-auto-rows: 270px;
-    margin-top: 10px;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 220px);
+  column-gap: 20px;
+  row-gap: 30px;
+  grid-auto-rows: 270px;
+  margin-top: 10px;
+  justify-content: center;
 }
 
 .paginator {
-
 }
-

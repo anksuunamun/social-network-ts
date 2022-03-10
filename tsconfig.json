@@ -19,16 +19,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      // remap rsg-components/anything to its version in react-styleguidist
-      "rsg-components/*": [
-        "node_modules/react-styleguidist/lib/client/rsg-components/*"
-      ]
-    }
+    "baseUrl": "."
   },
   "include": [
     "src"
   ],
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules"
+  ]
 }

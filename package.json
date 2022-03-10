@@ -48,7 +48,10 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
+    "styleguide:build": "styleguidist build",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "fix:lint": "eslint --ext .js,.jsx,.ts,.tsx src --fix",
+    "prettier": "prettier --write --ext .js,.jsx,.ts,.tsx src/**/*"
   },
   "eslintConfig": {
     "extends": [
@@ -69,7 +72,18 @@
     ]
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^7.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-html-reporter": "^0.7.4",
+    "eslint-plugin-css-modules": "^2.11.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "gh-pages": "^3.2.3",
+    "prettier": "^2.5.1",
     "react-styleguidist": "^11.1.7"
   }
 }

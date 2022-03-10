@@ -1,13 +1,12 @@
 .postsBlock {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-    margin-top: 20px;
-    column-gap: 20px;
-
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  margin-top: 20px;
+  column-gap: 20px;
 }
 
 .posts {
-    display: grid;
-    row-gap: 15px;
-    grid-auto-rows: 50px;
+  display: grid;
+  row-gap: 15px;
+  grid-auto-rows: 50px;
 }

@@ -1,16 +1,15 @@
 .contactsWrapper {
-    padding: 10px 0 0;
-    min-height: 170px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  padding: 10px 0 0;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .contact {
-    font-size: 17px;
-
+  font-size: 17px;
 }
 
 .name {
-    color: #ae54d8;
+  color: #ae54d8;
 }

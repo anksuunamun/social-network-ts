@@ -1,0 +1,13 @@
+/.git
+
+node_modules
+build
+
+/.idea
+/.vscode
+/src/Assets/Images
+/src/__snapshots__
+
+yarn-error.log
+
+*.md

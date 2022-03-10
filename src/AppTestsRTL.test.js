@@ -34,14 +34,14 @@
 //RTL comes with an extensive library of custom events that is built on top of the API fireEvent
 //userEvent simulates real browser behavior more accurately (as close as possible to real interaction between the user and the interface)
 
-import React from "react";
-import App from "./App";
-import { fireEvent, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import React from 'react';
+import App from './App';
+import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-describe("Tests for App with React Testing Library", () => {
-  test("Renders App (preloader; then log in form)", async () => {
-    render(<App/>);
+describe('Tests for App with React Testing Library', () => {
+  test('Renders App (preloader; then log in form)', async () => {
+    render(<App />);
 
     expect(screen.getByAltText(/preloader/i)).toHaveAttribute('src', 'preloader.gif');
     expect(await screen.findByAltText(/socialLogo/i)).toHaveAttribute('src', 'socialLogo.png');
@@ -59,8 +59,8 @@ describe("Tests for App with React Testing Library", () => {
     screen.debug();
   });
 
-  test("Test login form inputs and submit button with fireEvent", async () => {
-    render(<App/>);
+  test('Test login form inputs and submit button with fireEvent', async () => {
+    render(<App />);
 
     expect(await screen.findByRole('checkbox')).toBeInTheDocument();
     expect(await screen.findByRole('checkbox')).not.toBeChecked();
@@ -79,18 +79,17 @@ describe("Tests for App with React Testing Library", () => {
 
     fireEvent.change(passwordInput);
     expect(handleChange).toBeCalledTimes(1);
-
   });
 
-  test("Testing login form using userEvent", async () => {
+  test('Testing login form using userEvent', async () => {
     render(<App />);
 
     const passwordInput = await screen.findByLabelText('Password');
     const loginInput = await screen.findByLabelText('Login');
     const rememberMeCheckbox = await screen.findByRole('checkbox');
 
-    userEvent.paste(loginInput, "myLogin");
-    expect(loginInput).toHaveValue("myLogin");
+    userEvent.paste(loginInput, 'myLogin');
+    expect(loginInput).toHaveValue('myLogin');
     expect(loginInput).toHaveFocus();
 
     userEvent.tab();
@@ -98,8 +97,8 @@ describe("Tests for App with React Testing Library", () => {
     expect(passwordInput).toHaveFocus();
     expect(loginInput).not.toHaveFocus();
 
-    userEvent.type(passwordInput, "myPassword");
-    expect(passwordInput).toHaveValue("myPassword");
+    userEvent.type(passwordInput, 'myPassword');
+    expect(passwordInput).toHaveValue('myPassword');
 
     userEvent.clear(passwordInput);
 
@@ -115,6 +114,6 @@ describe("Tests for App with React Testing Library", () => {
 
     expect(rememberMeCheckbox).toBeChecked();
 
-    screen.debug()
+    screen.debug();
   });
-})
+});

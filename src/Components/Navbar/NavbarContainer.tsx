@@ -1,13 +1,12 @@
 import React from 'react';
 import Navbar from './Navbar';
 
-
 function NavbarContainer() {
-    return (
-        <>
-            <Navbar/>
-        </>
-    )
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 }
 
 export default NavbarContainer;

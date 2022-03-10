@@ -1,13 +1,13 @@
 .input {
-    background-color: #473B38;
-    color: white;
-    font-size: 16px;
-    border-radius: 0.25rem;
-    border: 1px solid #73605b;
+  background-color: #473b38;
+  color: white;
+  font-size: 16px;
+  border-radius: 0.25rem;
+  border: 1px solid #73605b;
 }
 
 .input:focus {
-    outline-color: #73605b;
-    border-color: #73605b;
-    background-color: #73605b;
+  outline-color: #73605b;
+  border-color: #73605b;
+  background-color: #73605b;
 }

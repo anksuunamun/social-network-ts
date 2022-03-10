@@ -1,80 +1,99 @@
-import React, {useEffect, useState} from 'react';
-import {v1} from 'uuid';
+import React, { useEffect, useState, KeyboardEvent } from 'react';
+import { v1 } from 'uuid';
 import PurpleButton from '../PurpleButton/PurpleButton';
 import styles from './Paginator.module.css';
 
 type PaginatorPropsType = {
-    totalCount: number
-    currentPage: number
-    portionSize: number
-    pagesPortionSize: number
-    onPageClickHandler: (item: number) => void
-    className?: string
-}
+  totalCount: number;
+  currentPage: number;
+  portionSize: number;
+  pagesPortionSize: number;
+  onPageClickHandler: (item: number) => void;
+  className?: string;
+};
 
 const Paginator: React.FC<PaginatorPropsType> = (props) => {
-
-    const [portionNumber, setPortionNumber] = useState<number>(1);
-    const [leftBorder, setLeftBorder] = useState<number>((portionNumber - 1) * props.pagesPortionSize + 1);
-    const [rightBorder, setRightBorder] = useState<number>(portionNumber * props.pagesPortionSize);
-    const generatePages = () => {
-        let tempPages = []
-        for (let i = leftBorder; i <= rightBorder; i++) {
-            tempPages.push(i);
-        }
-        return tempPages;
+  const [portionNumber, setPortionNumber] = useState<number>(1);
+  const [leftBorder, setLeftBorder] = useState<number>(
+    (portionNumber - 1) * props.pagesPortionSize + 1,
+  );
+  const [rightBorder, setRightBorder] = useState<number>(portionNumber * props.pagesPortionSize);
+  const generatePages = () => {
+    const tempPages = [];
+    for (let i = leftBorder; i <= rightBorder; i++) {
+      tempPages.push(i);
     }
-    const [pages, setPages] = useState<Array<number>>(generatePages());
+    return tempPages;
+  };
+  const [pages, setPages] = useState<Array<number>>(generatePages());
 
-    const pagesCount = Math.ceil(props.totalCount / props.portionSize);
+  const pagesCount = Math.ceil(props.totalCount / props.portionSize);
 
-
-    useEffect(() => {
-        let tempPages = [];
-        for (let i = leftBorder; i <= rightBorder; i++) {
-            tempPages.push(i);
-        }
-        setPages(tempPages);
-    }, [leftBorder, rightBorder])
-
-    const onPageClickHandler = (page: number) => {
-        setPortionNumber(page);
-        props.onPageClickHandler(page);
+  useEffect(() => {
+    const tempPages = [];
+    for (let i = leftBorder; i <= rightBorder; i++) {
+      tempPages.push(i);
     }
-    const onNextButtonClick = () => {
-        setLeftBorder(leftBorder + 10);
-        setRightBorder(rightBorder + 10);
-    }
-    const onBackButtonClick = () => {
-        setLeftBorder(leftBorder - 10);
-        setRightBorder(rightBorder - 10);
-    }
+    setPages(tempPages);
+  }, [leftBorder, rightBorder]);
 
-    return (
-        <div className={props.className}>
-            {leftBorder !== 1
-                ? <PurpleButton text={'back'}
-                                small
-                                className={styles.backButton}
-                                onButtonClick={() => {
-                                    onBackButtonClick()
-                                }}/>
-                : ''}
-            {pages.map(page => <span key={v1()}
-                                     className={`${styles.pageDigit} ${page === props.currentPage
-                                         ? styles.currentPage
-                                         : ''}`}
-                                     onClick={() => onPageClickHandler(page)}>{page}</span>)}
-            {rightBorder !== pagesCount
-                ? <PurpleButton text={'next'}
-                                small
-                                className={styles.nextButton}
-                                onButtonClick={() => {
-                                    onNextButtonClick()
-                                }}/>
-                : ''}
-        </div>
-    )
-}
+  const onPageClickHandler = (page: number) => {
+    setPortionNumber(page);
+    props.onPageClickHandler(page);
+  };
+  const onNextButtonClick = () => {
+    setLeftBorder(leftBorder + 10);
+    setRightBorder(rightBorder + 10);
+  };
+  const onBackButtonClick = () => {
+    setLeftBorder(leftBorder - 10);
+    setRightBorder(rightBorder - 10);
+  };
+
+  return (
+    <div className={props.className}>
+      {leftBorder !== 1 ? (
+        <PurpleButton
+          text={'back'}
+          small
+          className={styles.backButton}
+          onButtonClick={() => {
+            onBackButtonClick();
+          }}
+        />
+      ) : (
+        ''
+      )}
+      {pages.map((page) => (
+        <span
+          key={v1()}
+          className={`${styles.pageDigit} ${page === props.currentPage ? styles.currentPage : ''}`}
+          onClick={() => onPageClickHandler(page)}
+          onKeyPress={(e: KeyboardEvent<HTMLSpanElement>) => {
+            if (e.key === 'Enter') {
+              onPageClickHandler(page);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          {page}
+        </span>
+      ))}
+      {rightBorder !== pagesCount ? (
+        <PurpleButton
+          text={'next'}
+          small
+          className={styles.nextButton}
+          onButtonClick={() => {
+            onNextButtonClick();
+          }}
+        />
+      ) : (
+        ''
+      )}
+    </div>
+  );
+};
 
 export default Paginator;
