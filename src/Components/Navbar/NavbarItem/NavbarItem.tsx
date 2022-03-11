@@ -11,7 +11,7 @@ function NavbarItem(props: NavbarItemProps) {
   return (
     <NavLink
       to={'/' + props.url}
-      className={styles.navbarItemWrapper}
+      className={`${styles.navbarItemWrapper}`}
       activeClassName={styles.activeNavbarLink}
     >
       {props.itemName}
