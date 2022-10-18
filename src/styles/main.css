@@ -36,3 +36,6 @@ body {
   min-height: 700px;
   padding: 20px;
 }
+.btn {
+  @apply bg-purple hover:bg-brightPurple;
+}

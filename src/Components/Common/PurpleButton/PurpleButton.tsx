@@ -16,7 +16,7 @@ const PurpleButton: React.FC<PurpleButtonPropsType> = (props: PurpleButtonPropsT
   return (
     <>
       <button
-        className={`${styles.buttonWrapper} ${props.small ? styles.small : ''} ${props.className}`}
+        className={`btn ${props.small ? styles.small : ''} ${props.className}`}
         onClick={props.onButtonClick}
         disabled={props.disabled}
         type={props.type ? props.type : 'button'}
