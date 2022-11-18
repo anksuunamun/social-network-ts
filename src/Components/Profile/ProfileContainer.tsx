@@ -17,6 +17,7 @@ import {
   updateUserStatusThunkAC,
   UserProfileType,
   ActionsType,
+  getUserProfileAC,
 } from '../../redux-store/Profile-reducer';
 import { AppStateType } from '../../redux-store/redux-store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -45,7 +46,8 @@ class ProfileContainer extends React.PureComponent<PropsType> {
         this.props.history.push('/login');
       }
     }
-    this.props.getUserProfileThunkAC(+userId);
+    this.props.getUserProfileAC(+userId);
+    // this.props.getUserProfileThunkAC(+userId);
     this.props.getUserStatusThunkAC(+userId);
   }
 
@@ -76,6 +78,7 @@ type MapDispatchToPropsType = {
   updateProfilePhotoThunkAC: (formData: any) => void;
   updateUserStatusThunkAC: (status: string) => void;
   updateUserProfileTC: (data: UpdateProfileRequestType) => void;
+  getUserProfileAC: (userId: number) => void;
 };
 
 type MapStateToPropsType = {
@@ -115,6 +118,7 @@ const mapDispatchToProps = (
     updateProfilePhotoThunkAC: (formData: any) => dispatch(updateProfilePhotoThunkAC(formData)),
     updateUserStatusThunkAC: (status: string) => dispatch(updateUserStatusThunkAC(status)),
     updateUserProfileTC: (data: UpdateProfileRequestType) => dispatch(updateUserProfileTC(data)),
+    getUserProfileAC: (userId: number) => dispatch(getUserProfileAC(userId)),
   };
 };
 

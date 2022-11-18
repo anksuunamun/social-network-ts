@@ -1,7 +1,9 @@
-import { v1 } from 'uuid';
-import { profileAPI, UpdateProfileRequestType } from '../data-access-layer/api';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { AppStateType } from './redux-store';
+import {v1} from 'uuid';
+import {profileAPI, UpdateProfileRequestType} from '../data-access-layer/api';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {AppStateType} from './redux-store';
+
+import {put, takeEvery} from 'redux-saga/effects';
 
 const ADD_POST = 'ADD_POST';
 const CHANGE_LIKES = 'CHANGE_LIKE';
@@ -9,6 +11,7 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
 const SET_USER_PHOTOS = 'SET_USER_PHOTOS';
 const SET_USER_STATUS = 'SET_USER_STATUS';
+const GET_USER_PROFILE = 'profile-reducer/GET_USER_PROFILE';
 
 export const addPostAC = (postText: string): AddPostActionType => {
   return {
@@ -20,6 +23,7 @@ export type AddPostActionType = {
   type: typeof ADD_POST;
   postText: string;
 };
+
 
 export const changeLikesAC = (id: string, upOrDown: 'up' | 'down'): ChangeLikesActionType => {
   return {
@@ -97,6 +101,34 @@ export const getUserProfileThunkAC = (userId: number): ThunkType => {
   };
 };
 
+
+export const getUserProfileAC = (userId: number) => ({
+  type: 'profile-reducer/GET_USER_PROFILE',
+  payload: userId,
+});
+
+
+type GetUserProfileActionType = {
+  type: typeof GET_USER_PROFILE,
+  payload: number,
+}
+
+export function* getUserProfile({payload}: GetUserProfileActionType) {
+  yield put(setIsFetchingAC(true));
+  try {
+    const response: UserProfileType = yield profileAPI.getUserProfile(payload);
+    yield put(setProfileAC(response));
+    yield put(setIsFetchingAC(false));
+  } catch (e) {
+  }
+};
+
+
+export function* watchGetUSerProfile() {
+  yield takeEvery(GET_USER_PROFILE, getUserProfile);
+};
+
+
 export const getUserStatusThunkAC = (userId: number): ThunkType => {
   return (
     dispatch: ThunkDispatch<AppStateType, unknown, ActionsType>,
@@ -134,14 +166,14 @@ export const updateUserStatusThunkAC = (status: string): ThunkType => {
 
 export const updateUserProfileTC =
   (data: UpdateProfileRequestType): ThunkType =>
-  (dispatch, getState) => {
-    profileAPI.updateUserProfile(data).then((response) => {
-      if (response.resultCode === 0) {
-        const userId = getState().auth.id;
-        userId && getUserProfileThunkAC(userId);
-      }
-    });
-  };
+    (dispatch, getState) => {
+      profileAPI.updateUserProfile(data).then((response) => {
+        if (response.resultCode === 0) {
+          const userId = getState().auth.id;
+          userId && getUserProfileThunkAC(userId);
+        }
+      });
+    };
 
 export type ActionsType =
   | AddPostActionType
@@ -149,7 +181,8 @@ export type ActionsType =
   | SetUserProfileActionType
   | SetIsFetchingActionType
   | SetUserPhotosActionType
-  | SetUserStatusActionType;
+  | SetUserStatusActionType
+  | GetUserProfileActionType
 
 export type UserContactsType = {
   facebook: string | null;
@@ -222,7 +255,7 @@ export const profileReducer = (
 ): ProfileReducerStateType => {
   switch (action.type) {
     case ADD_POST: {
-      const newState = { ...state, posts: [...state.posts] };
+      const newState = {...state, posts: [...state.posts]};
       const newPost: PostsType = {
         text: action.postText,
         likes: '10',
@@ -232,7 +265,7 @@ export const profileReducer = (
       return newState;
     }
     case CHANGE_LIKES: {
-      const newState = { ...state, posts: [...state.posts] };
+      const newState = {...state, posts: [...state.posts]};
       newState.posts.map((post) => {
         if (post.id === action.id) {
           if (action.upOrDown === 'up') {
@@ -249,11 +282,11 @@ export const profileReducer = (
     case SET_USER_PROFILE: {
       return {
         ...state,
-        user: { ...action.payload },
+        user: {...action.payload},
       };
     }
     case SET_IS_FETCHING: {
-      return { ...state, isFetching: action.isFetching };
+      return {...state, isFetching: action.isFetching};
     }
     case SET_USER_PHOTOS: {
       const updatedUser = {
@@ -269,7 +302,7 @@ export const profileReducer = (
       };
     }
     case SET_USER_STATUS: {
-      return { ...state, userStatus: action.status };
+      return {...state, userStatus: action.status};
     }
     default: {
       return state;
